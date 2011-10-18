@@ -17,23 +17,36 @@ public abstract class Animal {
 	private double diffusionRate;
 	
 	/**
-	 * Rate the animal reproduces per animal
+	 * Coefficients scaling how amounts of the different animals effect this animal.
+	 * Matrix is rectangular N*N+1 where N is the number of types of animals
+	 * First row are linear coefficients and the rest are cross quadratic terms
+	 * Most of the grid will be 0
+	 * e.g. birth and death rates.
 	 */
-	private double birthRate;
-	
+	private double[][] diffCoefficients;
+		
 	/**
-	 * Rate the animal dies per animal
+	 * The initial density array and diffusion rate must be specified when an 
+	 * animal is created. If available the array or coefficients should be provided also. 
+	 * @param densities Initial density array
+	 * @param diffusionRate Rate this animal moves out/in to the cell
+	 * @param diffCo The coefficients which scale how the number of each animal effects this animal over time.
 	 */
-	private double deathRate;
+	public Animal(double[][] densities, double diffusionRate, double[][] diffCo) {
+		setDensities(densities);
+		setDiffusionRate(diffusionRate);
+		setDiffCo(diffCo);
+	}
 	
 	/**
 	 * The initial density array and diffusion rate must be specified when an 
 	 * animal is created.
 	 * @param densities Initial density array
+	 * @param diffusionRate Rate this animal moves out/in to the cell
 	 */
-	public Animal(double[][] densities, double diffusionRate, double birthRate, double deathRate) {
-		this.densities = densities;
-		this.diffusionRate = diffusionRate;
+	public Animal(double[][] densities, double diffusionRate) {
+		setDensities(densities);
+		setDiffusionRate(diffusionRate);
 	}
 	
 	/**
@@ -44,7 +57,41 @@ public abstract class Animal {
 	 * @param dt Time step
 	 * @param animals Array of animal densities the update may rely on.
 	 */
-	public abstract double getNextDensity(int i, int j, double dt, Animal[] animals);
+	public double getNextDensity(int i, int j, double dt, Animal[] animals) {
+		
+		double oldDensity = getDensity(i, j);
+		double newDensity = oldDensity;	
+				
+		/**
+		 * Runs through the first line of coefficients
+		 */
+		for(int k=0; k<animals.length; k++) {
+			
+			newDensity += dt*getDiffCo()[0][k]*animals[k].getDensity(i, j);
+			
+		}
+		
+		/**
+		 * Runs through the rest of the coefficient matrix
+		 */
+		for(int k=0; k<animals.length; k++) {
+			for(int l=1;l<=animals.length; l++) {
+								
+				newDensity += dt*getDiffCo()[l][k]*animals[k].getDensity(i, j)*animals[l].getDensity(i, j);
+			
+			}
+		}
+		
+		// TODO - Proper neighbour diffusion update
+		
+		/**
+		 * Calculates the diffusion of the animal
+		 */
+		newDensity += getDiffusionRate()*(getDensity(i,j-1)+getDensity(i,j+1) + getDensity(i-1,j)+getDensity(i+1,j)-4*getDensity(i,j));
+				
+		return newDensity;
+				
+	}
 	
 	/**
 	 * Sets the densities of all grid points from a premade array
@@ -91,38 +138,16 @@ public abstract class Animal {
 	}
 	
 	/**
-	 * Sets the rate of death per animal
-	 * @param deathRate Rate of death per animal
+	 * Sets the coefficients controlling the changes of population with time.
 	 */
-	public void setDeathRate(double deathRate) {
-		this.deathRate = deathRate;
+	public void setDiffCo(double[][] diffCo) {
+		this.diffCoefficients = diffCo;
 	}
 	
 	/**
-	 * 	Returns the rate of death per animal
-	 * @return Rate of death per animal
+	 * 	Returns the coefficients controlling the changes of population with time.
 	 */
-	public double getDeathRate() {
-		return deathRate;		
-	}
-	
-	/**
-	 * Sets the rate of birth per animal
-	 * @param birthRate Rate of birth per animal
-	 */
-	public void setBirthRate(double birthRate) {
-		this.birthRate = birthRate;
-	}
-	
-	/**
-	 * 	Returns the rate of birth per animal
-	 * @return Rate of birth per animal
-	 */
-	public double getBirthRate() {
-		return birthRate;		
-	}
-		
-		
-	
-	
+	public double[][] getDiffCo() {
+		return diffCoefficients;		
+	}	
 }

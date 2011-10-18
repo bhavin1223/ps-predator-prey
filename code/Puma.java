@@ -14,28 +14,11 @@ public class Puma extends Animal {
 	 * @param m Predator mortality rate
 	 */
 	public Puma(double[][] P, double l, double b, double m) {
-		super(P, l, b, m);
-	}
-	
-	/**
-	 * Provides implementation of the inherited getNextDensity method according to the PijNew equation
-	 * provided in the notes. Returns the new density value at grid position i, j after a time interval dt.
-	 * @param i Row index
-	 * @param j Column index
-	 * @param dt Time interval
-	 * @param animals Array of animal densities the update may rely on.
-	 */
-	@Override
-	public double getNextDensity(int i, int j, double dt, Animal[] animals) {
-		
-		// TODO Method body
-		
-		/*
-		 * Note that there will be likely values in the equation that can be calculated once
-		 * and stored in fields to decrease execution time.
-		 */
-
-		return 0;
+		super(P, l);
+		double[][] diffCo = new double[3][2];
+		diffCo[1][1] = b;
+		diffCo[0][1] = -m;
+		setDiffCo(diffCo);
 	}
 
 }

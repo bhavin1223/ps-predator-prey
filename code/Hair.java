@@ -14,23 +14,11 @@ public class Hair extends Animal {
 	 * @param a Hare mortality rate
 	 */
 	public Hair(double[][] H, double k, double r, double a) {
-		super(H, k, r, a);
+		super(H, k);
+		double[][] diffCo = new double[3][2];
+		diffCo[0][0] = r;
+		diffCo[1][0] = -a;
+		setDiffCo(diffCo);
 	}
-
-	/**
-	 * Provides implementation of the inherited getNextDensity method according to the HijNew equation
-	 * provided in the notes. Returns the new density value at grid position i, j after a time interval dt.
-	 * @param i Row index
-	 * @param j Column index
-	 * @param dt Time interval
-	 * @param animals Array of animal densities the update may rely on.
-	 */
-	@Override
-	public double getNextDensity(int i, int j, double dt, Animal[] animals) {
-		
-		// TODO Auto-generated method stub
-		
-		return 0;
-	}
-
+	
 }
