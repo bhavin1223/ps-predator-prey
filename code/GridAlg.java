@@ -73,18 +73,27 @@ public class GridAlg {
 	 */
 	public void syncUpdate() {
 		
-		Animal[] newAnimals = new Animal[animals.length];
-		
+		// Loop over all of the animals
 		for(int i=0;i<animals.length;i++) {
+			
+			// Loop over all of the cells, calculating the next densities
 			for(int j=0; j<grid.length;j++) {
-				for(int k=0; k<grid[0].length;k++) {
-					
-					newAnimals[i].setDensity(j, k, animals[i].getNextDensity(j, k, dt, animals));
-										
+				for(int k=0; k<grid[0].length;k++) {				
+					animals[i].calcNextDensity(j, k, dt, animals);										
 				}
 			}			
-		}		                                 
+		}
+		
+		// Apply change at end of all calculations
+		for(int i=0;i<animals.length;i++) {
+			animals[i].applyTimeStep();		
+		}
+		
 	}
+	
+	/*
+	 * Not sure why we need two different methods here. The one below is best? 
+	 */
 	
 	
 	/**
@@ -94,17 +103,20 @@ public class GridAlg {
 	 */
 	public void gridSyncUpdate() {
 		
+		// Loop over all of the animals
 		for(int i=0;i<animals.length;i++) {
 			
-			Animal newAnimal = animals[i];
-			
+			// Loop over all of the cells, calculating the next densities
 			for(int j=0; j<grid.length;j++) {
-				for(int k=0; k<grid[0].length;k++) {
-					
-					newAnimal.setDensity(j, k, animals[i].getNextDensity(j, k, dt, animals));
-										
+				for(int k=0; k<grid[0].length;k++) {				
+					animals[i].calcNextDensity(j, k, dt, animals);										
 				}
-			}			
-		}		                                 
+			}
+			
+			// Apply densities update while looping through animals
+			animals[i].applyTimeStep();		
+			
+		}                                 
 	}
+	
 }

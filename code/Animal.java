@@ -12,6 +12,11 @@ public abstract class Animal {
 	private double[][] densities;
 	
 	/**
+	 * Used to store the densities after the next time step;
+	 */
+	private double[][] nextDensities;
+	
+	/**
 	 * Diffusion rate of this animal;
 	 */
 	private double diffusionRate;
@@ -61,14 +66,14 @@ public abstract class Animal {
 	}	
 	
 	/**
-	 * Returns the density at location i, j after a time step of dt. Implementation
-	 * provided by subclasses.
+	 * Calculates the density at location i, j after a time step of dt. Stores the result in the 2D
+	 * nextDensites array.
 	 * @param i Row index
 	 * @param j Column index
 	 * @param dt Time step
 	 * @param animals Array of animal densities the update may rely on.
 	 */
-	public double getNextDensity(int i, int j, double dt, Animal[] animals) {
+	public void calcNextDensity(int i, int j, double dt, Animal[] animals) {
 		
 		double oldDensity = getDensity(i, j);
 		double newDensity = oldDensity;	
@@ -100,8 +105,21 @@ public abstract class Animal {
 		 */
 		newDensity += getDiffusionRate()*(getDensity(i,j-1)+getDensity(i,j+1) + getDensity(i-1,j)+getDensity(i+1,j)-4*getDensity(i,j));
 				
-		return newDensity;
+		nextDensities[i][j] = newDensity;
 				
+	}
+	
+	/**
+	 * Replaces the contents of the 2D densities array with that of the 2D nextDensities array. 
+	 */
+	public void applyTimeStep() {
+		
+		for(int i = 0; i < densities.length; i++) {
+			for(int j = 0; j < densities[0].length; j++) {
+				densities[i] = nextDensities[i];
+			}
+		}
+		
 	}
 	
 	/**
