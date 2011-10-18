@@ -21,6 +21,10 @@ public class GridAlg {
 	 */
 	private int[][] neighbours;
 	
+	/**
+	 * Update frequency
+	 */
+	private double dt = 0.1;
 	
 	public GridAlg() {
 		
@@ -45,7 +49,6 @@ public class GridAlg {
 		return neighbours;
 		
 	}
-	
 	public void setNeighbours() {
 		
 		int[] neighbours = new int[4];
@@ -62,12 +65,46 @@ public class GridAlg {
 		}
 	}
 	
+	//TODO fix the way the new animals array is made so that it actually duplicates the old array
 	
-	// TODO - Class body
-	
-	/*
-	 * Here we can choose in what order we update sites e.t.c. 1 method for 
-	 * each possible algorithm. Method used to be specified by user.
+	/**
+	 * Updates the grid and animals in parallel.
+	 * runs sequentially through the cells before replacing at end.
 	 */
-
+	public void syncUpdate() {
+		
+		Animal[] newAnimals = new Animal[animals.length];
+		
+		for(int i=0;i<animals.length;i++) {
+			for(int j=0; j<grid.length;j++) {
+				for(int k=0; k<grid[0].length;k++) {
+					
+					newAnimals[i].setDensity(j, k, animals[i].getNextDensity(j, k, dt, animals));
+										
+				}
+			}			
+		}		                                 
+	}
+	
+	
+	/**
+	 * Updates the grid and in parallel.
+	 * Runs sequentially through the cells for one animal then replaces
+	 * Goes through all animals in turn.
+	 */
+	public void gridSyncUpdate() {
+		
+		for(int i=0;i<animals.length;i++) {
+			
+			Animal newAnimal = animals[i];
+			
+			for(int j=0; j<grid.length;j++) {
+				for(int k=0; k<grid[0].length;k++) {
+					
+					newAnimal.setDensity(j, k, animals[i].getNextDensity(j, k, dt, animals));
+										
+				}
+			}			
+		}		                                 
+	}
 }

@@ -50,6 +50,17 @@ public abstract class Animal {
 	}
 	
 	/**
+	 * The initial density array and diffusion rate must be specified when an 
+	 * animal is created.
+	 * @param densities Initial density array
+	 * @param diffusionRate Rate this animal moves out/in to the cell
+	 */
+	public Animal(Animal animal) {
+		setDensities(animal.getDensities());
+		setDiffusionRate(animal.getDiffusionRate());
+	}	
+	
+	/**
 	 * Returns the density at location i, j after a time step of dt. Implementation
 	 * provided by subclasses.
 	 * @param i Row index
@@ -100,6 +111,14 @@ public abstract class Animal {
 	public void setDensities(double[][] densities) {
 		this.densities = densities;
 	}
+	
+	/**
+	 * Sets the densities of all grid points from a premade array
+	 * @param densities The densities of the animals being set across the grid.
+	 */
+	public double[][] getDensities() {
+		return densities;
+	}	
 	
 	/**
 	 * Sets the density at location i, j.
