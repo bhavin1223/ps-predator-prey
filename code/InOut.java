@@ -11,9 +11,8 @@ import java.io.IOException;
  * Read a .dat file in and parse the data into (an) array(s).
  * 
  * @author Jorge M.
- * @version 1.0, October, 19th 2011
- * @since 1.0 
- * 
+ * @version 1.1, October, 19th 2011
+ * @since 1.0  
  */
 
 /*
@@ -21,40 +20,63 @@ import java.io.IOException;
  * actionlisteners JPanel extensions etc.
  */
 public class InOut {
-	public static void main(String arg[]) {
-		File fileIn = null;
+	private int[][] landscape;
+	
+	/**
+	 * Constructor
+	 */
+	public InOut(String pathToFile) {
+		loadLandscape(pathToFile);		
+	}
+	
+	/**
+	 * Load the bitmask lanscape file
+	 * 
+	 * @param	maskFileIn	The absolute path to the file to be read
+	 */
+	public void loadLandscape(String maskFileIn) {
+		File maskFile = null;
+		byte[] bufffer;
 		// TODO : arrays declarations
 
 		// Get the file from the argument line.
-		if (arg.length > 0) {
-			fileIn = new File(arg[0]);
+		if (maskFileIn.length() > 0) {
+			maskFile = new File(maskFileIn);
 		}
 
-		if (fileIn == null) {
+		if (maskFile == null) {
 			System.out.println("Default: small.dat");
-			fileIn = new File("small.dat");
+			maskFile = new File("small.dat");
 		}
 
 		try {
 			// Wrap the FileInputStream with a DataInputStream
-			FileInputStream fis = new FileInputStream(fileIn);
+			FileInputStream fis = new FileInputStream(maskFile);
 			DataInputStream dis = new DataInputStream(fis);
 
-			while (true) {
-				try {
+//			while (true) {
+//				try {
 					// TODO actual reading of data
+				          byte[] buffer = new byte[dis.available()];
+				          dis.read(buffer);
 
-				} catch (EOFException eof) {
+//				} catch (EOFException eof) {
 					System.out.println("End of File");
-					break;
-				}
-
-			}
+	//				break;
+//				}
+//			}
 
 			dis.close();
 		} catch (IOException e) {
 			System.out.println("IO Exception =: " + e);
 		}
 	}
-
+	
+	public void setLanscape(int[][] landscapeIn) {
+		System.arraycopy(landscapeIn, 0, landscape, 0, landscapeIn.length);
+	}
+	
+	public int[][] getLanscape() {
+		return landscape;
+	}
 }
