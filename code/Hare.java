@@ -1,10 +1,10 @@
 
 /**
- * Hair animal. Contains the tools for calculating the density of hairs in a grid square
+ * Hare animal. Contains the tools for calculating the density of hares in a grid square
  * after a given time interval.
  * @author Simon Put your name here if you work on this class
  */
-public class Hair extends Animal {
+public class Hare extends Animal {
 	
 	/**
 	 * Constructor stores the values needed to calculate densities.
@@ -13,7 +13,7 @@ public class Hair extends Animal {
 	 * @param r Reproduction rate of hares
 	 * @param a Hare mortality rate
 	 */
-	public Hair(double[][] H, double k, double r, double a) {
+	public Hare(double[][] H, double k, double r, double a) {
 		super(H, k);
 		double[][] diffCo = new double[3][2];
 		diffCo[0][0] = r;
