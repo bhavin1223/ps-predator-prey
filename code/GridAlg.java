@@ -26,47 +26,79 @@ public class GridAlg {
 	 */
 	private double dt = 0.1;
 	
-	public GridAlg() {
-		
+	/**
+	 * Constructor for grid class taking inputs passed from input class.
+	 * @param grid
+	 */
+	public GridAlg(int[][] grid, Animal[] animals) {
+		setGrid(grid);
+		setNeighbours();
 	}
-	
 	
 	/**
-	 * Returns the value of the neighbours of grid point i, j.
+	 * Sets the local grid values to integer input values
+	 * @param grid Value of cells 1 for land and 0 for water.
+	 */
+	public void setGrid(int[][] grid) {
+		this.grid = grid;
+	}
+	
+	/**
+	 * Returns the local grid values
+	 * @return Returns the value of each cell in the grid array.
+	 */
+	public int[][] getGrid(){
+		return this.grid;		
+	}
+		
+	/**
+	 * Sets the array of animals to an input density array
+	 * @param
+	 */
+	public void setAnimals(Animal[] animals) {
+		this.animals = animals;
+	}
+	
+	/**
+	 * Returns the array of animals
+	 * @return
+	 */
+	public Animal[] getAnimals(){
+		return this.animals;		
+	}
+	
+	/**
+	 * Returns the number of land neighbours the grid point i, j has.
 	 * @param i Row index
 	 * @param j Column index
-	 * @return Array of values contained by neighbours 
+	 * @return neighbours Number of land neighbours point i,j has.
 	 */
-	public int[] getNeighbours(int i,int j) {
-		
-		int[] neighbours = new int[4]; 
-		
-		neighbours[0] = grid[i-1][j];	
-		neighbours[1] = grid[i+1][j];	
-		neighbours[2] = grid[i][j-1];	
-		neighbours[3] = grid[i][j+1];			
-		
-		return neighbours;
-		
+	public int getNeighbours(int i,int j) {	
+		return neighbours[i][j];		
 	}
+	
+	/**
+	 * Sets the number of land neighbours each cell has in an array.
+	 */
 	public void setNeighbours() {
 		
-		int[] neighbours = new int[4];
+		int[][] neighbours = new int[grid.length][grid[0].length];
 		
 		for(int i=0;i<grid.length;i++) {
-			for(int j=0;j<grid[i].length;j++) {
-				if(grid[i][j] != 0) {
+			for(int j=0;j<grid[i].length;j++) {				
+
+				neighbours[i][j] += grid[i-1][j];
+				neighbours[i][j] += grid[i+1][j];
+				neighbours[i][j] += grid[i][j-1];
+				neighbours[i][j] += grid[i][j+1];
 				
-					
-					
-					
-				}				
 			}
-		}
+		}		
+		
+		this.neighbours = neighbours;
+		
 	}
-	
-	//TODO fix the way the new animals array is made so that it actually duplicates the old array
-	
+		
 	/**
 	 * Updates the grid and animals in parallel.
 	 * runs sequentially through the cells before replacing at end.
@@ -78,8 +110,10 @@ public class GridAlg {
 			
 			// Loop over all of the cells, calculating the next densities
 			for(int j=0; j<grid.length;j++) {
-				for(int k=0; k<grid[0].length;k++) {				
-					animals[i].calcNextDensity(j, k, dt, animals);										
+				for(int k=0; k<grid[0].length;k++) {
+					if(grid[j][k]!=0) {
+						animals[i].calcNextDensity(j, k, dt, animals, neighbours[j][k]);
+					}
 				}
 			}			
 		}
@@ -93,6 +127,8 @@ public class GridAlg {
 	
 	/*
 	 * Not sure why we need two different methods here. The one below is best? 
+	 * Two different methods to see how the algorithm behaves under each update order.
+	 * The one above is possibly more correct as animals are eaten, reproduce and die in the same step.
 	 */
 	
 	
@@ -108,8 +144,10 @@ public class GridAlg {
 			
 			// Loop over all of the cells, calculating the next densities
 			for(int j=0; j<grid.length;j++) {
-				for(int k=0; k<grid[0].length;k++) {				
-					animals[i].calcNextDensity(j, k, dt, animals);										
+				for(int k=0; k<grid[j].length;k++) {		
+					if(grid[j][k]!=0) {		
+						animals[i].calcNextDensity(j, k, dt, animals,neighbours[j][k]);	
+					}
 				}
 			}
 			

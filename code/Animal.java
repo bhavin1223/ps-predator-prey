@@ -72,8 +72,9 @@ public abstract class Animal {
 	 * @param j Column index
 	 * @param dt Time step
 	 * @param animals Array of animal densities the update may rely on.
+	 * @param neighbours The number of land neighbours cell i, j has. 
 	 */
-	public void calcNextDensity(int i, int j, double dt, Animal[] animals) {
+	public void calcNextDensity(int i, int j, double dt, Animal[] animals, int neighbours) {
 		
 		double oldDensity = getDensity(i, j);
 		double newDensity = oldDensity;	
@@ -91,19 +92,17 @@ public abstract class Animal {
 		 * Runs through the rest of the coefficient matrix
 		 */
 		for(int k=0; k<animals.length; k++) {
-			for(int l=1;l<=animals.length; l++) {
+			for(int l=k+1;l<=animals.length; l++) {
 								
 				newDensity += dt*getDiffCo()[l][k]*animals[k].getDensity(i, j)*animals[l].getDensity(i, j);
 			
 			}
 		}
 		
-		// TODO - Proper neighbour diffusion update
-		
 		/**
 		 * Calculates the diffusion of the animal
 		 */
-		newDensity += getDiffusionRate()*(getDensity(i,j-1)+getDensity(i,j+1) + getDensity(i-1,j)+getDensity(i+1,j)-4*getDensity(i,j));
+		newDensity += getDiffusionRate()*(getDensity(i,j-1)+getDensity(i,j+1) + getDensity(i-1,j)+getDensity(i+1,j)-neighbours*getDensity(i,j));
 				
 		nextDensities[i][j] = newDensity;
 				
