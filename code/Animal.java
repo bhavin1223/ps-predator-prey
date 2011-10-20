@@ -4,7 +4,7 @@
  * @author Matt, Simon Put your name here if you work on this class
  *
  */
-public abstract class Animal {
+public class Animal {
 	
 	/**
 	 * Density grid for this animal.
@@ -28,7 +28,20 @@ public abstract class Animal {
 	 * Most of the grid will be 0
 	 * e.g. birth and death rates.
 	 */
-	private double[][] diffCoefficients;
+	private double[] diffCoefficients;
+		
+	/**
+	 * The name of the animal
+	 */
+	private String name;
+	
+	/**
+	 * USE THIS Creates an animal with no parameters initially input as they are all input by the user in the GUI
+	 * Only the number of animals in the simulation needs to be initially given.
+	 */
+	public Animal(int numAnimals) {
+		diffCoefficients = new double[numAnimals];
+	}
 		
 	/**
 	 * The initial density array and diffusion rate must be specified when an 
@@ -37,7 +50,7 @@ public abstract class Animal {
 	 * @param diffusionRate Rate this animal moves out/in to the cell
 	 * @param diffCo The coefficients which scale how the number of each animal effects this animal over time.
 	 */
-	public Animal(double[][] densities, double diffusionRate, double[][] diffCo) {
+	public Animal(double[][] densities, double diffusionRate, double[] diffCo) {
 		setDensities(densities);
 		setDiffusionRate(diffusionRate);
 		setDiffCo(diffCo);
@@ -63,7 +76,7 @@ public abstract class Animal {
 	public Animal(Animal animal) {
 		setDensities(animal.getDensities());
 		setDiffusionRate(animal.getDiffusionRate());
-	}	
+	}
 	
 	/**
 	 * Calculates the density at location i, j after a time step of dt. Stores the result in the 2D
@@ -74,29 +87,23 @@ public abstract class Animal {
 	 * @param animals Array of animal densities the update may rely on.
 	 * @param neighbours The number of land neighbours cell i, j has. 
 	 */
-	public void calcNextDensity(int i, int j, double dt, Animal[] animals, int neighbours) {
+	public void calcNextDensity(int i, int j, double dt, Animal[] animals, int neighbours, int animal) {
 		
 		double oldDensity = getDensity(i, j);
 		double newDensity = oldDensity;	
-				
+					
 		/**
-		 * Runs through the first line of coefficients
+		 * Runs through the coefficients
 		 */
 		for(int k=0; k<animals.length; k++) {
 			
-			newDensity += dt*getDiffCo()[0][k]*animals[k].getDensity(i, j);
-			
-		}
-		
-		/**
-		 * Runs through the rest of the coefficient matrix
-		 */
-		for(int k=0; k<animals.length; k++) {
-			for(int l=k+1;l<=animals.length; l++) {
-								
-				newDensity += dt*getDiffCo()[l][k]*animals[k].getDensity(i, j)*animals[l].getDensity(i, j);
-			
+			if(animals[k]==this){
+				newDensity += dt*getDiffCo()[k]*this.getDensity(i, j);
 			}
+			else{
+				newDensity += dt*getDiffCo()[k]*animals[k].getDensity(i, j)*this.getDensity(i, j);
+			}
+			
 		}
 		
 		/**
@@ -119,6 +126,20 @@ public abstract class Animal {
 			}
 		}
 		
+	}
+	
+	/**
+	 * Sets the name of the animal
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	/**
+	 * Returns the name of the animal
+	 */
+	public String getName() {
+		return name;
 	}
 	
 	/**
@@ -176,14 +197,14 @@ public abstract class Animal {
 	/**
 	 * Sets the coefficients controlling the changes of population with time.
 	 */
-	public void setDiffCo(double[][] diffCo) {
+	public void setDiffCo(double[] diffCo) {
 		this.diffCoefficients = diffCo;
 	}
 	
 	/**
 	 * 	Returns the coefficients controlling the changes of population with time.
 	 */
-	public double[][] getDiffCo() {
+	public double[] getDiffCo() {
 		return diffCoefficients;		
 	}	
 }
