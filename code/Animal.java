@@ -1,4 +1,4 @@
-
+import java.util.Random;
 /**
  * Abstract class governs the structure of an animal density update.
  * @author Matt, Simon Put your name here if you work on this class
@@ -143,11 +143,20 @@ public class Animal {
 	}
 	
 	/**
-	 * Sets the densities of all grid points from a premade array
+	 * Sets the densities of all grid points from the distributions
+	 * defined in the 'customrand' method
 	 * @param densities The densities of the animals being set across the grid.
 	 */
 	public void setDensities(double[][] densities) {
-		this.densities = densities;
+		
+		int k;
+		for (k=0; k<10000; k++) {
+			int i = customrand(1,100); /* arguments should be limits of array */
+			int j = customrand(1,100);
+			densities[i][j] += 1; /* larger range of i gives smoother distribution */
+			}
+		
+		/* densities need to be normalised somehow after this (divide by area?) */	
 	}
 	
 	/**
@@ -207,4 +216,54 @@ public class Animal {
 	public double[] getDiffCo() {
 		return diffCoefficients;		
 	}	
+
+	/** 
+	 * the genrand method generates random integers in a pseudo normal
+	 * distribution between bmin and bmax, returning only values that fall between
+	 * rmin and rmax. Larger n improves the approximation to a normal distribution,
+	 * but 3 should be sufficient for our needs 
+	 */
+
+	private int genrand(int bmin, int bmax, int rmin, int rmax, int n) {
+	Random rand = new Random(); 
+	int i, u, sum;
+	do {
+	sum = 0;
+	for (i=0; i<n; i++) sum += bmin + (rand.nextInt() % (bmax - bmin));
+	if (sum < 0) sum -= n-1; /* prevent pileup at 0 */
+	u = sum / n;
+	} while ( ! (rmin <= u && u < rmax) );
+	return u;
+	}
+
+	/** 
+	 * the customrand method makes calls to the genrand method with a distributed set of
+	 * parameters. This means we can combine an arbitrary set of normal distributions
+	 * or sections of normal distributions, and in theory produce any distribution
+	 * we want! Min and max are the lower and upper indices of the density array for 
+	 * the animal. Method taken from Michael A. Covington 'How to Make a Lumpy Random-Number
+	 * Generator'.
+	 */
+
+	/** 
+	 * at the moment it produces a single distrubution symmetric in x,y, but it
+	 * should be very easy to extend this to different distributions for each 
+	 * animal/dimension using a few if() statements and an extra argument 
+	 */
+
+	public int customrand(int min, int max) {
+	Random rand2 = new Random(); 
+	int d = rand2.nextInt(3); /* gives a number from 0,1,2 */
+	int x;
+		switch(d) {
+			case 0: x = genrand(-200,300,min,max,3); break;
+			case 1: x = genrand(0,100,min,max,3); break;
+			case 2: x = genrand(80,100,min,max,3); break;
+			default: x = genrand(-100,200,min,max,3); break;
+		}
+	return x;
+	}
+
+
+
 }
