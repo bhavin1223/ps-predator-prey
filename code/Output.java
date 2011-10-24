@@ -2,7 +2,7 @@ import java.io.*;
 /**
  * Method to write output in ppm files.
  * @author Milena Put your name here if you work on this class
- * @version 3.0, October, 24th 2011
+ * @version 4.0, October, 24th 2011
  * @since 1.0
  */
 
@@ -10,12 +10,14 @@ public class Output{
 
  
     int x, y;
-    int maxValue = 0;
     int red, blue, green;  
-    int xMax, yMax, height, width;
-
+    int maxValue = 0;
+   
     int [][][] cell;
     int [][] density;   
+
+    int sum = 0;
+    int average;
     
     /**
      *Constructor for density
@@ -145,9 +147,33 @@ public class Output{
     }
     
 	
-	// TODO - sort out the spaces
+	// TO DO - sort out the spaces
 
 
+
+
+
+    public void printMeanDensity(String outputName, int[][] density, double time) throws Exception
+    {
+	
+	PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(outputName)));
+	
+	for (x=0; x<density.length; x++)
+	    {
+		for (y=0; y<density[0].length; y++)
+		    {
+			 sum += density[x][y];
+		    }
+	    }
+	
+	 average = sum/(density.length*density[0].length);
+	 
+	 out.printf("%s", "Mean density after "+time+" seconds is "+average);
+	 out.printf("\n");
+	 out.close();
+    }
+    // TO DO - change so it doesn't overwrite itself! 
+	
 
 }	    
 	
