@@ -87,7 +87,7 @@ public class Animal {
 	 * @param animals Array of animal densities the update may rely on.
 	 * @param neighbours The number of land neighbours cell i, j has. 
 	 */
-	public void calcNextDensity(int i, int j, double dt, Animal[] animals, int neighbours, int animal) {
+	public void calcNextDensity(int i, int j, double dt, Animal[] animals, int neighbours) {
 		
 		double oldDensity = getDensity(i, j);
 		double newDensity = oldDensity;	
@@ -141,13 +141,23 @@ public class Animal {
 	public String getName() {
 		return name;
 	}
+
+	/**
+	 * Sets the densities of all grid points to those in an array.
+	 * @param densities The densities of the animals being set across the grid.
+	 */
+	public void setDensities(double[][] densities) {
+		
+		this.densities = densities;
+		
+	}
 	
 	/**
 	 * Sets the densities of all grid points from the distributions
 	 * defined in the 'customrand' method
 	 * @param densities The densities of the animals being set across the grid.
 	 */
-	public void setDensities(double[][] densities) {
+	public void initiateDensities(double[][] densities) {
 		
 		int k;
 		for (k=0; k<10000; k++) {

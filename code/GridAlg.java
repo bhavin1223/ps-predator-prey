@@ -1,3 +1,5 @@
+import java.util.Random;
+
 
 /**
  * Runs the algorithm corresponding to the user's input with the user defined settings.
@@ -33,6 +35,8 @@ public class GridAlg {
 	public GridAlg(int[][] grid, Animal[] animals) {
 		setGrid(grid);
 		setNeighbours();
+		setAnimals(animals);
+		initaliseDensities();
 	}
 	
 	/**
@@ -99,6 +103,52 @@ public class GridAlg {
 		
 	}
 		
+	/**
+	 * Initialises the densities of all the animals to a pseudo-normally distributed number.
+	 * Only the land squares are filled with animals.
+	 */
+	public void initaliseDensities() {
+		
+		double randomValue;
+		
+		for(int i=0;i<getAnimals().length;i++) {
+			for(int j=0;j<getGrid().length;j++) {
+				for(int k=0;k<getGrid().length;k++) {
+			
+					if(getGrid()[i][j] ==0) {
+						randomValue = 0;
+					}
+					else {
+						randomValue = distributedRandom(0,1);
+					}
+					getAnimals()[i].setDensity(j, k, randomValue);
+					
+				}
+			}			
+		}			
+	}
+	
+	/**
+	 * Method for creating random densities which will fill the density array. 
+	 * @param dMin Bottom of the range of possible numbers
+	 * @param dMax Top of the range of numbers
+	 * @return
+	 */
+	public double distributedRandom(double dMin, double dMax) {
+		Random random = new Random(2011);
+		double ranNum = 0;
+		
+		for(int i=0;i<3;i++){
+			ranNum += random.nextDouble()*(dMax-dMin);
+		}
+		
+		ranNum = ranNum/3;
+		ranNum += dMin;
+		
+		return ranNum;
+	}
+	
+	
 	/**
 	 * Updates the grid and animals in parallel.
 	 * runs sequentially through the cells before replacing at end.
