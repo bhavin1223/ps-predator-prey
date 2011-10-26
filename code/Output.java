@@ -2,7 +2,7 @@ import java.io.*;
 /**
  * Method to write output in ppm files.
  * @author Milena Put your name here if you work on this class
- * @version 4.0, October, 24th 2011
+ * @version 5.0, October, 26th 2011
  * @since 1.0
  */
 
@@ -61,13 +61,13 @@ public class Output{
 
     /**
      * Method to write densities into a PPM file
-     * In the final output, variations in density with position will be seen as 
-     * different shades of red/green/blue 
-     * (grid cells with zero density will appear white)
-     * Water cells set to black (need the density in water cells to be negative)
+     * In the final output, change in density with position will be
+     * represented by the variation between black and red/green/blue
+     * colours in each cell. Maximum density will appear as red/blue/green, 
+     * black means zero density.
+     * Water cells set to white (need the density in water cells to be negative)
      * @param outputName 
      * @param density 
-     * 
      **/
 
     
@@ -83,8 +83,6 @@ public class Output{
 			    }
 		    }
 	    }
-
-		// TODO - check on the limitting values for maxValue;
 	
         cell = new int[density.length][density[0].length][3];
 	
@@ -147,16 +145,19 @@ public class Output{
     }
     
 	
-	// TO DO - sort out the spaces
-
-
+    /**
+     * Method to write average density with corresponding time to a file
+     * @param outputName
+     * @param density
+     * @param time
+     **/
 
 
 
     public void printMeanDensity(String outputName, int[][] density, double time) throws Exception
     {
 	
-	PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(outputName)));
+       	PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(outputName,true)));
 	
 	for (x=0; x<density.length; x++)
 	    {
@@ -169,12 +170,10 @@ public class Output{
 	 average = sum/(density.length*density[0].length);
 	 
 	 out.printf("%s", "Mean density after "+time+" seconds is "+average);
-	 out.printf("\n");
-	 out.close();
+       	 out.printf("\n");
+       	 out.close();
     }
-    // TO DO - change so it doesn't overwrite itself! 
-	
-
+  
 }	    
 	
 
