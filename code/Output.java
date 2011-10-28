@@ -2,7 +2,7 @@ import java.io.*;
 /**
  * Method to write output in ppm files.
  * @author Milena Put your name here if you work on this class
- * @version 5.0, October, 26th 2011
+ * @version 6.0, October, 28th 2011
  * @since 1.0
  */
 
@@ -61,18 +61,22 @@ public class Output{
 
     /**
      * Method to write densities into a PPM file
-     * In the final output, change in density with position will be
-     * represented by the variation between black and red/green/blue
-     * colours in each cell. Maximum density will appear as red/blue/green, 
-     * black means zero density.
-     * Water cells set to white (need the density in water cells to be negative)
+     * In the final output, water will be seen as blue and land as green cells.
+     * (negative input values for water cells required). 
+     * The change in density of animals with position will be represented by different shades of grey
+     * (the higher the density the darker th colour).
      * @param outputName 
      * @param density 
+     * @param colour optional
      **/
 
     
     public void printPpm(String outputName, int[][] density, String colour) throws Exception { 	
 
+
+	/**
+	 * Calculate the maximum density.
+	 **/
 	for(x=0; x<density.length; x++)
 	    {
 		for(y=0; y<density[0].length; y++)
@@ -85,46 +89,67 @@ public class Output{
 	    }
 	
         cell = new int[density.length][density[0].length][3];
+
 	
 
+	/**
+	 * Fill the image cells with appropriate colours.
+	 **/
 	for(x=0; x<density.length; x++)
 	    {
 		for(y=0; y<density[0].length; y++)
 		    {
-
-			
+			/**
+			 * Fill water cells with blue.
+			 **/
 			if(density[x][y]<=-1)
 			    {
-				cell[x][y][0] = maxValue;
-				cell[x][y][1] = maxValue;
+				cell[x][y][0] = 0;
+				cell[x][y][1] = 0;
 				cell[x][y][2] = maxValue;
 			    }
 		    
 			else
 			    {
-				if(colour=="red")
+				/**
+				 * Choosing this option will result in green land cells with density variations
+				 * being represented as different shades of grey.
+				 **/
+				// This would look not bad, I think, but there are other options below.
+				if (colour == "black&white")
 				    {
 					cell[x][y][0] = density[x][y];
-					cell[x][y][1] = 0;
-					cell[x][y][2] = 0;
+					cell[x][y][1] = density[x][y];
+					cell[x][y][2] = density[x][y];
 				    }
-				if(colour=="green")
+
+				/**
+				 * Choosing this one will basically result in white land cells.
+				 **/
+				if (colour == "black&green")
 				    {
 					cell[x][y][0] = 0;
 					cell[x][y][1] = density[x][y];
 					cell[x][y][2] = 0;
 				    }
-				if(colour=="blue")
+
+				/**
+				 * This option will show land in white and density variations as different shades of green.
+				 **/
+				if (colour == "green&white")
 				    {
-					cell[x][y][0] = 0;
-					cell[x][y][1] = 0;
+					cell[x][y][0] = density[x][y];
+					cell[x][y][1] = maxValue;
 					cell[x][y][2] = density[x][y];
 				    }
+				// Anyway, we can always change the colours.
 			    }
-
 		    }
 	    }		
 
+	/**
+	 * Print the values in a ppm file.
+	 **/
 	PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(outputName)));
 
 			out.printf("P3");
@@ -144,6 +169,8 @@ public class Output{
 	out.close();    	
     }
     
+
+
 	
     /**
      * Method to write average density with corresponding time to a file
@@ -151,8 +178,6 @@ public class Output{
      * @param density
      * @param time
      **/
-
-
 
     public void printMeanDensity(String outputName, int[][] density, double time) throws Exception
     {
