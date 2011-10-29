@@ -1,17 +1,16 @@
-import java.io.DataInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 
 /**
- * Inputs user settings (GUI) and water/land mask (.dat file). Outputs PPM
- * density files.
- * 
- * Read a .dat file in and parse the data into an array.
+ * Read a .dat file in and parse the data into (an) array(s).
  * 
  * @author Jorge M.
- * @version 1.3, October, 23rd 2011
+ * @version 2.0, October, 29th 2011
  * @since 1.0
  */
 
@@ -21,10 +20,9 @@ import java.io.IOException;
  */
 public class InOut {
 	private static final int MAX = 2000;
-	private char[][] charBuffer = new char[MAX + 2][MAX + 2];
-	private int[][] landscape = new int[MAX + 2][MAX + 2];
-	private int[][] neighbours = new int[MAX + 2][MAX + 2];
-	private byte[] buffer;
+	private int[][] intBuffer;
+	private int[][] neighbours;
+	private int m, n;
 
 	/**
 	 * Constructor
@@ -35,13 +33,17 @@ public class InOut {
 	}
 
 	/**
-	 * Load the bitmask lanscape file
+	 * Load the bitmask landscape file, parse it, read the file dimensions and stores the data into multidimensional arrays
 	 * 
 	 * @param maskFileIn
 	 *            The absolute path to the file to be read
+	 * 
 	 */
 	public void loadLandscape(String maskFileIn) {
 		File maskFile = null;
+		String[] tokens = null;
+		String s;
+		int lineNo = 0; // line counter
 
 		if (maskFileIn.length() > 0) {
 			maskFile = new File(maskFileIn);
@@ -52,37 +54,39 @@ public class InOut {
 			maskFile = new File("small.dat");
 		}
 
-		initialiseCharBuffer();
-
 		try {
-			FileInputStream fis = new FileInputStream(maskFile);
-			DataInputStream dis = new DataInputStream(fis);
+			FileInputStream fis = new FileInputStream(maskFile);			
+			InputStreamReader isr = null;
+			
+			try {
+				isr = new InputStreamReader(fis, "UTF8");
+			} catch (UnsupportedEncodingException uee) {
+				uee.getMessage();
+			}
+
+			BufferedReader in = new BufferedReader(isr);
 
 			try {
-				buffer = new byte[dis.available()];
-				dis.read(buffer);
+				while ((s = in.readLine()) != null) {
+					tokens = s.split(" ");
 
-				for (int i = 6, j = 1, k = 1; i < buffer.length; i++) {
-					char c = (char) buffer[i];
-
-					if (c != '\n') {
-						if (c == ' ') {
-							continue;
+					if (lineNo == 0) {
+						// Parse the dimensions of the file
+						m = Integer.parseInt(tokens[0]);
+						n = Integer.parseInt(tokens[1]);
+						intBuffer = new int[m + 2][n + 2];
+						lineNo++;
+					} else if (lineNo > 0) {
+						for (int i = 0, j = 1; (i < tokens.length) && (lineNo < (m + 2)); i++, j++) {
+							intBuffer[lineNo][j] = Integer.parseInt(tokens[i]);							
+							//System.out.print(intBuffer[lineNo][j]);
 						}
-
-						charBuffer[j][k++] = c;
-					} else if (c == '\n') {
-						k = 1;
-						++j;
+						lineNo++;
+						//System.out.println(lineNo);
 					}
 				}
-
-				dis.close();
-			} catch (IOException e) {
-				System.out.println("IO Exception =: " + e.getMessage());
-			} catch (NullPointerException npe) {
-				System.out.println("Null Pointer Exception Exception =: "
-						+ npe.getMessage());
+			} catch (IOException ioe) {
+				ioe.getMessage();
 			}
 		} catch (FileNotFoundException fnfe) {
 			System.out.println("File Not Found Exception =: "
@@ -91,71 +95,117 @@ public class InOut {
 	}
 
 	/**
-	 * Initialise the buffer that receives the bytes turned to characters
-	 */
-	public void initialiseCharBuffer() {
-		for (int i = 0; i < charBuffer.length; i++) {
-			for (int j = 0; j < charBuffer[0].length; j++) {
-				charBuffer[i][j] = 'x';
-			}
-		}
-	}
-
-	/**
-	 * Fill in the array of neighbours which the number of neighbours at each location (vertically and horizontally)
+	 * Calculate the number of neighbours at each
+	 * location (vertically and horizontally) and fill in the array
 	 */
 	public void countNeighbours() {
-		for (int i = 0; i < landscape.length; i++) { // Set halos/ borders to
-														// zeros
-			for (int j = 0; j < landscape[0].length; j++) {
-				landscape[i][j] = 0;
+		//landscape = new int[getM() + 2][getN() + 2];
+		neighbours = new int[m + 2][n + 2];
+		
+		// Set halos to zeros
+		for (int i = 0; i < neighbours.length; i++) { 														
+			for (int j = 0; j < neighbours[0].length; j++) {
 				neighbours[i][j] = 0;
 			}
 		}
 
-		for (int i = 1, k = 1; i < charBuffer.length - 1; i++, k++) {
-			for (int j = 1, l = 1; j < charBuffer[0].length - 1; j++, l++) {
-				if (charBuffer[i][j] == 'x' || charBuffer[i][j] == '0') {
-					landscape[i][j] = 0;
-				} else if (charBuffer[i][j] == '1') {
-					landscape[k][l] = 1;
+		// Sum up neighbours
+		for (int i = 1; i < intBuffer.length - 1; i++) {
+			for (int j = 1; j < intBuffer[0].length - 1; j++) {
+				if (intBuffer[i][j] == 1) {
+					neighbours[i][j] = intBuffer[i - 1][j]
+							+ intBuffer[i][j - 1] + intBuffer[i][j + 1]
+							+ intBuffer[i + 1][j + 1];
 				}
 			}
 		}
-
-		for (int i = 1; i < landscape.length - 1; i++) {
-			for (int j = 1; j < landscape[0].length - 1; j++) {
-				if (landscape[i][j] == 1) {
-					neighbours[i][j] = landscape[i - 1][j]
-							+ landscape[i][j - 1] + landscape[i][j + 1]
-							+ landscape[i + 1][j + 1];
-				}
+		
+/*		for (int i = 0; i < neighbours.length; i++) { 			
+			for (int j = 0; j < neighbours[0].length; j++) {
+				System.out.print(neighbours[i][j]);
 			}
-		}
-
-/*		for (int i = 0; i < landscape.length; i++) {
 			System.out.println();
-			for (int j = 0; j < landscape[0].length; j++) {
-				System.out.print(landscape[i][j]);
-			}
 		}*/
 	}
 
 	/**
-	 * Setter for the array of neighbours
+	 * Setter for the array that stores the number of neighbours of each element.
+	 * If the value in the data mask is land = 1 then the algorithm calculates the number of neighbours (vertically and horizontally) 
+	 * and stores it in the array.
 	 * 
-	 * @param neighboursIn 	An array to be copied
+	 * @param neighboursIn
+	 *            An array to be copied from
 	 */
 	public void setNeighbours(int[][] neighboursIn) {
 		System.arraycopy(neighboursIn, 0, neighbours, 0, neighboursIn.length);
 	}
 
 	/**
-	 * Getter for the array of neighbours
+	 * Getter for the array that stores the number of neighbours of each element.
+	 * If the value in the data mask is land = 1 then the algorithm calculates the number of neighbours (vertically and horizontally) 
+	 * and stores it in the array.
 	 * 
 	 * @return The reference to the array of neighbours
 	 */
 	public int[][] getNeighbours() {
 		return neighbours;
+	}
+
+	/**
+	 * Get the current value of the dimension m.
+	 * m is the first dimension of the data file being read
+	 * and will be used to build arrays to store the data.
+	 *  
+	 * @return The first dimension read from the data file
+	 */
+	public int getM() {
+		return m;
+	}
+
+	/**
+	 * Set the current value of the dimension m.
+	 * m is the first dimension of the data file being read
+	 * and will be used to build arrays to store the data.
+	 */
+	public void setM(int m) {
+		this.m = m;
+	}
+
+	/**
+	 * Get the current value of the dimension n.
+	 * n is the second dimension of the data file being read
+	 * and will be used to build arrays to store the data.
+	 *  
+	 * @return The second dimension read from the data file
+	 */
+	public int getN() {
+		return n;
+	}
+
+	/**
+	 * Set the current value of the dimension n.
+	 * n is the second dimension of the data file being read
+	 * and will be used to build arrays to store the data.
+	 */
+	public void setN(int n) {
+		this.n = n;
+	}
+
+	/**
+	 * Get intBuffer: a double dimensional array that stores the values read from the data file
+	 * 
+	 * @return The data from the file in a double dimensional array without spaces
+	 */
+	public int[][] getIntBuffer() {
+		return intBuffer;
+	}
+
+	/**
+	 * Set intBuffer: a double dimensional array that stores the values read from the data file
+	 * 
+	 * @return The data from the file in a double dimensional array without spaces
+	 */
+	public void setIntBuffer(int[][] intBuffer) {
+		this.intBuffer = intBuffer;
 	}
 }
