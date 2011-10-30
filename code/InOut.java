@@ -1,9 +1,12 @@
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -22,13 +25,23 @@ public class InOut {
 	private static final int MAX = 2000;
 	private int[][] intBuffer;
 	private int[][] neighbours;
-	private int m, n;
+	private int m, n; /** Dimensions of the data file and the storage arrays.
+	/**
+	 * Path to the data file to be read. It file must be outside the "src" folder, in the level just above.
+	 */
+	private String defaultFile = "./small.dat";
+	//private String defaultFile = "./islands.dat";
 
 	/**
 	 * Constructor
 	 */
 	public InOut(String pathToFile) {
 		loadLandscape(pathToFile);
+		countNeighbours();
+	}
+	
+	public InOut() {
+		loadLandscape(defaultFile);
 		countNeighbours();
 	}
 
@@ -39,24 +52,25 @@ public class InOut {
 	 *            The absolute path to the file to be read
 	 * 
 	 */
-	public void loadLandscape(String maskFileIn) {
+	public String loadLandscape(String maskFileIn) {
 		File maskFile = null;
 		String[] tokens = null;
 		String s;
 		int lineNo = 0; // line counter
+		InputStreamReader isr = null;
 
+		if (maskFileIn == null) {
+			System.out.println("Default: small.dat");
+			maskFile = new File(defaultFile);
+		}
+		
 		if (maskFileIn.length() > 0) {
 			maskFile = new File(maskFileIn);
 		}
 
-		if (maskFile == null) {
-			System.out.println("Default: small.dat");
-			maskFile = new File("small.dat");
-		}
-
 		try {
 			FileInputStream fis = new FileInputStream(maskFile);			
-			InputStreamReader isr = null;
+			BufferedReader br = null;
 			
 			try {
 				isr = new InputStreamReader(fis, "UTF8");
@@ -64,33 +78,49 @@ public class InOut {
 				uee.getMessage();
 			}
 
-			BufferedReader in = new BufferedReader(isr);
+			br = new BufferedReader(isr);
 
 			try {
-				while ((s = in.readLine()) != null) {
-					tokens = s.split(" ");
-
+				while ((s = br.readLine()) != null) {
+					tokens = s.split(" ");					
+					
 					if (lineNo == 0) {
 						// Parse the dimensions of the file
-						m = Integer.parseInt(tokens[0]);
-						n = Integer.parseInt(tokens[1]);
+						n = Integer.parseInt(tokens[0]);						
+						m = Integer.parseInt(tokens[1]);
+						
 						intBuffer = new int[m + 2][n + 2];
 						lineNo++;
-					} else if (lineNo > 0) {
-						for (int i = 0, j = 1; (i < tokens.length) && (lineNo < (m + 2)); i++, j++) {
-							intBuffer[lineNo][j] = Integer.parseInt(tokens[i]);							
-							//System.out.print(intBuffer[lineNo][j]);
+						
+						initialiseIntBuffer();						
+					} else if (lineNo > 0 ) {
+						for (int j = 1; j < tokens.length - 1 ; j++) {
+							intBuffer[lineNo][j] = Integer.parseInt(tokens[j - 1]);							
 						}
-						lineNo++;
-						//System.out.println(lineNo);
+						
+						lineNo++;						
 					}
 				}
+				
+				br.close();
 			} catch (IOException ioe) {
 				ioe.getMessage();
 			}
 		} catch (FileNotFoundException fnfe) {
 			System.out.println("File Not Found Exception =: "
 					+ fnfe.getMessage());
+		}
+		return "ok";
+	}
+	
+	/**
+	 * Set the array storage for the data to zeroes
+	 */
+	public void initialiseIntBuffer() {
+		for (int i = 0; i < intBuffer.length; i++) {
+			for (int j = 0; j < intBuffer[0].length; j++) {
+				intBuffer[i][j] = 0;
+			}
 		}
 	}
 
@@ -99,7 +129,6 @@ public class InOut {
 	 * location (vertically and horizontally) and fill in the array
 	 */
 	public void countNeighbours() {
-		//landscape = new int[getM() + 2][getN() + 2];
 		neighbours = new int[m + 2][n + 2];
 		
 		// Set halos to zeros
@@ -120,9 +149,9 @@ public class InOut {
 			}
 		}
 		
-/*		for (int i = 0; i < neighbours.length; i++) { 			
-			for (int j = 0; j < neighbours[0].length; j++) {
-				System.out.print(neighbours[i][j]);
+/*		for (int i = 0; i < intBuffer.length; i++) { 			
+			for (int j = 0; j < intBuffer[0].length; j++) {
+				System.out.print(intBuffer[i][j]);
 			}
 			System.out.println();
 		}*/
