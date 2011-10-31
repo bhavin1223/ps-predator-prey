@@ -1,6 +1,6 @@
 import java.util.Random;
 /**
- * Abstract class governs the structure of an animal density update.
+ * Class governs the structure of an animal density update.
  * @author Matt, Simon Put your name here if you work on this class
  *
  */
@@ -157,16 +157,11 @@ public class Animal {
 	 * defined in the 'customrand' method
 	 * @param densities The densities of the animals being set across the grid.
 	 */
-	public void initiateDensities(double[][] densities) {
+	public void initiateDensities(int i, int j) {
 		
-		int k;
-		for (k=0; k<10000; k++) {
-			int i = customrand(1,100); /* arguments should be limits of array */
-			int j = customrand(1,100);
-			densities[i][j] += 1; /* larger range of i gives smoother distribution */
-			}
+		this.densities = new double[i][j];
+		this.nextDensities = new double[i][j];
 		
-		/* densities need to be normalised somehow after this (divide by area?) */	
 	}
 	
 	/**

@@ -11,10 +11,10 @@ public class Output{
  
     int x, y;
     int red, blue, green;  
-    int maxValue = 0;
+    double maxValue = 0;
    
-    int [][][] cell;
-    int [][] density;   
+    double [][][] cell;
+    double [][] density;   
 
     int sum = 0;
     int average;
@@ -29,11 +29,15 @@ public class Output{
     {
 	density[x][y] = d;
     }
-    public int[][] getDensity()
+    public double[][] getDensity()
     {
 	return density;
     }
 
+    
+    public Output()	{
+    	
+    }
 
 
     /**
@@ -53,7 +57,7 @@ public class Output{
 	cell[x][y][1] = green;
 	cell[x][y][2] = blue;
     }  
-    public int[][][] getImageCell()
+    public double[][][] getImageCell()
     {
 	return cell;
     }
@@ -64,14 +68,14 @@ public class Output{
      * In the final output, water will be seen as blue and land as green cells.
      * (negative input values for water cells required). 
      * The change in density of animals with position will be represented by different shades of grey
-     * (the higher the density the darker th colour).
+     * (the higher the density the darker the colour).
      * @param outputName 
      * @param density 
      * @param colour optional
      **/
 
     
-    public void printPpm(String outputName, int[][] density, String colour) throws Exception { 	
+    public void printPpm(String outputName, double[][] density, String colour) throws Exception { 	
 
 
 	/**
@@ -88,7 +92,7 @@ public class Output{
 		    }
 	    }
 	
-        cell = new int[density.length][density[0].length][3];
+	cell = new double[density.length][density[0].length][3];
 
 	
 
@@ -96,76 +100,77 @@ public class Output{
 	 * Fill the image cells with appropriate colours.
 	 **/
 	for(x=0; x<density.length; x++)
-	    {
+	{
 		for(y=0; y<density[0].length; y++)
-		    {
+		{
 			/**
 			 * Fill water cells with blue.
 			 **/
 			if(density[x][y]<=-1)
-			    {
+			{
 				cell[x][y][0] = 0;
 				cell[x][y][1] = 0;
 				cell[x][y][2] = maxValue;
-			    }
+			}
 		    
 			else
-			    {
+			{
 				/**
 				 * Choosing this option will result in green land cells with density variations
 				 * being represented as different shades of grey.
-				 **/
+				 **/	
 				// This would look not bad, I think, but there are other options below.
 				if (colour == "black&white")
-				    {
+				{
 					cell[x][y][0] = density[x][y];
 					cell[x][y][1] = density[x][y];
 					cell[x][y][2] = density[x][y];
-				    }
+				}
 
 				/**
 				 * Choosing this one will basically result in white land cells.
 				 **/
 				if (colour == "black&green")
-				    {
+				{
 					cell[x][y][0] = 0;
 					cell[x][y][1] = density[x][y];
 					cell[x][y][2] = 0;
-				    }
+				}
 
 				/**
 				 * This option will show land in white and density variations as different shades of green.
 				 **/
 				if (colour == "green&white")
-				    {
+				{
 					cell[x][y][0] = density[x][y];
 					cell[x][y][1] = maxValue;
 					cell[x][y][2] = density[x][y];
-				    }
+				}
 				// Anyway, we can always change the colours.
-			    }
-		    }
-	    }		
+			}
+		}
+	}		
 
 	/**
 	 * Print the values in a ppm file.
 	 **/
 	PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(outputName)));
 
-			out.printf("P3");
-			out.printf("\n");
-		       	out.printf(""+density.length+" "+density[0].length);
-		       	out.printf("\n");
-		       	out.printf(""+maxValue);
-		       	out.printf("\n");
+	out.printf("P3");
+	out.printf("\n");
+	out.printf(""+density.length+" "+density[0].length);
+	out.printf("\n");
+	out.printf(""+maxValue);
+	out.printf("\n");
 
 	for(x=0; x<density.length; x++)
-	    {
+	{
 		for(y=0; y<density[0].length; y++)
-		    {				
-			out.printf("%s", cell[x][y][0]+" "+cell[x][y][1]+" "+cell[x][y][2]+"  ");	       		    }
+		{				
+			out.printf("%s", cell[x][y][0]+" "+cell[x][y][1]+" "+cell[x][y][2]+"  ");	       		    
+		}
 		out.printf("\n");
-	    }
+	}
 	out.close();    	
     }
     
@@ -179,7 +184,7 @@ public class Output{
      * @param time
      **/
 
-    public void printMeanDensity(String outputName, int[][] density, double time) throws Exception
+    public void printMeanDensity(String outputName, double[][] density, double time) throws Exception
     {
 	
        	PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(outputName,true)));

@@ -27,7 +27,7 @@ public class GridAlg {
         /**
          * Update frequency
          */
-        private double dt = 0.1;
+        private double dt;
         
     	/**
     	 * Object that reads the data file in, parse it and stores its data in arrays.
@@ -89,6 +89,14 @@ public class GridAlg {
                 return this.animals;            
         }
         
+        public double getStep(){
+            return this.dt;            
+        }
+        
+        public void setStep(double step){
+            this.dt = step;            
+        }	   
+                        
         /**
          * Returns the number of land neighbours the grid point i, j has.
          * @param i Row index
@@ -126,11 +134,18 @@ public class GridAlg {
                 for(int i=0;i<grid.length;i++) {
                         for(int j=0;j<grid[i].length;j++) {                             
 
-                                neighbours[i][j] += grid[i-1][j];
-                                neighbours[i][j] += grid[i+1][j];
-                                neighbours[i][j] += grid[i][j-1];
-                                neighbours[i][j] += grid[i][j+1];
-                                
+                        		if(i-1>=0)	{
+                        			neighbours[i][j] += grid[i-1][j];
+                        		}
+                        		if(i+1<grid.length) {
+                        			neighbours[i][j] += grid[i+1][j];
+                        		}
+                        		if(j-1>=0)	{
+                        			neighbours[i][j] += grid[i][j-1];
+                        		}
+                        		if(j+1<grid[i].length) {
+                        			neighbours[i][j] += grid[i][j+1];
+                        		}
                         }
                 }               
                 
@@ -147,16 +162,20 @@ public class GridAlg {
                 double randomValue;
                 
                 for(int i=0;i<getAnimals().length;i++) {
+                	
+                	getAnimals()[i].initiateDensities(getGrid().length,getGrid()[0].length);
+                	
                         for(int j=0;j<getGrid().length;j++) {
                                 for(int k=0;k<getGrid().length;k++) {
                         
-                                        if(getGrid()[i][j] ==0) {
-                                                randomValue = 0;
-                                        } else {
+                                        if(getGrid()[i][j] == 0) {
+                                                randomValue = -1;
+                                        }
+                                        else {
                                                 randomValue = distributedRandom(0,1);
+                                                System.out.println(randomValue);
                                         }
                                         getAnimals()[i].setDensity(j, k, randomValue);
-                                        
                                 }
                         }                       
                 }                       

@@ -37,12 +37,12 @@ public class InOut {
 	 */
 	public InOut(String pathToFile) {
 		loadLandscape(pathToFile);
-		countNeighbours();
+		//countNeighbours();
 	}
 	
 	public InOut() {
 		loadLandscape(defaultFile);
-		countNeighbours();
+		//countNeighbours();
 	}
 
 	/**
@@ -144,7 +144,7 @@ public class InOut {
 				if (intBuffer[i][j] == 1) {
 					neighbours[i][j] = intBuffer[i - 1][j]
 							+ intBuffer[i][j - 1] + intBuffer[i][j + 1]
-							+ intBuffer[i + 1][j + 1];
+							+ intBuffer[i + 1][j];
 				}
 			}
 		}

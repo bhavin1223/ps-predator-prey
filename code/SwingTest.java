@@ -6,24 +6,31 @@ import java.awt.event.ActionEvent;
 import java.awt.*;
 
 class TestFrame extends JFrame {
+	
+	private int noAnimals = 2;
+	
 	private JTextField hareBirthRate, pumaBirthRate, pumaPredationRate,
 			pumaDiffusionRate, pumaDeathRate, hareDiffusionRate, timeStep;
 
-	private double parameters[] = new double[7];
-	private double[] initialValues = {3.0, 7.0, 7.0, 7.0, 7.0, 3.0, 3.0};
+	private double[][] diffCo = new double[noAnimals][noAnimals];
+	private double[] diffusionRate = new double[noAnimals];
+	private double step; 
+	private double[][] initialDiffCo = {{3.0, 7.0}, {7.0, 7.0}};
+	private double[] initialDiffusionRate = {7.0, 3.0};
+	private double initialTimeStep = 3.0;
+	private Boolean run = false;
 
 	public void read() {
-		parameters[0] = Double.parseDouble(hareBirthRate.getText());
-		parameters[1] = Double.parseDouble(pumaBirthRate.getText());
-		parameters[2] = Double.parseDouble(pumaPredationRate.getText());
-		parameters[3] = Double.parseDouble(pumaDiffusionRate.getText());
-		parameters[4] = Double.parseDouble(pumaDeathRate.getText());
-		parameters[5] = Double.parseDouble(hareDiffusionRate.getText());
-		parameters[6] = Double.parseDouble(timeStep.getText());
+		diffCo[0][0] = Double.parseDouble(hareBirthRate.getText());
+		diffCo[0][1] = Double.parseDouble(pumaPredationRate.getText());
+		diffCo[1][0] = Double.parseDouble(pumaBirthRate.getText());
+		diffCo[1][1] = Double.parseDouble(pumaDeathRate.getText());
+		diffusionRate[0] = Double.parseDouble(hareDiffusionRate.getText());
+		diffusionRate[1] = Double.parseDouble(pumaDiffusionRate.getText());
+		step = Double.parseDouble(timeStep.getText());
 	}
 
 	TestFrame() {
-		double inputs[] = new double[7];
 		Container content = this.getContentPane();
 		// content.setBackground(Color.lightGray);
 		/*
@@ -69,6 +76,8 @@ class TestFrame extends JFrame {
 		start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				read();
+				setRun(true);
+				System.out.println(getRun());
 			}
 		});
 
@@ -80,10 +89,6 @@ class TestFrame extends JFrame {
 		content.add(pumaPredationRate);
 		content.add(new JLabel(""));
 
-		content.add(pumaDiffusionRateL);
-		content.add(pumaDiffusionRate);
-		content.add(new JLabel(""));
-
 		content.add(pumaDeathRateL);
 		content.add(pumaDeathRate);
 		content.add(new JLabel(""));
@@ -91,6 +96,10 @@ class TestFrame extends JFrame {
 		content.add(hareDiffusionRateL);
 		content.add(hareDiffusionRate);
 		content.add(range);
+
+		content.add(pumaDiffusionRateL);
+		content.add(pumaDiffusionRate);
+		content.add(new JLabel(""));
 
 		content.add(timeStepL);
 		content.add(timeStep);
@@ -101,7 +110,19 @@ class TestFrame extends JFrame {
 		this.setSize(400, 200);
 		setVisible(true);
 		
-		setParameters(initialValues);
+		setDiffCo(initialDiffCo);
+		setDiffusion(initialDiffusionRate);
+		setStep(initialTimeStep);
+	}
+	
+	/**
+	 * Parameters is an array of double precision values that hold the user inputs.
+	 * 
+	 * @param DiffCo	User inputs such as Hare Birth Rate, Puma Birth Rate, 
+	 * Puma Predation Rate..., necessary for the computations
+	 */
+	public void setDiffCo(double[][] diffCo) {
+		this.diffCo = diffCo;
 	}
 	
 	/**
@@ -110,19 +131,48 @@ class TestFrame extends JFrame {
 	 * @param parametersIn	User inputs such as Hare Birth Rate, Puma Birth Rate, 
 	 * Puma Predation Rate..., necessary for the computations
 	 */
-	public void setParameters(double[] parametersIn) {
-		parameters = parametersIn;
+	public double[][] getDiffCo() {
+		return diffCo;
 	}
 	
-	/**
-	 * Parameters is an array of double precision values that hold the user inputs.
-	 * 
-	 * @param parametersIn	User inputs such as Hare Birth Rate, Puma Birth Rate, 
-	 * Puma Predation Rate..., necessary for the computations
-	 */
-	public double[] getParameters() {
-		return parameters;
+	
+	public void setDiffusion(double[] diffusionRate) {
+		this.diffusionRate = diffusionRate;
 	}
+	
+	
+	public double[] getDiffusion() {
+		return diffusionRate;
+	}
+	
+	
+	public void setStep(double step) {
+		this.step = step;
+	}
+	
+	
+	public double getStep() {
+		return step;
+	}
+	
+	
+	public void setnoAnimals(int noAnimals) {
+		this.noAnimals = noAnimals;
+	}
+	
+	
+	public int getNoAnimals() {
+		return noAnimals;
+	}
+	
+	public void setRun(Boolean run){
+		this.run = run;
+	}
+	
+	public Boolean getRun()	{
+		return this.run;
+	}
+	
 }
 
 public class SwingTest {
