@@ -2,10 +2,11 @@ import org.junit.Test;
 import junit.framework.TestCase;
 
 /**
- * JUnit test class that make some checks on InOut.java. It works in Eclipse. Not sure from the command line. 
+ * JUnit test class that make some checks on InOut.java. It works in Eclipse.
+ * Not sure from the command line.
  * 
  * @author Jorge M.
- *
+ * 
  */
 public class TestInOut extends TestCase {
 	// String fName = "/home/jorge/Library/PS/Coursework/islands.dat";
@@ -47,10 +48,13 @@ public class TestInOut extends TestCase {
 
 	@Test
 	public void testGetNeighbours() {
+		IOtest.loadLandscape(fName);
+		IOtest.countNeighbours();
+
 		assertNotNull(IOtest.getNeighbours());
-		assertEquals(4, IOtest.getNeighbours()[20][20]);
-		assertEquals(3, IOtest.getNeighbours()[15][17]);
-		assertEquals(2, IOtest.getNeighbours()[14][17]);
-		assertEquals(2, IOtest.getNeighbours()[36][19]);
+		assertEquals(4,IOtest.getNeighbours()[20][20]); 
+		assertEquals(3,IOtest.getNeighbours()[15][17]); 
+		assertEquals(2,IOtest.getNeighbours()[14][17]); 
+		assertEquals(2,IOtest.getNeighbours()[36][19]);
 	}
 }
