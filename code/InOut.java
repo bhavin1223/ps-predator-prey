@@ -37,12 +37,12 @@ public class InOut {
 	 */
 	public InOut(String pathToFile) {
 		loadLandscape(pathToFile);
-		//countNeighbours();
+		countNeighbours();
 	}
 	
 	public InOut() {
 		loadLandscape(defaultFile);
-		//countNeighbours();
+		countNeighbours();
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class InOut {
 				neighbours[i][j] = 0;
 			}
 		}
-
+		/*
 		// Sum up neighbours
 		for (int i = 1; i < intBuffer.length - 1; i++) {
 			for (int j = 1; j < intBuffer[0].length - 1; j++) {
@@ -147,14 +147,14 @@ public class InOut {
 							+ intBuffer[i + 1][j];
 				}
 			}
-		}
+		}*/
 		
-/*		for (int i = 0; i < intBuffer.length; i++) { 			
+		for (int i = 0; i < intBuffer.length; i++) { 			
 			for (int j = 0; j < intBuffer[0].length; j++) {
 				System.out.print(intBuffer[i][j]);
 			}
 			System.out.println();
-		}*/
+		}
 	}
 
 	/**

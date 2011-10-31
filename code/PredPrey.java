@@ -1,8 +1,8 @@
 
 /**
  * Contains the main method. Controls the various components of the program.
- * @author Jorge Put your name here if you worked on this class
- * @version 1.0, October, 30th 2011
+ * @author Put your name here if you worked on this class
+ * @version 1.2, October, 31th 2011
  */
 public class PredPrey {
 	
@@ -86,17 +86,15 @@ public class PredPrey {
 			
 		}
 		
-		animals = theseAnimals;
-		
+		animals = theseAnimals;		
 	}
 	
 	
 	public static void createGrid() {
 		
 		io = new InOut();
-		grid = new GridAlg(io.getIntBuffer(),animals);
-		grid.setStep(step);	
-		
+		grid = new GridAlg(animals);
+		grid.setStep(step);			
 	}
 	
 	public static void createOutput() {
