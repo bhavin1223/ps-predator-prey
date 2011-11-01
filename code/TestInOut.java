@@ -1,27 +1,42 @@
 import org.junit.Test;
+import org.junit.Before;
+
 import junit.framework.TestCase;
 
 /**
- * JUnit test class that make some checks on InOut.java. It works in Eclipse.
- * Not sure from the command line.
+ * JUnit test class that make some checks on InOut.java. 
  * 
  * @author Jorge M.
  * 
  */
 public class TestInOut extends TestCase {
 	// String fName = "/home/jorge/Library/PS/Coursework/islands.dat";
-	String fName = "/home/jorge/Library/PS/Coursework/small.dat";
-	InOut IOtest = new InOut();
+	private String fName = "/home/jorge/Library/PS/Coursework/small.dat";
+	private InOut IOtest;
+		
+	/**
+     * Gets executed before each test. Initialises the object under test.
+     */
+    @Before
+    public void setUp() {
+    	IOtest = new InOut();
+		IOtest.loadLandscape(fName);
+		IOtest.countNeighbours();
+    }
 
+	/**
+	 * Test if loadLanscape method returns expected values
+	 */
 	@Test
 	public void testLoadLandscape() {
 		assertEquals("ok", IOtest.loadLandscape(fName));
 	}
 
+	/**
+	 * Test values read from the file stored in intBuffer are correct
+	 */
 	@Test
 	public void testIntBuffer() {
-		IOtest.loadLandscape(fName);
-
 		if (fName.equals("/home/jorge/Library/PS/Coursework/small.dat")) {
 			assertEquals(50, IOtest.getM());
 			assertEquals(50, IOtest.getN());
@@ -46,11 +61,11 @@ public class TestInOut extends TestCase {
 		}
 	}
 
+	/**
+	 * Test values calculated for the neighbours of each land element stored in neighbours are correct
+	 */
 	@Test
 	public void testGetNeighbours() {
-		IOtest.loadLandscape(fName);
-		IOtest.countNeighbours();
-
 		assertNotNull(IOtest.getNeighbours());
 		assertEquals(4,IOtest.getNeighbours()[20][20]); 
 		assertEquals(3,IOtest.getNeighbours()[15][17]); 
