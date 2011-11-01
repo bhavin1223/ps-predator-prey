@@ -15,11 +15,6 @@ public class GridAlg {
         private Animal[] animals;
         
         /**
-         * Array containing the layout of the grid, land and water as 1's and 0's.
-         */
-        private int[][] grid;
-        
-        /**
          * Array containing the neighbours each grid point should check for density updates based on land and water.
          */
         private int[][] neighbours;
@@ -30,48 +25,16 @@ public class GridAlg {
         private double dt;
         
     	/**
-    	 * Object that reads the data file in, parse it and stores its data in arrays.
-    	 */
-    	private InOut io; 
-        
-        /**
-         * Constructor for grid class taking inputs passed from input class.
-         * @param grid
-         */
-        public GridAlg(int[][] grid, Animal[] animals) {
-                setGrid(grid);
-                setNeighbours();
-                setAnimals(animals);
-                initaliseDensities();
-        }
-    	
-    	/**
-    	 * Class constructor - Simplified version taking an array of animals as argument. 
-    	 * 
+    	 * Class constructor - Version taking an array of animals as argument
+    	 * and the Neighbours Array from the input grid.
+    	 *  
     	 * @param Array containing the animal objects.
     	 */
-    	public GridAlg(Animal[] animals) {
-    		io = new InOut();
-    		setIONeighbours();
+    	public GridAlg(int[][] neighbours, Animal[] animals) {
+    		setNeighbours(neighbours);
             setAnimals(animals);
             initaliseDensities();
     	}
-        
-        /**
-         * Sets the local grid values to integer input values
-         * @param grid Value of cells 1 for land and 0 for water.
-         */
-        public void setGrid(int[][] grid) {
-                this.grid = grid;
-        }
-        
-        /**
-         * Returns the local grid values
-         * @return Returns the value of each cell in the grid array.
-         */
-        public int[][] getGrid(){
-                return this.grid;               
-        }
                 
         /**
          * Sets the array of animals to an input density array
@@ -95,8 +58,8 @@ public class GridAlg {
         
         public void setStep(double step){
             this.dt = step;            
-        }	   
-                        
+        }	        
+                              
         /**
          * Returns the number of land neighbours the grid point i, j has.
          * @param i Row index
@@ -107,27 +70,22 @@ public class GridAlg {
                 return neighbours[i][j];                
         }
         
-        /**
-    	 * Second version - It calls the InOut object and retrieves the array of neighbours stored in it.
-    	 * 
-    	 * @return	A double dimension array with the number of neighbours for each element of a particular landscape map.
-    	 */
-    	public int[][] getIONeighbours() {
-    		return io.getNeighbours();
-    	}
+        public int[][] getNeighbours() { 
+        	return neighbours;                
+        }
 
     	/**
     	 * Set the current object neighbours array to the array in InOut.java. 
     	 * The number of neighbours for each land element is directly accessible.
     	 */
-    	public void setIONeighbours() {
-    		this.neighbours = io.getNeighbours();
+    	public void setNeighbours(int[][] neighbours) {
+    		this.neighbours = neighbours;
     	}
         
         /**
          * Sets the number of land neighbours each cell has in an array.
          */
-        public void setNeighbours() {
+        /*public void setNeighbours() {
                 
                 int[][] neighbours = new int[grid.length][grid[0].length];
                 
@@ -151,7 +109,7 @@ public class GridAlg {
                 
                 this.neighbours = neighbours;
                 
-        }
+        }*/
                 
         /**
          * Initialises the densities of all the animals to a pseudo-normally distributed number.
@@ -163,12 +121,12 @@ public class GridAlg {
                 
                 for(int i=0;i<getAnimals().length;i++) {
                 	
-                	getAnimals()[i].initiateDensities(getGrid().length,getGrid()[0].length);
+                	getAnimals()[i].initiateDensities(getNeighbours().length,getNeighbours()[0].length);
                 	
-                        for(int j=0;j<getGrid().length;j++) {
-                                for(int k=0;k<getGrid().length;k++) {
+                        for(int j=0;j<getNeighbours().length;j++) {
+                                for(int k=0;k<getNeighbours().length;k++) {
                         
-                                        if(getGrid()[i][j] == 0) {
+                                        if(getNeighbours(i,j) == -1) {
                                                 randomValue = -1;
                                         }
                                         else {
@@ -180,25 +138,6 @@ public class GridAlg {
                         }                       
                 }                       
         }
-        
-        public void initaliseDensities_() {    
-        	
-        	/** Value to be assigned to the animal densities for each valid point on the grid **/
-            double randomValue = 0;
-            
-            for(int i = 0; i < animals.length; i++) {
-                    for(int j=0;j<neighbours.length;j++) {
-                            for(int k=0;k<neighbours[0].length;k++) {                    
-                                    if(neighbours[i][j] == 0) {
-                                            randomValue = 0;
-                                    } else if (neighbours[i][j] > 0){
-                                            randomValue = distributedRandom(0,1);
-                                    }
-                                    animals[i].setDensity(j, k, randomValue);                                    
-                            }
-                    }                       
-            }                       
-    }
         
         /**
          * Method for creating random densities which will fill the density array. 
@@ -231,9 +170,9 @@ public class GridAlg {
                 for(int i=0;i<animals.length;i++) {
                         
                         // Loop over all of the cells, calculating the next densities
-                        for(int j=0; j<grid.length;j++) {
-                                for(int k=0; k<grid[0].length;k++) {
-                                        if(grid[j][k]!=0) {
+                        for(int j=0; j<getNeighbours().length;j++) {
+                                for(int k=0; k<getNeighbours()[0].length;k++) {
+                                        if(getNeighbours(j,k)!=-1) {
                                                 animals[i].calcNextDensity(j, k, dt, animals, neighbours[j][k]);
                                         }
                                 }
@@ -265,42 +204,17 @@ public class GridAlg {
                 for(int i=0;i<animals.length;i++) {
                         
                         // Loop over all of the cells, calculating the next densities
-                        for(int j=0; j<grid.length;j++) {
-                                for(int k=0; k<grid[j].length;k++) {            
-                                        if(grid[j][k]!=0) {             
+                        for(int j=0; j<getNeighbours().length;j++) {
+                                for(int k=0; k<getNeighbours()[j].length;k++) {            
+                                        if(getNeighbours(j,k)!=0) {             
                                                 animals[i].calcNextDensity(j, k, dt, animals,neighbours[j][k]); 
                                         }
                                 }
                         }
                         
                         // Apply densities update while looping through animals
-                        animals[i].applyTimeStep();             
+                        animals[i].applyTimeStep();      
                         
                 }                                 
-        }
-        
-        /**
-         * Updates the grid and in parallel.
-         * Runs sequentially through the cells for one animal then replaces
-         * Goes through all animals in turn.
-         */
-        public void gridSyncUpdate_() {
-                
-                // Loop over all of the animals
-                for(int i=0;i<animals.length;i++) {
-                        
-                        // Loop over all of the cells, calculating the next densities
-                        for(int j=0; j<neighbours.length;j++) {
-                                for(int k=0; k<neighbours.length;k++) {            
-                                        if(neighbours[j][k]!=0) {             
-                                                animals[i].calcNextDensity(j, k, dt, animals,neighbours[j][k]); 
-                                        }
-                                }
-                        }
-                        
-                        // Apply densities update while looping through animals
-                        animals[i].applyTimeStep();                        
-                }                                 
-        }
-        
+        }        
 }

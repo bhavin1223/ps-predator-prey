@@ -10,7 +10,7 @@ class TestFrame extends JFrame {
 	private int noAnimals = 2;
 	
 	private JTextField hareBirthRate, pumaBirthRate, pumaPredationRate,
-			pumaDiffusionRate, pumaDeathRate, hareDiffusionRate, timeStep;
+			pumaDiffusionRate, pumaDeathRate, hareDiffusionRate, timeStep, fileName;
 
 	private double[][] diffCo = new double[noAnimals][noAnimals];
 	private double[] diffusionRate = new double[noAnimals];
@@ -18,7 +18,9 @@ class TestFrame extends JFrame {
 	private double[][] initialDiffCo = {{3.0, 7.0}, {7.0, 7.0}};
 	private double[] initialDiffusionRate = {7.0, 3.0};
 	private double initialTimeStep = 3.0;
+	private String initialFileName = "small.dat";
 	private Boolean run = false;
+	private String file;
 
 	public void read() {
 		diffCo[0][0] = Double.parseDouble(hareBirthRate.getText());
@@ -28,6 +30,7 @@ class TestFrame extends JFrame {
 		diffusionRate[0] = Double.parseDouble(hareDiffusionRate.getText());
 		diffusionRate[1] = Double.parseDouble(pumaDiffusionRate.getText());
 		step = Double.parseDouble(timeStep.getText());
+		file = fileName.getText();
 	}
 
 	TestFrame() {
@@ -60,6 +63,7 @@ class TestFrame extends JFrame {
 		this.pumaDeathRate = new JTextField("7");
 		this.hareDiffusionRate = new JTextField("3");
 		this.timeStep = new JTextField("3");
+		this.fileName = new JTextField("small.dat");
 
 		JLabel hareBirthRateL = new JLabel("Hare Birth Rate");
 		JLabel pumaBirthRateL = new JLabel("Puma Birth Rate");
@@ -68,6 +72,7 @@ class TestFrame extends JFrame {
 		JLabel pumaDeathRateL = new JLabel("Puma Death Rate");
 		JLabel hareDiffusionRateL = new JLabel("Hare Diffusion Rate");
 		JLabel timeStepL = new JLabel("Time Step");
+		JLabel fileNameL = new JLabel("Grid File Name");
 
 		content.add(hareBirthRateL);
 		content.add(hareBirthRate);
@@ -104,6 +109,9 @@ class TestFrame extends JFrame {
 		content.add(timeStepL);
 		content.add(timeStep);
 		content.add(preSet);
+		
+		content.add(fileNameL);
+		content.add(fileName);
 
 		// JLabel jlbHelloWorld = new JLabel("Hello World");
 		// add(jlbHelloWorld);
@@ -113,6 +121,7 @@ class TestFrame extends JFrame {
 		setDiffCo(initialDiffCo);
 		setDiffusion(initialDiffusionRate);
 		setStep(initialTimeStep);
+		setFileName(initialFileName);
 	}
 	
 	/**
@@ -156,8 +165,16 @@ class TestFrame extends JFrame {
 	}
 	
 	
-	public void setnoAnimals(int noAnimals) {
+	public void setNoAnimals(int noAnimals) {
 		this.noAnimals = noAnimals;
+	}
+	
+	public String getFileName() {
+		return file;
+	}
+	
+	public void setFileName(String file) {
+		this.file = file;
 	}
 	
 	

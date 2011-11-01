@@ -11,6 +11,7 @@ public class PredPrey {
 	private static double step;
 	private static int noAnimals;
 	private static Animal[] animals;
+	private static String fileName;
 	private static InOut io;
 	private static GridAlg grid;
 	private static Output output;
@@ -60,6 +61,7 @@ public class PredPrey {
 		diffCo = gui.getDiffCo();
 		diffusionRate = gui.getDiffusion();
 		step = gui.getStep();
+		fileName = gui.getFileName();
 		
 	}
 	
@@ -92,15 +94,14 @@ public class PredPrey {
 	
 	public static void createGrid() {
 		
-		io = new InOut();
-		grid = new GridAlg(animals);
+		io = new InOut(fileName);
+		int[][] neighbours = io.getNeighbours();
+		grid = new GridAlg(neighbours,animals);
 		grid.setStep(step);			
+		
 	}
 	
 	public static void createOutput() {
 		output = new Output();
-	}
-	
-	
-	
+	}	
 }

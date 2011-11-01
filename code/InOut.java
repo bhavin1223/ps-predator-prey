@@ -137,7 +137,7 @@ public class InOut {
 				neighbours[i][j] = 0;
 			}
 		}
-		/*
+		
 		// Sum up neighbours
 		for (int i = 1; i < intBuffer.length - 1; i++) {
 			for (int j = 1; j < intBuffer[0].length - 1; j++) {
@@ -146,15 +146,18 @@ public class InOut {
 							+ intBuffer[i][j - 1] + intBuffer[i][j + 1]
 							+ intBuffer[i + 1][j];
 				}
+				else {
+					neighbours[i][j] = -1;
+				}
 			}
-		}*/
-		
+		}
+		/*
 		for (int i = 0; i < intBuffer.length; i++) { 			
 			for (int j = 0; j < intBuffer[0].length; j++) {
 				System.out.print(intBuffer[i][j]);
 			}
 			System.out.println();
-		}
+		}*/
 	}
 
 	/**
