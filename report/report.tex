@@ -41,9 +41,11 @@ These populations exist on a `world' consisting of land and water, and are also 
 
 \chapter{Algorithms}
 
-$H_{ij}^{new}=H_{ij}^{old} + {\Delta}t(C_{1}H_{ij}^{old}+C_{2}H_{ij}^{old}P_{ij}^{old} + l_{1}[H_{i+1j}^{old} + H_{i-1j}^{old} + H_{ij+1}^{old} + H_{ij-1}^{old}-H_{ij}^{old}])$
+$H_{ij}^{new}=H_{ij}^{old} + {\Delta}t(C_{1}H_{ij}^{old}+C_{2}H_{ij}^{old}P_{ij}^{old} + l(H_{i+1j}^{old} + H_{i-1j}^{old} + H_{ij+1}^{old} + H_{ij-1}^{old}-H_{ij}^{old}))$
 
-\[ \left( \begin{array}{cc}
+where
+
+\[ C = \left( \begin{array}{cc}
 H & PH \\
 HP & P \end{array} \right)\] 
 
