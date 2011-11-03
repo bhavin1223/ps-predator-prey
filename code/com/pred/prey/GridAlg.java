@@ -1,3 +1,4 @@
+package com.pred.prey;
 import java.util.Random;
 
 /**

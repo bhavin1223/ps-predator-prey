@@ -1,5 +1,9 @@
+package com.pred.tests;
+
 import org.junit.Test;
 import org.junit.Before;
+
+import com.pred.prey.InOut;
 
 import junit.framework.TestCase;
 

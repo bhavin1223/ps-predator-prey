@@ -1,3 +1,4 @@
+package com.pred.prey;
 
 /**
  * Contains the main method. Controls the various components of the program.

@@ -1,7 +1,9 @@
+package com.pred.tests;
 import org.junit.Before;
 import org.junit.Test;
 
 import junit.framework.TestCase;
+import com.pred.prey.*;
 
 /**
  * JUnit test case for the class Animal

@@ -1,3 +1,4 @@
+package com.pred.prey;
 import java.io.*;
 /**
  * Method to write output in ppm files.
