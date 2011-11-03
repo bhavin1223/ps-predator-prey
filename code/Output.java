@@ -189,20 +189,19 @@ public class Output{
 	
        	PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(outputName,true)));
 	
-	for (x=0; x<density.length; x++)
-	    {
-		for (y=0; y<density[0].length; y++)
-		    {
-			 sum += density[x][y];
+       	for (x=0; x<density.length; x++)
+       	{
+       		for (y=0; y<density[x].length; y++)
+       		{       			
+       			sum += density[x][y];
 		    }
 	    }
-	
-	
+		
 	 average = sum/((double)density.length*(double)density[0].length);
 	 
 	 out.printf("%s", "Mean density after "+time+" seconds is "+average);
-       	 out.printf("\n");
-       	 out.close();
+	 out.printf("\n");
+	 out.close();
     }
   
 }	    

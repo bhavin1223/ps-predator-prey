@@ -134,7 +134,7 @@ public class InOut {
 		// Set halos to zeros
 		for (int i = 0; i < neighbours.length; i++) { 														
 			for (int j = 0; j < neighbours[0].length; j++) {
-				neighbours[i][j] = 0;
+				neighbours[i][j] = -1;
 			}
 		}
 		

@@ -119,10 +119,10 @@ public class Animal {
 		for (int k = 0; k < animals.length; k++) {
 
 			if (animals[k] == this) {
-				newDensity += dt * getDiffCo()[k] * this.getDensity(i, j);
+				newDensity += dt * getDiffCo()[k] * newDensity;
 			} else {
 				newDensity += dt * getDiffCo()[k] * animals[k].getDensity(i, j)
-						* this.getDensity(i, j);
+				* newDensity;
 			}
 
 		}
@@ -130,10 +130,19 @@ public class Animal {
 		/**
 		 * Calculates the diffusion of the animal
 		 */
-		newDensity += getDiffusionRate()
-				* (getDensity(i, j - 1) + getDensity(i, j + 1)
-						+ getDensity(i - 1, j) + getDensity(i + 1, j) - neighbours
-						* getDensity(i, j));
+		if(j-1>0){
+			newDensity += getDiffusionRate()*getDensity(i,j-1);
+		}
+		if(j+1<getDensities()[i].length){
+			newDensity += getDiffusionRate()*getDensity(i,j+1);
+		}	
+		if(i-1>0){
+			newDensity += getDiffusionRate()*getDensity(i-1,j);
+		}
+		if(i+1<getDensities().length){
+			newDensity += getDiffusionRate()*getDensity(i+1,j);
+		}	
+		newDensity -= neighbours*oldDensity;
 
 		nextDensities[i][j] = newDensity;
 	}
@@ -214,6 +223,7 @@ public class Animal {
 	 */
 	public void setDensity(int i, int j, double value) {
 		densities[i][j] = value;
+		System.out.println(value);
 	}
 
 	/**
@@ -280,62 +290,4 @@ public class Animal {
 	public void setNextDensities(double[][] nextDensitiesIn) {
 		nextDensities = nextDensitiesIn;
 	}
-
-	/**
-	 * the genrand method generates random integers in a pseudo normal
-	 * distribution between bmin and bmax, returning only values that fall
-	 * between rmin and rmax. Larger n improves the approximation to a normal
-	 * distribution, but 3 should be sufficient for our needs
-	 */
-
-	private int genrand(int bmin, int bmax, int rmin, int rmax, int n) {
-		Random rand = new Random();
-		int i, u, sum;
-		do {
-			sum = 0;
-			for (i = 0; i < n; i++)
-				sum += bmin + (rand.nextInt() % (bmax - bmin));
-			if (sum < 0)
-				sum -= n - 1; /* prevent pileup at 0 */
-			u = sum / n;
-		} while (!(rmin <= u && u < rmax));
-		return u;
-	}
-
-	/**
-	 * the customrand method makes calls to the genrand method with a
-	 * distributed set of parameters. This means we can combine an arbitrary set
-	 * of normal distributions or sections of normal distributions, and in
-	 * theory produce any distribution we want! Min and max are the lower and
-	 * upper indices of the density array for the animal. Method taken from
-	 * Michael A. Covington 'How to Make a Lumpy Random-Number Generator'.
-	 */
-
-	/**
-	 * at the moment it produces a single distrubution symmetric in x,y, but it
-	 * should be very easy to extend this to different distributions for each
-	 * animal/dimension using a few if() statements and an extra argument
-	 */
-
-	public int customrand(int min, int max) {
-		Random rand2 = new Random();
-		int d = rand2.nextInt(3); /* gives a number from 0,1,2 */
-		int x;
-		switch (d) {
-		case 0:
-			x = genrand(-200, 300, min, max, 3);
-			break;
-		case 1:
-			x = genrand(0, 100, min, max, 3);
-			break;
-		case 2:
-			x = genrand(80, 100, min, max, 3);
-			break;
-		default:
-			x = genrand(-100, 200, min, max, 3);
-			break;
-		}
-		return x;
-	}
-
 }

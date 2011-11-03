@@ -88,34 +88,6 @@ public class GridAlg {
     		this.neighbours = neighbours;
     	}
         
-        /**
-         * Sets the number of land neighbours each cell has in an array.
-         */
-        /*public void setNeighbours() {
-                
-                int[][] neighbours = new int[grid.length][grid[0].length];
-                
-                for(int i=0;i<grid.length;i++) {
-                        for(int j=0;j<grid[i].length;j++) {                             
-
-                        		if(i-1>=0)	{
-                        			neighbours[i][j] += grid[i-1][j];
-                        		}
-                        		if(i+1<grid.length) {
-                        			neighbours[i][j] += grid[i+1][j];
-                        		}
-                        		if(j-1>=0)	{
-                        			neighbours[i][j] += grid[i][j-1];
-                        		}
-                        		if(j+1<grid[i].length) {
-                        			neighbours[i][j] += grid[i][j+1];
-                        		}
-                        }
-                }               
-                
-                this.neighbours = neighbours;
-                
-        }*/
                 
         /**
          * Initialises the densities of all the animals to a pseudo-normally distributed number.
@@ -133,12 +105,11 @@ public class GridAlg {
                                 for(int k=0;k<getNeighbours().length;k++) {
                         
                                         if(getNeighbours(j,k) == -1) {
-                                                randomValue = -1;
+                                                randomValue = 0;
                                         }
                                         else {
                                                 randomValue = distributedRandom(0,1);
-                                        }
-                                        System.out.println(randomValue);
+                                        }                                        
                                         getAnimals()[i].setDensity(j, k, randomValue);
                                 }
                         }                       
@@ -179,7 +150,10 @@ public class GridAlg {
                         for(int j=0; j<getNeighbours().length;j++) {
                                 for(int k=0; k<getNeighbours()[0].length;k++) {
                                         if(getNeighbours(j,k)!=-1) {
-                                                animals[i].calcNextDensity(j, k, dt, animals, neighbours[j][k]);
+                                        	animals[i].calcNextDensity(j, k, dt, animals, neighbours[j][k]);
+                                        	if(animals[i].getNextDensities()[j][k]!=0){
+                                        		System.out.println(animals[i].getNextDensities()[j][k]);
+                                        	}
                                         }
                                 }
                         }                       
@@ -187,7 +161,7 @@ public class GridAlg {
                 
                 // Apply change at end of all calculations
                 for(int i=0;i<animals.length;i++) {
-                        animals[i].applyTimeStep();             
+                	animals[i].applyTimeStep();             
                 }
                 
         }
@@ -212,7 +186,7 @@ public class GridAlg {
                         // Loop over all of the cells, calculating the next densities
                         for(int j=0; j<getNeighbours().length;j++) {
                                 for(int k=0; k<getNeighbours()[j].length;k++) {            
-                                        if(getNeighbours(j,k)!=0) {             
+                                        if(getNeighbours(j,k)!=-1) {             
                                                 animals[i].calcNextDensity(j, k, dt, animals,neighbours[j][k]); 
                                         }
                                 }

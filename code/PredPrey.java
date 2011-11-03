@@ -39,12 +39,24 @@ public class PredPrey {
 		
 		for (double i= 0; i<t/100; i+=step) {
 			for (int j=0; j<100; j++) {
-				grid.gridSyncUpdate();		
+				grid.syncUpdate();		
 			}
-			output.printMeanDensity("MeanHareDensityAfter" + i, animals[0].getDensities(), i);	
-			output.printMeanDensity("MeanPumaDensityAfter" + i, animals[1].getDensities(), i);
-			output.printPpm("HareDensitiesAfter" +i, animals[0].getDensities(), "black&white");
-			output.printPpm("PumaDensitiesAfter" +i, animals[1].getDensities(), "green&white");
+			
+			String colour;
+			
+			for (int k=0;k<animals.length;k++) {
+				
+				if(k==0) {
+					colour = "green&white";
+				}
+				else {
+					colour = "black&white";
+				}
+				
+				output.printMeanDensity("Mean" + animals[k].getName() + "DensityAfter" + i, animals[k].getDensities(), i);
+				output.printPpm(animals[k].getName() + "DensitiesAfter" +i, animals[k].getDensities(), colour);
+				
+			}
 		}
 		
 		System.out.println("done");
@@ -87,6 +99,9 @@ public class PredPrey {
 			theseAnimals[i].setDiffusionRate(diffusionRate[i]);
 			
 		}
+		
+		theseAnimals[0].setName("Hare");
+		theseAnimals[1].setName("Puma");				
 		
 		animals = theseAnimals;		
 	}

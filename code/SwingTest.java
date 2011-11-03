@@ -15,9 +15,9 @@ class TestFrame extends JFrame {
 	private double[][] diffCo = new double[noAnimals][noAnimals];
 	private double[] diffusionRate = new double[noAnimals];
 	private double step; 
-	private double[][] initialDiffCo = {{3.0, 7.0}, {7.0, 7.0}};
-	private double[] initialDiffusionRate = {7.0, 3.0};
-	private double initialTimeStep = 3.0;
+	private double[][] initialDiffCo = {{1.5, 1.5}, {2.0, 2.0}};
+	private double[] initialDiffusionRate = {1.0, 1.0};
+	private double initialTimeStep = 1.0;
 	private String initialFileName = "small.dat";
 	private Boolean run = false;
 	private String file;
@@ -55,14 +55,14 @@ class TestFrame extends JFrame {
 		choise.add(preSet);
 		choise.add(range);
 
-		this.hareBirthRate = new JTextField("3");
+		this.hareBirthRate = new JTextField("1.5");
 		// hareBirthRate.setPreferredSize(new Dimension(50, 25));
-		this.pumaBirthRate = new JTextField("7");
-		this.pumaPredationRate = new JTextField("7");
-		this.pumaDiffusionRate = new JTextField("7");
-		this.pumaDeathRate = new JTextField("7");
-		this.hareDiffusionRate = new JTextField("3");
-		this.timeStep = new JTextField("3");
+		this.pumaBirthRate = new JTextField("1.5");
+		this.pumaPredationRate = new JTextField("1.5");
+		this.pumaDiffusionRate = new JTextField("1.0");
+		this.pumaDeathRate = new JTextField("1.5");
+		this.hareDiffusionRate = new JTextField("1.0");
+		this.timeStep = new JTextField("1");
 		this.fileName = new JTextField("small.dat");
 
 		JLabel hareBirthRateL = new JLabel("Hare Birth Rate");
