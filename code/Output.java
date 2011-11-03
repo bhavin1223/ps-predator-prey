@@ -199,7 +199,7 @@ public class Output{
 		
 	 average = sum/((double)density.length*(double)density[0].length);
 	 
-	 out.printf("%s", "Mean density after "+time+" seconds is "+average);
+	 out.printf(time+" "+average);
 	 out.printf("\n");
 	 out.close();
     }
