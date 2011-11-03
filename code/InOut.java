@@ -148,7 +148,7 @@ public class InOut {
 				}
 				else {
 					neighbours[i][j] = -1;
-				}
+				}				
 			}
 		}
 		/*

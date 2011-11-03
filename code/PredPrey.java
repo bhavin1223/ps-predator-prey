@@ -25,7 +25,6 @@ public class PredPrey {
 		// read values from GUI - maybe stored in an array
 		TestFrame gui = new TestFrame();
 		gui.setVisible(true);
-
 		while(gui.getRun() == false) {
 			System.out.println(gui.getRun());
 		}
@@ -48,6 +47,7 @@ public class PredPrey {
 			output.printPpm("PumaDensitiesAfter" +i, animals[1].getDensities(), "green&white");
 		}
 		
+		System.out.println("done");
 		
 	}	
 	

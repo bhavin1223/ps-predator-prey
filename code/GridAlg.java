@@ -24,6 +24,11 @@ public class GridAlg {
          */
         private double dt;
         
+        /**
+         * Random number generator
+         */
+        private Random random;
+        
     	/**
     	 * Class constructor - Version taking an array of animals as argument
     	 * and the Neighbours Array from the input grid.
@@ -33,6 +38,7 @@ public class GridAlg {
     	public GridAlg(int[][] neighbours, Animal[] animals) {
     		setNeighbours(neighbours);
             setAnimals(animals);
+            random = new Random(2011);
             initaliseDensities();
     	}
                 
@@ -126,13 +132,13 @@ public class GridAlg {
                         for(int j=0;j<getNeighbours().length;j++) {
                                 for(int k=0;k<getNeighbours().length;k++) {
                         
-                                        if(getNeighbours(i,j) == -1) {
+                                        if(getNeighbours(j,k) == -1) {
                                                 randomValue = -1;
                                         }
                                         else {
                                                 randomValue = distributedRandom(0,1);
-                                                System.out.println(randomValue);
                                         }
+                                        System.out.println(randomValue);
                                         getAnimals()[i].setDensity(j, k, randomValue);
                                 }
                         }                       
@@ -146,17 +152,17 @@ public class GridAlg {
          * @return
          */
         public double distributedRandom(double dMin, double dMax) {
-                Random random = new Random(2011);
-                double ranNum = 0;
+        	
+        	double ranNum = 0;
                 
-                for(int i=0;i<3;i++){
-                        ranNum += random.nextDouble()*(dMax-dMin);
-                }
+        	for(int i=0;i<1;i++){
+        		ranNum += random.nextDouble()*(dMax-dMin);
+        	}
                 
-                ranNum = ranNum/3;
-                ranNum += dMin;
+        	ranNum = ranNum/1;
+        	ranNum += dMin;
                 
-                return ranNum;
+        	return ranNum;
         }
         
         

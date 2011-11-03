@@ -15,9 +15,6 @@ public class Output{
    
     double [][][] cell;
     double [][] density;   
-
-    int sum = 0;
-    int average;
     
     /**
      *Constructor for density
@@ -186,6 +183,9 @@ public class Output{
 
     public void printMeanDensity(String outputName, double[][] density, double time) throws Exception
     {
+    	
+        double sum = 0;
+        double average;
 	
        	PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(outputName,true)));
 	
@@ -197,7 +197,8 @@ public class Output{
 		    }
 	    }
 	
-	 average = sum/(density.length*density[0].length);
+	
+	 average = sum/((double)density.length*(double)density[0].length);
 	 
 	 out.printf("%s", "Mean density after "+time+" seconds is "+average);
        	 out.printf("\n");
