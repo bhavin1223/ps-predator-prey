@@ -13,7 +13,7 @@ public class Output{
     int red, blue, green;  
     double maxValue = 0;
    
-    double [][][] cell;
+    int [][][] cell;
     double [][] density;   
     
     /**
@@ -54,7 +54,7 @@ public class Output{
 	cell[x][y][1] = green;
 	cell[x][y][2] = blue;
     }  
-    public double[][][] getImageCell()
+    public int[][][] getImageCell()
     {
 	return cell;
     }
@@ -88,8 +88,9 @@ public class Output{
 			    }
 		    }
 	    }
+	double scale=255/maxValue;
 	
-	cell = new double[density.length][density[0].length][3];
+	cell = new int [density.length][density[0].length][3];
 
 	
 
@@ -105,9 +106,9 @@ public class Output{
 			 **/
 			if(density[x][y]<=-1)
 			{
-				cell[x][y][0] = 0;
-				cell[x][y][1] = 0;
-				cell[x][y][2] = maxValue;
+				cell[x][y][0] = (int) 0;
+				cell[x][y][1] = (int) 0;
+				cell[x][y][2] = (int) (maxValue*scale);
 			}
 		    
 			else
@@ -119,9 +120,9 @@ public class Output{
 				// This would look not bad, I think, but there are other options below.
 				if (colour == "black&white")
 				{
-					cell[x][y][0] = density[x][y];
-					cell[x][y][1] = density[x][y];
-					cell[x][y][2] = density[x][y];
+					cell[x][y][0] = (int) (density[x][y]*scale);
+					cell[x][y][1] = (int) (density[x][y]*scale);
+					cell[x][y][2] = (int) (density[x][y]*scale);
 				}
 
 				/**
@@ -129,9 +130,9 @@ public class Output{
 				 **/
 				if (colour == "black&green")
 				{
-					cell[x][y][0] = 0;
-					cell[x][y][1] = density[x][y];
-					cell[x][y][2] = 0;
+					cell[x][y][0] = (int) (0);
+					cell[x][y][1] = (int) (density[x][y]*scale);
+					cell[x][y][2] = (int) (0);
 				}
 
 				/**
@@ -139,9 +140,9 @@ public class Output{
 				 **/
 				if (colour == "green&white")
 				{
-					cell[x][y][0] = density[x][y];
-					cell[x][y][1] = maxValue;
-					cell[x][y][2] = density[x][y];
+					cell[x][y][0] = (int) (density[x][y]*scale);
+					cell[x][y][1] = (int) (maxValue*scale);
+					cell[x][y][2] = (int) (density[x][y]*scale);
 				}
 				// Anyway, we can always change the colours.
 			}
@@ -157,7 +158,7 @@ public class Output{
 	out.printf("\n");
 	out.printf(""+density.length+" "+density[0].length);
 	out.printf("\n");
-	out.printf(""+maxValue);
+	out.printf("255");
 	out.printf("\n");
 
 	for(x=0; x<density.length; x++)
