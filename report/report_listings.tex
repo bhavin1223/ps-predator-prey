@@ -1,0 +1,150 @@
+\documentclass[11pt]{report}
+\title{Predator Prey Model}
+\author{Names Here}
+\date{November 2011}
+
+\usepackage{tikz}
+\usepackage{verbatim} 
+\usepackage{pict2e}
+\usepackage[pdftex]{hyperref}
+
+%%%%% Code Constraints %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{listings}
+ \usepackage{courier}
+%\lstset{
+\lstset{columns=fullflexible,
+language=Java,
+%captionpos=b,
+basicstyle=\footnotesize,
+keywordstyle=\bfseries\ttfamily\color[rgb]{0,0,1},
+identifierstyle=\ttfamily,
+commentstyle=\color[rgb]{0.133,0.545,0.133},
+stringstyle=\ttfamily\color[rgb]{0.627,0.126,0.941},
+showstringspaces=false,
+%basicstyle=\small,
+numberstyle=\footnotesize,
+numbers=left,
+stepnumber=1,
+numbersep=5pt,
+tabsize=1,
+breaklines=true,
+%prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+breakatwhitespace=false,
+aboveskip={1.5\baselineskip},
+columns=fixed,
+%upquote=true,
+extendedchars=true,
+%frame=bottomline,
+inputencoding=utf8
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\usetikzlibrary{shapes,arrows}
+
+
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+    text width=5em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, -latex']
+
+
+\maketitle
+
+\begin{abstract}
+\end{abstract}
+
+\tableofcontents
+
+\chapter{Introduction}
+
+% i just wrote this to get the report started - feel free to change or add to it
+
+In this task we worked as a group to implement a 2D, sequential predator-prey algorithm with spatial diffusion
+in Java. We tried to design the program in such a way as to take advantage of Java's object-orientated, modular nature. 
+Due to the large size of our group we also decided to develop a GUI for the program, although the code was designed 
+in such a way as to be usable from the command line as well. -----is it?-----\newline{}
+
+There is always some compromise between readability and performance in coding, and we tried to keep this balance in mind
+when designing our code. We made best use of class structure whilst still keeping our implementation of the given 
+algorithm as efficient as possible.\newline{}
+
+The predator prey algorithm implemented in this project crudely models the interaction between population densities of different animals, specifically Hares and Pumas. Each population has a self-interaction coefficient (birth for Hares, death for Pumas) and a coefficient describing how it interacts with other species' populations. \newline{}
+
+These populations exist on a `world' consisting of land and water, and are also able to diffuse across land squares with a rate determined by a diffusion coeffient. Thus, each population has N+1 coefficients which determine it's behaviour, where N is the number of animals.
+
+\chapter{Model} %dmitry
+
+$H_{ij}^{new}=H_{ij}^{old} + {\Delta}t(C_{1}H_{ij}^{old}+C_{2}H_{ij}^{old}P_{ij}^{old} + l(H_{i+1j}^{old} + H_{i-1j}^{old} + H_{ij+1}^{old} + H_{ij-1}^{old}-H_{ij}^{old}))$
+
+
+\vspace{30 mm}
+
+\noindent for k=1:NumberOfAnimals\newline{}
+if (k=ThisAnimal) then\newline{}
+$N_{k}^{new}=N_{k}^{old} + {\Delta}tC_{k}(k)N_{k}^{old}$\newline{}
+else\newline{}
+$N_{k}^{new}=N_{k}^{old} + {\Delta}tC_{k}(k)N_{k}^{old}N_{ThisAnimal}^{old}$\newline{}
+end if\newline{}
+end
+
+where
+
+\[ C_{Hare} = \left( \begin{array}{cc}
+H & PH \end{array} \right)\] 
+
+\chapter{Design \& Implementation}
+   \section{Code}
+      \subsection{Structure} %simon (dmitry to make flowchart)
+      \subsection{Algorithm} %matt
+      \subsection{Input/Output} %milena
+      \subsection{GUI} %dmitry
+   
+   \section{Tools}
+      \subsection{SVN} %matt
+      \subsection{Makefile} %tom
+      \subsection{Unit Testing} %jorge
+Every class of the project form a functional unit according to the design elaborated at the beginning of the \newline{}
+  has been tested using the Java JUnit framework \newline{}
+The libraries necessary to the tests are thus accessed from the test cases using Java import statements and extending the TestCase superclass in the class declaration:
+
+\begin{lstlisting}[language=Java,caption= Test case headers]
+import org.junit.Before;
+import org.junit.Test;
+import junit.framework.TestCase;
+
+public class TestAnimal extends TestCase {
+...
+\end{lstlisting}
+
+Then the test cases, for each class, follow the normal directives in use for Unit testing with JUnit. The most relevant methods were submitted to thorough tests, where their properties, return values and correct functioning were evaluated by comparing the actual results they provide with the expected ones. These procedures were implemented by test methods in each test case using the format required by the JUnit standards. 
+
+Every test case included a setup() method that builds the initial object and its different parameters. Directives like @Before and @Test for every method declaration were thus inserted in the code were appropriate. The functioning of a method is then assessed comparing the expected results with the actual ones with JUnit testing methods such as AssertEquals(), AssertNotNull(), etc.
+
+\begin{lstlisting}[language=Java,caption= Use of JUNit directives in test cases]
+@Before
+public void setUp() {
+    ...
+    testAnimal = new Animal(numbAnimals);
+    testAnimal.setName("Puma");
+    testAnimal.setDiffCo(diffCoIn);
+    ...
+@Test
+public void testAnimal() {
+    assertNotNull(testAnimal);
+    assertNotNull(testAnimal2);
+} 
+...
+\end{lstlisting}
+
+
+
+\chapter{Performance Analysis}
+   \section{Testing} %chen+tom
+   \section{Analysis} %tom+chen
+
+\chapter{Conclusions} %everyone
+
+\chapter{Group Evaluation} %everyone
+
+\end{document}
