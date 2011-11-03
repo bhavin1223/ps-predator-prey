@@ -36,7 +36,6 @@ public class PredPrey {
 		createGrid();
 		createOutput();
 		
-		
 		for (double i= 0; i<t/100; i+=step) {
 			for (int j=0; j<100; j++) {
 				grid.syncUpdate();		
@@ -47,15 +46,14 @@ public class PredPrey {
 			for (int k=0;k<animals.length;k++) {
 				
 				if(k==0) {
-					colour = "green&white";
+					colour = "black&white";
 				}
 				else {
 					colour = "black&white";
 				}
 				
-				output.printMeanDensity("Mean" + animals[k].getName() + "Densities", animals[k].getDensities(), i);
-				output.printPpm(animals[k].getName() + "DensitiesAfter" +i, animals[k].getDensities(), colour);
-				
+				output.printMeanDensity("./outputs/Mean" + animals[k].getName() + "Densities", animals[k].getDensities(), i);
+				output.printPpm("./outputs/" + animals[k].getName() + i +".ppm", animals[k].getDensities(), colour);
 			}
 		}
 		
