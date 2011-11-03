@@ -3,6 +3,12 @@ import org.junit.Test;
 
 import junit.framework.TestCase;
 
+/**
+ * JUnit test case for the class Animal
+ *
+ * @version 1.1, November 3rd, 2011
+ * @since 1.0
+ */
 public class TestAnimal extends TestCase {
 	private double[][] densities;// = {{0.0, 0.0}, {0.0, 0.0}};
 	private double[][] nextDensities;
@@ -47,6 +53,8 @@ public class TestAnimal extends TestCase {
 		}
 		
 		testAnimal.setDensities(densities);
+		testAnimal.calcNextDensity(50, 50, dt, animals, 4);
+		testAnimal.applyTimeStep();
 	}
 
 	@Test
@@ -74,12 +82,18 @@ public class TestAnimal extends TestCase {
 
 	@Test
 	public void testCalcNextDensity() {
-		assertEquals(2.0, testAnimal.getDensity(50, 50));
-		testAnimal.calcNextDensity(50, 50, dt, animals, 4);
+		assertNotSame(2.0, testAnimal.getDensity(50, 50));
+		
 		assertNotNull(testAnimal.getNextDensities());
 		assertEquals(13.2, testAnimal.getNextDensities()[50][50]);
 /*		assertEquals(nextDensities[50][50]);
 		assertEquals();*/
 
+	}
+	
+	@Test
+	public void testApplyTimeStep() {
+			assertEquals(testAnimal.getDensities()[50][50], testAnimal.getNextDensities()[50][50]);
+			assertEquals(testAnimal.getDensities()[49][49], testAnimal.getNextDensities()[49][49]);
 	}
 }
