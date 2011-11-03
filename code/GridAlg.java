@@ -151,9 +151,9 @@ public class GridAlg {
                                 for(int k=0; k<getNeighbours()[0].length;k++) {
                                         if(getNeighbours(j,k)!=-1) {
                                         	animals[i].calcNextDensity(j, k, dt, animals, neighbours[j][k]);
-                                        	if(animals[i].getNextDensities()[j][k]!=0){
-                                        		System.out.println(animals[i].getNextDensities()[j][k]);
-                                        	}
+//                                        	if(animals[i].getNextDensities()[j][k]!=0){
+//                                        		System.out.println(animals[i].getName() + " " +animals[i].getNextDensities()[j][k]);
+//                                        	}
                                         }
                                 }
                         }                       

@@ -109,7 +109,6 @@ public class Animal {
 	 */
 	public void calcNextDensity(int i, int j, double dt, Animal[] animals,
 			int neighbours) {
-		nextDensities = new double[densities.length][densities[0].length];
 		double oldDensity = getDensity(i, j);
 		double newDensity = oldDensity;
 
@@ -117,12 +116,12 @@ public class Animal {
 		 * Runs through the coefficients
 		 */
 		for (int k = 0; k < animals.length; k++) {
-
+			
 			if (animals[k] == this) {
-				newDensity += dt * getDiffCo()[k] * newDensity;
+				newDensity += dt * getDiffCo()[k] * oldDensity;
 			} else {
 				newDensity += dt * getDiffCo()[k] * animals[k].getDensity(i, j)
-				* newDensity;
+				* oldDensity;
 			}
 
 		}
@@ -130,19 +129,23 @@ public class Animal {
 		/**
 		 * Calculates the diffusion of the animal
 		 */
-		if(j-1>0){
-			newDensity += getDiffusionRate()*getDensity(i,j-1);
-		}
-		if(j+1<getDensities()[i].length){
-			newDensity += getDiffusionRate()*getDensity(i,j+1);
-		}	
-		if(i-1>0){
-			newDensity += getDiffusionRate()*getDensity(i-1,j);
-		}
-		if(i+1<getDensities().length){
-			newDensity += getDiffusionRate()*getDensity(i+1,j);
-		}	
-		newDensity -= neighbours*oldDensity;
+		//if(j-1>0){
+			newDensity += dt*getDiffusionRate()*getDensity(i,j-1);
+	//	}
+		//if(j+1<getDensities()[i].length){
+			newDensity += dt*getDiffusionRate()*getDensity(i,j+1);
+		//}	
+	//	if(i-1>0){
+			newDensity += dt*getDiffusionRate()*getDensity(i-1,j);
+		//}
+	//	if(i+1<getDensities().length){
+			newDensity += dt*getDiffusionRate()*getDensity(i+1,j);
+		//}	
+		newDensity -= dt*getDiffusionRate()*neighbours*oldDensity;
+
+		//System.out.println(oldDensity);
+		//System.out.println(dt*getDiffusionRate()*neighbours*oldDensity);
+		//System.out.println(dt*getDiffusionRate()*neighbours*oldDensity);
 
 		nextDensities[i][j] = newDensity;
 	}
@@ -155,7 +158,7 @@ public class Animal {
 
 		for (int i = 0; i < densities.length; i++) {
 			for (int j = 0; j < densities[0].length; j++) {
-				densities[i] = nextDensities[i];
+				densities[i][j] = nextDensities[i][j];
 			}
 		}
 
@@ -223,7 +226,6 @@ public class Animal {
 	 */
 	public void setDensity(int i, int j, double value) {
 		densities[i][j] = value;
-		System.out.println(value);
 	}
 
 	/**

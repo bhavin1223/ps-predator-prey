@@ -146,9 +146,9 @@ public class InOut {
 							+ intBuffer[i][j - 1] + intBuffer[i][j + 1]
 							+ intBuffer[i + 1][j];
 				}
-				else {
-					neighbours[i][j] = -1;
-				}				
+				//else {
+				//	neighbours[i][j] = -1;
+				//}				
 			}
 		}
 		/*

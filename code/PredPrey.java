@@ -53,7 +53,7 @@ public class PredPrey {
 					colour = "black&white";
 				}
 				
-				output.printMeanDensity("Mean" + animals[k].getName() + "DensityAfter" + i, animals[k].getDensities(), i);
+				output.printMeanDensity("Mean" + animals[k].getName() + "Densities", animals[k].getDensities(), i);
 				output.printPpm(animals[k].getName() + "DensitiesAfter" +i, animals[k].getDensities(), colour);
 				
 			}
