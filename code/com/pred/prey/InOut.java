@@ -1,13 +1,11 @@
 package com.pred.prey;
+
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.LineNumberReader;
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -23,7 +21,6 @@ import java.io.UnsupportedEncodingException;
  * actionlisteners JPanel extensions etc.
  */
 public class InOut {
-	private static final int MAX = 2000;
 	private int[][] intBuffer;
 	private int[][] neighbours;
 	private int m, n; /** Dimensions of the data file and the storage arrays.

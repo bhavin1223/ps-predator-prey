@@ -1,4 +1,5 @@
 package com.pred.prey;
+
 import java.util.Random;
 
 /**
@@ -110,6 +111,7 @@ public class Animal {
 	 */
 	public void calcNextDensity(int i, int j, double dt, Animal[] animals,
 			int neighbours) {
+		nextDensities = new double[densities.length][densities[0].length]; 																		
 		double oldDensity = getDensity(i, j);
 		double newDensity = oldDensity;
 
@@ -117,43 +119,44 @@ public class Animal {
 		 * Runs through the coefficients
 		 */
 		for (int k = 0; k < animals.length; k++) {
-			
 			if (animals[k] == this) {
 				newDensity += dt * getDiffCo()[k] * oldDensity;
 			} else {
 				newDensity += dt * getDiffCo()[k] * animals[k].getDensity(i, j)
-				* oldDensity;
+						* oldDensity;
 			}
-
 		}
 
 		/**
 		 * Calculates the diffusion of the animal
 		 */
-		if(j-1>0){
-			newDensity += dt*getDiffusionRate()*getDensity(i,j-1);
-	   }
-		if(j+1<getDensities()[i].length){
-			newDensity += dt*getDiffusionRate()*getDensity(i,j+1);
-		}	
-	   if(i-1>0){
-			newDensity += dt*getDiffusionRate()*getDensity(i-1,j);
+		if (j - 1 > 0) {
+			newDensity += dt * getDiffusionRate() * getDensity(i, j - 1);
 		}
-	   if(i+1<getDensities().length){
-			newDensity += dt*getDiffusionRate()*getDensity(i+1,j);
-		}	
-		newDensity -= dt*getDiffusionRate()*neighbours*oldDensity;
+		
+		if (j + 1 < getDensities()[i].length) {
+			newDensity += dt * getDiffusionRate() * getDensity(i, j + 1);
+		}
+		
+		if (i - 1 > 0) {
+			newDensity += dt * getDiffusionRate() * getDensity(i - 1, j);
+		}
+		
+		if (i + 1 < getDensities().length) {
+			newDensity += dt * getDiffusionRate() * getDensity(i + 1, j);
+		}
+		
+		newDensity -= dt * getDiffusionRate() * neighbours * oldDensity;
 
-		//System.out.println(oldDensity);
-		//System.out.println(dt*getDiffusionRate()*neighbours*oldDensity);
-		//System.out.println(dt*getDiffusionRate()*neighbours*oldDensity);
+		// System.out.println(oldDensity);
+		// System.out.println(dt*getDiffusionRate()*neighbours*oldDensity);
+		// System.out.println(dt*getDiffusionRate()*neighbours*oldDensity);
 
-      if(newDensity>=0){
-		nextDensities[i][j] = newDensity;
+		if (newDensity >= 0) {
+			nextDensities[i][j] = newDensity;
 		} else {
-		nextDensities[i][j] = 0;
+			nextDensities[i][j] = 0;
 		}
-
 	}
 
 	/**
@@ -161,13 +164,11 @@ public class Animal {
 	 * nextDensities array.
 	 */
 	public void applyTimeStep() {
-
 		for (int i = 0; i < densities.length; i++) {
 			for (int j = 0; j < densities[0].length; j++) {
 				densities[i][j] = nextDensities[i][j];
 			}
 		}
-
 	}
 
 	/**
@@ -191,9 +192,7 @@ public class Animal {
 	 *            The densities of the animals being set across the grid.
 	 */
 	public void setDensities(double[][] densities) {
-
 		this.densities = densities;
-
 	}
 
 	/**
@@ -204,10 +203,8 @@ public class Animal {
 	 *            The densities of the animals being set across the grid.
 	 */
 	public void initiateDensities(int i, int j) {
-
 		this.densities = new double[i][j];
 		this.nextDensities = new double[i][j];
-
 	}
 
 	/**

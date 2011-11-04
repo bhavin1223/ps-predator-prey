@@ -35,8 +35,7 @@ public class TestAnimal extends TestCase {
 		dt = 4.0;
 		r = 0.625;
 		diffusionRate = 0.2;
-		animals = new Animal[numbAnimals];
-		
+		animals = new Animal[numbAnimals];		
 
 		testAnimal = new Animal(numbAnimals);
 		testAnimal.setName("Puma");
@@ -88,9 +87,6 @@ public class TestAnimal extends TestCase {
 		
 		assertNotNull(testAnimal.getNextDensities());
 		assertEquals(13.2, testAnimal.getNextDensities()[50][50]);
-/*		assertEquals(nextDensities[50][50]);
-		assertEquals();*/
-
 	}
 	
 	@Test
