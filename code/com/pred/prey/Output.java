@@ -105,10 +105,10 @@ public class Output{
 			/**
 			 * Fill water cells with blue.
 			 **/
-			if(density[x][y]<=-1)
+			if(density[x][y]==0)
 			{
-				cell[x][y][0] = (int) 0;
-				cell[x][y][1] = (int) 0;
+				cell[x][y][0] = (int) 000;
+				cell[x][y][1] = (int) 000;
 				cell[x][y][2] = (int) (maxValue*scale);
 			}
 		    
@@ -166,7 +166,7 @@ public class Output{
 	{
 		for(y=0; y<density[0].length; y++)
 		{				
-			out.printf("%s", cell[x][y][0]+" "+cell[x][y][1]+" "+cell[x][y][2]+"  ");	       		    
+			out.printf("  %03d %03d %03d",cell[x][y][0],cell[x][y][1],cell[x][y][2]);	       		    
 		}
 		out.printf("\n");
 	}
