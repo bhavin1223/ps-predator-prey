@@ -80,8 +80,9 @@ H & PH \end{array} \right)\]
    \begin{figure}[h]
    
    \input{figs/overhead.tex}
-   \caption{With greater than $\sim$ 10000 cells the run time scales linearly with the number of cells, as expected.
-   Below this, overhead begins to dominate.}
+   \caption{This is a graph of total time spent on each cell, which shows that overheads such as array initialization
+   and output (i.e. things not directly involved in the simulation) take up a significant fraction of computation
+   time with grids smaller than $\sim$100 by 100.}
    \end{figure}
 
 \chapter{Conclusions} %everyone
