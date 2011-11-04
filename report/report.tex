@@ -59,7 +59,13 @@ end
 where
 
 \[ C_{Hare} = \left( \begin{array}{cc}
-H & PH \end{array} \right)\] 
+H & PH \end{array} \right)\]    \begin{figure}[h]
+   
+   \input{figs/overhead.tex}
+   \caption{This is a graph of total time spent on each cell, which shows that overheads such as array initialization
+   and output (i.e. things not directly involved in the simulation) take up a significant fraction of computation
+   time with grids smaller than $\sim$100 by 100.}
+   \end{figure}
 
 \chapter{Design \& Implementation}
    \section{Code}
@@ -79,11 +85,12 @@ H & PH \end{array} \right)\]
    
    \begin{figure}[h]
    
-   \input{figs/overhead.tex}
-   \caption{This is a graph of total time spent on each cell, which shows that overheads such as array initialization
-   and output (i.e. things not directly involved in the simulation) take up a significant fraction of computation
-   time with grids smaller than $\sim$100 by 100.}
+   \input{figs/density.tex}
+   \caption{Density vs. Time}
    \end{figure}
+
+
+
 
 \chapter{Conclusions} %everyone
 

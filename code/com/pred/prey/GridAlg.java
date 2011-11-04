@@ -109,7 +109,7 @@ public class GridAlg {
                                                 randomValue = 0;
                                         }
                                         else {
-                                                randomValue = distributedRandom(0,100);
+                                                randomValue = distributedRandom(0,10);
                                         }                                        
                                         getAnimals()[i].setDensity(j, k, randomValue);
                                 }
