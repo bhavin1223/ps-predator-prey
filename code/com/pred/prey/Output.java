@@ -64,7 +64,6 @@ public class Output{
     /**
      * Method to write densities into a PPM file
      * In the final output, water will be seen as blue and land as green cells.
-     * (negative input values for water cells required). 
      * The change in density of animals with position will be represented by different shades of grey
      * (the higher the density the darker the colour).
      * @param outputName 
@@ -119,22 +118,24 @@ public class Output{
 				 * being represented as different shades of grey.
 				 **/	
 				// This would look not bad, I think, but there are other options below.
-				if (colour == "black&white")
-				{
-					cell[x][y][0] = (int) (density[x][y]*scale);
-					cell[x][y][1] = (int) (density[x][y]*scale);
-					cell[x][y][2] = (int) (density[x][y]*scale);
-				}
-
-				/**
-				 * Choosing this one will basically result in white land cells.
-				 **/
 				if (colour == "black&green")
 				{
 					cell[x][y][0] = (int) (0);
 					cell[x][y][1] = (int) (density[x][y]*scale);
 					cell[x][y][2] = (int) (0);
 				}
+
+				/**
+				 * Choosing this one will basically result in white land cells.
+				 **/
+				
+				if (colour == "black&white")
+				{
+					cell[x][y][0] = (int) (density[x][y]*scale);
+					cell[x][y][1] = (int) (density[x][y]*scale);
+					cell[x][y][2] = (int) (density[x][y]*scale);
+				}
+				
 
 				/**
 				 * This option will show land in white and density variations as different shades of green.
