@@ -16,7 +16,7 @@ public class PredPrey {
 	private static InOut io;
 	private static GridAlg grid;
 	private static Output output;
-	private static double t = 1000;
+	private static double t = 500;
 		
 	/**
 	 * Controls the IO and Algorithm classes.
@@ -64,32 +64,31 @@ public class PredPrey {
 		
 		System.out.println("Simulating populations...");		
 
-		int stepnum=1;
+		int stepnum=0;
+		int T=50;
+	   String colour;
 		
-		for (double i= 0; i<t/100; i+=step) {
+		for (double i= 0; i<t; i+=step) {
+			
+			if( (stepnum % T==0) || (stepnum==0)){
+				for (int k=0;k<animals.length;k++) {
+				
+					if(k==0) {
+						colour = "black&white";
+					}
+					else {
+						colour = "black&white";
+					}
+				
+					output.printMeanDensity("./outputs/Mean" + animals[k].getName() + "Densities", animals[k].getDensities(), i);
+					output.printPpm("./outputs/" + animals[k].getName() + stepnum +".ppm", animals[k].getDensities(), colour);
+				}
 
-			String colour;
-			
-			for (int k=0;k<animals.length;k++) {
-				
-				if(k==0) {
-					colour = "black&white";
-				}
-				else {
-					colour = "black&white";
-				}
-				
-				output.printMeanDensity("./outputs/Mean" + animals[k].getName() + "Densities", animals[k].getDensities(), i);
-				output.printPpm("./outputs/" + animals[k].getName() + stepnum +".ppm", animals[k].getDensities(), colour);
 			}
-			
-			
-			for (int j=0; j<100; j++) {
-				grid.syncUpdate();		
-			}
-			
-			
-			stepnum+=1;
+						
+			grid.syncUpdate();		
+			stepnum+=1;	
+
 		}
 		
 		System.out.println("done");
