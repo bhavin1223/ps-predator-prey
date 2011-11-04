@@ -64,12 +64,10 @@ public class PredPrey {
 		
 		System.out.println("Simulating populations...");		
 
+		int stepnum=1;
 		
 		for (double i= 0; i<t/100; i+=step) {
-			for (int j=0; j<100; j++) {
-				grid.syncUpdate();		
-			}
-			
+
 			String colour;
 			
 			for (int k=0;k<animals.length;k++) {
@@ -82,8 +80,16 @@ public class PredPrey {
 				}
 				
 				output.printMeanDensity("./outputs/Mean" + animals[k].getName() + "Densities", animals[k].getDensities(), i);
-				output.printPpm("./outputs/" + animals[k].getName() + i +".ppm", animals[k].getDensities(), colour);
+				output.printPpm("./outputs/" + animals[k].getName() + stepnum +".ppm", animals[k].getDensities(), colour);
 			}
+			
+			
+			for (int j=0; j<100; j++) {
+				grid.syncUpdate();		
+			}
+			
+			
+			stepnum+=1;
 		}
 		
 		System.out.println("done");

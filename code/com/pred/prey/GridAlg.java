@@ -109,7 +109,7 @@ public class GridAlg {
                                                 randomValue = 0;
                                         }
                                         else {
-                                                randomValue = distributedRandom(0,1);
+                                                randomValue = distributedRandom(0,100);
                                         }                                        
                                         getAnimals()[i].setDensity(j, k, randomValue);
                                 }
@@ -127,11 +127,11 @@ public class GridAlg {
         	
         	double ranNum = 0;
                 
-        	for(int i=0;i<1;i++){
+        	for(int i=0;i<3;i++){
         		ranNum += random.nextDouble()*(dMax-dMin);
         	}
                 
-        	ranNum = ranNum/1;
+        	ranNum = ranNum/3;
         	ranNum += dMin;
                 
         	return ranNum;
