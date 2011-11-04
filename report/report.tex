@@ -1,4 +1,4 @@
-\documentclass[12pt]{report}
+\documentclass[11pt]{report}
 \title{Predator Prey Model}
 \author{Names Here}
 \date{November 2011}
@@ -7,6 +7,37 @@
 \usepackage{verbatim} 
 \usepackage{pict2e}
 \usepackage[pdftex]{hyperref}
+
+%%%%% Code Constraints %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{listings}
+ \usepackage{courier}
+%\lstset{
+\lstset{columns=fullflexible,
+language=Java,
+%captionpos=b,
+basicstyle=\footnotesize,
+keywordstyle=\bfseries\ttfamily\color[rgb]{0,0,1},
+identifierstyle=\ttfamily,
+commentstyle=\color[rgb]{0.133,0.545,0.133},
+stringstyle=\ttfamily\color[rgb]{0.627,0.126,0.941},
+showstringspaces=false,
+%basicstyle=\small,
+numberstyle=\footnotesize,
+numbers=left,
+stepnumber=1,
+numbersep=5pt,
+tabsize=1,
+breaklines=true,
+%prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+breakatwhitespace=false,
+aboveskip={1.5\baselineskip},
+columns=fixed,
+%upquote=true,
+extendedchars=true,
+%frame=bottomline,
+inputencoding=utf8
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
 
@@ -73,6 +104,38 @@ H & PH \end{array} \right)\]
       \subsection{SVN} %matt
       \subsection{Makefile} %tom
       \subsection{Unit Testing} %jorge
+      Every class of the project form a functional unit according to the design elaborated at the beginning of the \newline{}
+  has been tested using the Java JUnit framework \newline{}
+The libraries necessary to the tests are thus accessed from the test cases using Java import statements and extending the TestCase superclass in the class declaration:
+
+\begin{lstlisting}[language=Java,caption= Test case headers]
+import org.junit.Before;
+import org.junit.Test;
+import junit.framework.TestCase;
+
+public class TestAnimal extends TestCase {
+...
+\end{lstlisting}
+
+Then the test cases, for each class, follow the normal directives in use for Unit testing with JUnit. The most relevant methods were submitted to thorough tests, where their properties, return values and correct functioning were evaluated by comparing the actual results they provide with the expected ones. These procedures were implemented by test methods in each test case using the format required by the JUnit standards. 
+
+Every test case included a setup() method that builds the initial object and its different parameters. Directives like @Before and @Test for every method declaration were thus inserted in the code were appropriate. The functioning of a method is then assessed comparing the expected results with the actual ones with JUnit testing methods such as AssertEquals(), AssertNotNull(), etc.
+
+\begin{lstlisting}[language=Java,caption= Use of JUNit directives in test cases]
+@Before
+public void setUp() {
+    ...
+    testAnimal = new Animal(numbAnimals);
+    testAnimal.setName("Puma");
+    testAnimal.setDiffCo(diffCoIn);
+    ...
+@Test
+public void testAnimal() {
+    assertNotNull(testAnimal);
+    assertNotNull(testAnimal2);
+} 
+...
+\end{lstlisting}
 
 \chapter{Performance Analysis}
    \section{Testing} %chen+tom
