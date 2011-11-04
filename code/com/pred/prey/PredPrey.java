@@ -46,9 +46,9 @@ public class PredPrey {
 			diffusionRate = new double[2];
 			
 			diffCo[0][0] = Double.parseDouble(args[0]);
-			diffCo[1][0] = Double.parseDouble(args[1]);
+			diffCo[0][1] = Double.parseDouble(args[1]);
 			diffusionRate[0] = Double.parseDouble(args[2]);
-			diffCo[0][1] = Double.parseDouble(args[3]);
+			diffCo[1][0] = Double.parseDouble(args[3]);
 			diffCo[1][1] = Double.parseDouble(args[4]);
 			diffusionRate[1] = Double.parseDouble(args[5]);
 			step = Double.parseDouble(args[6]);
