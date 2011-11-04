@@ -24,18 +24,46 @@ public class PredPrey {
 	 */
 	public static void main(String[] args) throws Exception {
 		// read values from GUI - maybe stored in an array
-		TestFrame gui = new TestFrame();
-		gui.setVisible(true);
-		while(gui.getRun() == false) {
-			System.out.println(gui.getRun());
-		}
-
-		System.out.println("woo");		
 		
-		setParameters(gui);
-		createAnimals();
-		createGrid();
-		createOutput();
+		if(args.length == 0){
+		
+			TestFrame gui = new TestFrame();
+			gui.setVisible(true);
+			while(gui.getRun() == false) {
+				System.out.println(gui.getRun());
+			}
+				
+			setParameters(gui);
+			createAnimals();
+			createGrid();
+			createOutput();
+		
+		} else if (args.length == 8){
+			
+			noAnimals = 2;
+			
+			diffCo = new double[2][2];
+			diffusionRate = new double[2];
+			
+			diffCo[0][0] = Double.parseDouble(args[0]);
+			diffCo[1][0] = Double.parseDouble(args[1]);
+			diffusionRate[0] = Double.parseDouble(args[2]);
+			diffCo[0][1] = Double.parseDouble(args[3]);
+			diffCo[1][1] = Double.parseDouble(args[4]);
+			diffusionRate[1] = Double.parseDouble(args[5]);
+			step = Double.parseDouble(args[6]);
+			fileName=args[7];
+			
+			createAnimals();
+			createGrid();
+			createOutput();
+			
+		} else {
+			throw new IllegalArgumentException("Number of arguments should be 0 or 8");
+		}
+		
+		System.out.println("Simulating populations...");		
+
 		
 		for (double i= 0; i<t/100; i+=step) {
 			for (int j=0; j<100; j++) {
@@ -75,6 +103,7 @@ public class PredPrey {
 		fileName = gui.getFileName();
 		
 	}
+	
 	
 	public Animal[] getAnimals() {
 		return animals;
