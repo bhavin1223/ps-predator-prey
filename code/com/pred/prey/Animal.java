@@ -148,7 +148,12 @@ public class Animal {
 		//System.out.println(dt*getDiffusionRate()*neighbours*oldDensity);
 		//System.out.println(dt*getDiffusionRate()*neighbours*oldDensity);
 
+      if(newDensity>=0){
 		nextDensities[i][j] = newDensity;
+		} else {
+		nextDensities[i][j] = 0;
+		}
+
 	}
 
 	/**

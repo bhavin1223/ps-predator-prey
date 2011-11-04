@@ -65,7 +65,7 @@ public class PredPrey {
 		System.out.println("Simulating populations...");		
 
 		int stepnum=0;
-		int T=50;
+		int T=20;
 	   String colour;
 		
 		for (double i= 0; i<t; i+=step) {
