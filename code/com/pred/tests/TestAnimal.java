@@ -54,6 +54,7 @@ public class TestAnimal extends TestCase {
 		}
 		
 		testAnimal.setDensities(densities);
+		testAnimal.setNextDensities(densities);
 		testAnimal.calcNextDensity(50, 50, dt, animals, 4);
 		testAnimal.applyTimeStep();
 	}
@@ -83,8 +84,7 @@ public class TestAnimal extends TestCase {
 
 	@Test
 	public void testCalcNextDensity() {
-		assertNotSame(2.0, testAnimal.getDensity(50, 50));
-		
+		assertNotSame(2.0, testAnimal.getDensity(50, 50));		
 		assertNotNull(testAnimal.getNextDensities());
 		assertEquals(13.2, testAnimal.getNextDensities()[50][50]);
 	}

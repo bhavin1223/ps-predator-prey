@@ -45,6 +45,7 @@ public class Animal {
 	 */
 	public Animal(int numAnimals) {
 		diffCoefficients = new double[numAnimals];
+		//setNextDensities(densities);
 	}
 
 	/**
@@ -64,6 +65,7 @@ public class Animal {
 		setDensities(densities);
 		setDiffusionRate(diffusionRate);
 		setDiffCo(diffCo);
+		setNextDensities(densities);
 	}
 
 	/**
@@ -78,6 +80,7 @@ public class Animal {
 	public Animal(double[][] densities, double diffusionRate) {
 		setDensities(densities);
 		setDiffusionRate(diffusionRate);
+		setNextDensities(densities);
 	}
 
 	/**
@@ -89,9 +92,10 @@ public class Animal {
 	 * @param diffusionRate
 	 *            Rate this animal moves out/in to the cell
 	 */
-	public Animal(Animal animal) {
+	public Animal(Animal animal) {		 
 		setDensities(animal.getDensities());
 		setDiffusionRate(animal.getDiffusionRate());
+		setNextDensities(animal.getDensities());
 	}
 
 	/**
@@ -110,8 +114,7 @@ public class Animal {
 	 *            The number of land neighbours cell i, j has.
 	 */
 	public void calcNextDensity(int i, int j, double dt, Animal[] animals,
-			int neighbours) {
-		nextDensities = new double[densities.length][densities[0].length]; 																		
+			int neighbours) {		//																		
 		double oldDensity = getDensity(i, j);
 		double newDensity = oldDensity;
 
@@ -294,5 +297,32 @@ public class Animal {
 	 */
 	public void setNextDensities(double[][] nextDensitiesIn) {
 		nextDensities = nextDensitiesIn;
+	}
+	
+	/**
+	 * Sets the density at location i, j.
+	 * 
+	 * @param i
+	 *            Row index
+	 * @param j
+	 *            Column index
+	 * @param value
+	 *            Next density value the grid point is being set to
+	 */
+	public void setNextDensity(int i, int j, double value) {
+		nextDensities[i][j] = value;
+	}
+
+	/**
+	 * Returns density at location i, j.
+	 * 
+	 * @param i
+	 *            Row index
+	 * @param j
+	 *            Column index
+	 * @return Value of next density at grid point
+	 */
+	public double getNextDensity(int i, int j) {
+		return nextDensities[i][j];
 	}
 }

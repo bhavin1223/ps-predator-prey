@@ -2,6 +2,7 @@ package com.pred.tests;
 
 import com.pred.prey.InOut;
 
+import org.junit.After;
 import org.junit.Test;
 import org.junit.Before;
 
@@ -27,6 +28,14 @@ public class TestInOut extends TestCase {
 		IOtest.loadLandscape(fName);
 		IOtest.countNeighbours();
     }
+    
+    /**
+	 * @throws java.lang.Exception
+	 */
+	@After
+	public void tearDown() throws Exception {
+		IOtest = null;		
+	}
 
 	/**
 	 * Test if loadLanscape method returns expected values

@@ -111,13 +111,14 @@ public class GridAlg {
 					getNeighbours()[0].length);
 
 			for (int j = 0; j < getNeighbours().length; j++) {
-				for (int k = 0; k < getNeighbours().length; k++) {
+				for (int k = 0; k < getNeighbours()[0].length; k++) {
 					if (getNeighbours(j, k) == -1) {
 						randomValue = 0;
 					} else {
 						randomValue = distributedRandom(0, 10);
 					}
 					getAnimals()[i].setDensity(j, k, randomValue);
+					getAnimals()[i].setNextDensity(j, k, randomValue);
 				}
 			}
 		}
