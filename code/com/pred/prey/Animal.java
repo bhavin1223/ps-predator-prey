@@ -43,9 +43,19 @@ public class Animal {
 	 * all input by the user in the GUI Only the number of animals in the
 	 * simulation needs to be initially given.
 	 */
+	public Animal(int numAnimals, int width, int height) {
+		diffCoefficients = new double[numAnimals];
+    densities = new double[width][height];
+    nextDensities = new double[width][height];
+	}
+   
+	/**
+	 * USE THIS Creates an animal with no parameters initially input as they are
+	 * all input by the user in the GUI Only the number of animals in the
+	 * simulation needs to be initially given.
+	 */
 	public Animal(int numAnimals) {
 		diffCoefficients = new double[numAnimals];
-		//setNextDensities(densities);
 	}
 
 	/**
