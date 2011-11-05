@@ -52,6 +52,7 @@ public class PredPrey {
 			step = Double.parseDouble(args[6]);
 			fileName = args[7];
 
+      io = new InOut(fileName);
 			createAnimals();
 			createGrid();
 			createOutput();
@@ -123,7 +124,7 @@ public class PredPrey {
 		Animal[] theseAnimals = new Animal[noAnimals];
 
 		for (int i = 0; i < noAnimals; i++) {
-			theseAnimals[i] = new Animal(noAnimals);
+			theseAnimals[i] = new Animal(noAnimals,io.getM(),io.getN());
 			theseAnimals[i].setDiffCo(diffCo[i]);
 			theseAnimals[i].setDiffusionRate(diffusionRate[i]);
 		}
@@ -135,7 +136,6 @@ public class PredPrey {
 	}
 
 	public static void createGrid() {
-		io = new InOut(fileName);
 		int[][] neighbours = io.getNeighbours();
 		grid = new GridAlg(neighbours, animals);
 		grid.setStep(step);
