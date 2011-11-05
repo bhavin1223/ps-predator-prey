@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.pred.tests;
 
 import static org.junit.Assert.*;
@@ -13,8 +10,10 @@ import com.pred.prey.Animal;
 import com.pred.prey.GridAlg;
 
 /**
- * @author jorge
- *
+ * JUnit test case for GridAlg.java
+ * 
+ * @author Jorge M.
+ * @version 1.0, November 5th, 2011
  */
 public class TestGridAlg {
 	private int[][] neighbours;
@@ -37,10 +36,8 @@ public class TestGridAlg {
 		
 		for (int i = 0; i < neighbours.length; i++) { 			
 			for (int j = 0; j < neighbours[0].length; j++) {
-				//System.out.print(intBuffer[i][j]);
 				neighbours[i][j] = 4;
 			}
-			//System.out.println();
 		}
 		
 		theseAnimals = new Animal[noAnimals];
