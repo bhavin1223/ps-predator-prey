@@ -7,6 +7,15 @@
 \usepackage{verbatim} 
 \usepackage{pict2e}
 \usepackage[pdftex]{hyperref}
+%%%%% Remove URL link boxes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hypersetup{
+    colorlinks,%
+    citecolor=black,%
+    filecolor=black,%
+    linkcolor=black,%
+    urlcolor=black
+}
+\usepackage{times}
 
 %%%%% Code Constraints %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{listings}
@@ -121,7 +130,7 @@ Then the test cases, for each class, follow the normal directives in use for Uni
 
 Every test case included a setup() method that builds the initial object and its different parameters. Directives like @Before and @Test for every method declaration were thus inserted in the code were appropriate. The functioning of a method is then assessed comparing the expected results with the actual ones with JUnit testing methods such as AssertEquals(), AssertNotNull(), etc.
 
-\begin{lstlisting}[language=Java,caption= Use of JUNit directives in test cases]
+\begin{lstlisting}[language=Java,caption= Use of JUnit directives in test cases]
 @Before
 public void setUp() {
     ...
@@ -158,7 +167,7 @@ public void testAnimal() {
    
    \begin{figure}[h]
    
-   \input{figs/overhead.tex}
+   \input{figs/overhead}
    \caption{\label{overhead}This is a graph of total time spent on each cell, which shows that overheads such as array initialization
    and output (i.e. things not directly involved in the simulation) take up a significant fraction of computation
    time with grids smaller than $\sim$100 by 100.}
@@ -173,7 +182,7 @@ public void testAnimal() {
 
    \begin{figure}[h]
    
-   \input{figs/density.tex}
+   \input{figs/density}
    \caption{Population density vs. time for Hares and Pumas. This periodic behaviour is typical of predator-prey interactions.}
    \end{figure}
 
