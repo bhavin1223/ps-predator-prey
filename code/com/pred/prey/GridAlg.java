@@ -156,8 +156,8 @@ public class GridAlg {
 		for (int i = 0; i < animals.length; i++) {
 
 			// Loop over all of the cells, calculating the next densities
-			for (int j = 0; j < getNeighbours().length; j++) {
-				for (int k = 0; k < getNeighbours()[0].length; k++) {
+			for (int j = 1; j < (getNeighbours().length-1); j++) {
+				for (int k = 1; k < (getNeighbours()[0].length-1); k++) {
 					if (getNeighbours(j, k) != -1) {
 						animals[i].calcNextDensity(j, k, dt, animals,
 								neighbours[j][k]);
