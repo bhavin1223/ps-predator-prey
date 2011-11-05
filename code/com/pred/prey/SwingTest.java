@@ -34,7 +34,7 @@ class TestFrame extends JFrame {
 		file = fileName.getText();
 	}
 
-	TestFrame() {
+	public TestFrame() {
 		Container content = this.getContentPane();
 		// content.setBackground(Color.lightGray);
 		/*

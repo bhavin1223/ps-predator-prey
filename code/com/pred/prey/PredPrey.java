@@ -52,7 +52,6 @@ public class PredPrey {
 			step = Double.parseDouble(args[6]);
 			fileName = args[7];
 
-      io = new InOut(fileName);
 			createAnimals();
 			createGrid();
 			createOutput();
@@ -121,21 +120,20 @@ public class PredPrey {
 	 * Creates the animals as specified by the gui
 	 */
 	public static void createAnimals() {
-		Animal[] theseAnimals = new Animal[noAnimals];
+		animals = new Animal[noAnimals];
 
 		for (int i = 0; i < noAnimals; i++) {
-			theseAnimals[i] = new Animal(noAnimals,io.getM(),io.getN());
-			theseAnimals[i].setDiffCo(diffCo[i]);
-			theseAnimals[i].setDiffusionRate(diffusionRate[i]);
+			animals[i] = new Animal(noAnimals);
+			animals[i].setDiffCo(diffCo[i]);
+			animals[i].setDiffusionRate(diffusionRate[i]);
 		}
-
-		theseAnimals[0].setName("Hare");
-		theseAnimals[1].setName("Puma");
-
-		animals = theseAnimals;
+	
+		 animals[0].setName("Hare"); 
+		 animals[1].setName("Puma");
 	}
 
 	public static void createGrid() {
+		io = new InOut(fileName);
 		int[][] neighbours = io.getNeighbours();
 		grid = new GridAlg(neighbours, animals);
 		grid.setStep(step);
@@ -143,5 +141,29 @@ public class PredPrey {
 
 	public static void createOutput() {
 		output = new Output();
+	}
+
+	public void setNoAnimals(int noAnimalsIn) {
+		noAnimals = noAnimalsIn;
+	}
+
+	public int getNoAnimals() {
+		return noAnimals;
+	}
+	
+	public void setDiffCo(double[][] diffCoIn) {
+		diffCo = diffCoIn;
+	}
+
+	public double[][] getDiffCo() {
+		return diffCo;
+	}
+	
+	public void setDiffusionRate(double[] diffusionRateIn) {
+		diffusionRate = diffusionRateIn;
+	}
+
+	public double[] getDiffusionRate() {
+		return diffusionRate;
 	}
 }

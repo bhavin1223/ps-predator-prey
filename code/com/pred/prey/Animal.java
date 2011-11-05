@@ -45,10 +45,10 @@ public class Animal {
 	 */
 	public Animal(int numAnimals, int width, int height) {
 		diffCoefficients = new double[numAnimals];
-    densities = new double[width][height];
-    nextDensities = new double[width][height];
+		densities = new double[width][height];
+		nextDensities = new double[width][height];
 	}
-   
+
 	/**
 	 * USE THIS Creates an animal with no parameters initially input as they are
 	 * all input by the user in the GUI Only the number of animals in the
@@ -102,7 +102,7 @@ public class Animal {
 	 * @param diffusionRate
 	 *            Rate this animal moves out/in to the cell
 	 */
-	public Animal(Animal animal) {		 
+	public Animal(Animal animal) {
 		setDensities(animal.getDensities());
 		setDiffusionRate(animal.getDiffusionRate());
 		setNextDensities(animal.getDensities());
@@ -124,7 +124,7 @@ public class Animal {
 	 *            The number of land neighbours cell i, j has.
 	 */
 	public void calcNextDensity(int i, int j, double dt, Animal[] animals,
-			int neighbours) {		//																		
+			int neighbours) { //
 		double oldDensity = getDensity(i, j);
 		double newDensity = oldDensity;
 
@@ -146,19 +146,19 @@ public class Animal {
 //		if (j - 1 > 0) {
 			newDensity += dt * getDiffusionRate() * getDensity(i, j - 1);
 //		}
-		
+
 //		if (j + 1 < getDensities()[i].length) {
 			newDensity += dt * getDiffusionRate() * getDensity(i, j + 1);
 //		}
-		
+
 //		if (i - 1 > 0) {
 			newDensity += dt * getDiffusionRate() * getDensity(i - 1, j);
 //		}
-		
+
 //		if (i + 1 < getDensities().length) {
 			newDensity += dt * getDiffusionRate() * getDensity(i + 1, j);
 //		}
-		
+
 		newDensity -= dt * getDiffusionRate() * neighbours * oldDensity;
 
 		// System.out.println(oldDensity);
@@ -308,7 +308,7 @@ public class Animal {
 	public void setNextDensities(double[][] nextDensitiesIn) {
 		nextDensities = nextDensitiesIn;
 	}
-	
+
 	/**
 	 * Sets the density at location i, j.
 	 * 
