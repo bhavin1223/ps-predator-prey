@@ -11,7 +11,7 @@ public class Output{
 
  
     int x, y;
-    double maxValue = 0;
+    double maxValue;
    
     int [][][] cell;
     double [][] density;   
@@ -49,6 +49,7 @@ public class Output{
 	/**
 	 * Calculate the maximum density.
 	 **/
+	maxValue=0;
 	for(x=1; x<(density.length-1); x++)
 	    {
 		for(y=1; y<(density[0].length-1); y++)
@@ -79,7 +80,7 @@ public class Output{
 			{
 				cell[y][x][0] = (int) 000;
 				cell[y][x][1] = (int) 000;
-				cell[y][x][2] = (int) (maxValue*scale);
+				cell[y][x][2] = (int) 255;
 			}
 		    
 			else

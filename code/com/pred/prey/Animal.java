@@ -143,21 +143,21 @@ public class Animal {
 		/**
 		 * Calculates the diffusion of the animal
 		 */
-		if (j - 1 > 0) {
+//		if (j - 1 > 0) {
 			newDensity += dt * getDiffusionRate() * getDensity(i, j - 1);
-		}
+//		}
 		
-		if (j + 1 < getDensities()[i].length) {
+//		if (j + 1 < getDensities()[i].length) {
 			newDensity += dt * getDiffusionRate() * getDensity(i, j + 1);
-		}
+//		}
 		
-		if (i - 1 > 0) {
+//		if (i - 1 > 0) {
 			newDensity += dt * getDiffusionRate() * getDensity(i - 1, j);
-		}
+//		}
 		
-		if (i + 1 < getDensities().length) {
+//		if (i + 1 < getDensities().length) {
 			newDensity += dt * getDiffusionRate() * getDensity(i + 1, j);
-		}
+//		}
 		
 		newDensity -= dt * getDiffusionRate() * neighbours * oldDensity;
 
