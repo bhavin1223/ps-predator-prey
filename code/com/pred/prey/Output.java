@@ -65,7 +65,7 @@ public class Output{
 			    }
 		    }
 	    }
-	double scale=255/(maxValue-minValue);
+	double scale=250/(maxValue-minValue); //actual max will be 255, leave room for error
 		
 	 /**
 	 * Print the values in a ppm file.
