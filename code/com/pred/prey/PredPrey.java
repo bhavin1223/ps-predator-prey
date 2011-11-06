@@ -17,6 +17,7 @@ public class PredPrey {
 	private static GridAlg grid;
 	private static Output output;
 	private static double t = 500;
+	private static int T=20;
 
 	/**
 	 * Controls the IO and Algorithm classes.
@@ -37,7 +38,7 @@ public class PredPrey {
 			createGrid();
 			createOutput();
 
-		} else if (args.length == 8) {
+		} else if (args.length == 9) {
 			noAnimals = 2;
 
 			diffCo = new double[2][2];
@@ -50,7 +51,8 @@ public class PredPrey {
 			diffCo[1][1] = Double.parseDouble(args[4]);
 			diffusionRate[1] = Double.parseDouble(args[5]);
 			step = Double.parseDouble(args[6]);
-			fileName = args[7];
+			T = Integer.parseInt(args[7]);
+			fileName = args[8];
 
 			createAnimals();
 			createGrid();
@@ -63,26 +65,20 @@ public class PredPrey {
 		System.out.println("Simulating populations...");
 
 		int stepnum = 0;
-		int T = 20;
-		String colour;
 
 		for (double i = 0; i < t; i += step) {
-			if ((stepnum % T == 0) || (stepnum == 0)) {
-				for (int k = 0; k < animals.length; k++) {
-					if (k == 0) {
-						colour = "black&white";
-					} else {
-						colour = "black&white";
+		
+				if ((stepnum % T == 0) || (stepnum == 0)) {
+					for (int k = 0; k < animals.length; k++) {
+
+						output.printMeanDensity(
+								"./outputs/Mean" + animals[k].getName()
+										+ "Densities", animals[k].getDensities(), i);
+						output.printPpm("./outputs/" + animals[k].getName()
+						+ stepnum + ".ppm", animals[k].getDensities(),io.getNeighbours());
 					}
 
-					output.printMeanDensity(
-							"./outputs/Mean" + animals[k].getName()
-									+ "Densities", animals[k].getDensities(), i);
-					output.printPpm("./outputs/" + animals[k].getName()
-					+ stepnum + ".ppm", animals[k].getDensities(),io.getNeighbours(),colour);
 				}
-
-			}
 
 			grid.syncUpdate();
 			stepnum += 1;

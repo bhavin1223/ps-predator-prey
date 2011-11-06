@@ -43,7 +43,7 @@ public class Output{
      **/
 
     
-    public void printPpm(String outputName, double[][] density, int[][] neighbours, String colour) throws Exception { 	
+    public void printPpm(String outputName, double[][] density, int[][] neighbours) throws Exception { 	
 
 
 	/**
@@ -61,69 +61,8 @@ public class Output{
 		    }
 	    }
 	double scale=255/maxValue;
-	
-	cell = new int [density[0].length][density.length][3];
-
-	
-
-	/**
-	 * Fill the image cells with appropriate colours.
-	 **/
-	for(x=1; x<(density.length-1); x++)
-	{
-		for(y=1; y<(density[0].length-1); y++)
-		{
-			/**
-			 * Fill water cells with blue.
-			 **/
-			if(neighbours[y][x]==-1)
-			{
-				cell[y][x][0] = (int) 000;
-				cell[y][x][1] = (int) 000;
-				cell[y][x][2] = (int) 255;
-			}
-		    
-			else
-			{
-				/**
-				 * Choosing this option will result in green land cells with density variations
-				 * being represented as different shades of grey.
-				 **/	
-				// This would look not bad, I think, but there are other options below.
-				if (colour == "black&green")
-				{
-					cell[y][x][0] = (int) (0);
-					cell[y][x][1] = (int) (density[y][x]*scale);
-					cell[y][x][2] = (int) (0);
-				}
-
-				/**
-				 * Choosing this one will basically result in white land cells.
-				 **/
-				
-				if (colour == "black&white")
-				{
-					cell[y][x][0] = (int) (density[y][x]*scale);
-					cell[y][x][1] = (int) (density[y][x]*scale);
-					cell[y][x][2] = (int) (density[y][x]*scale);
-				}
-				
-
-				/**
-				 * This option will show land in white and density variations as different shades of green.
-				 **/
-				if (colour == "green&white")
-				{
-					cell[y][x][0] = (int) (density[y][x]*scale);
-					cell[y][x][1] = (int) (maxValue*scale);
-					cell[y][x][2] = (int) (density[y][x]*scale);
-				}
-				// Anyway, we can always change the colours.
-			}
-		}
-	}		
-
-	/**
+		
+	 /**
 	 * Print the values in a ppm file.
 	 **/
 	PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(outputName)));
@@ -134,20 +73,30 @@ public class Output{
 	out.printf("\n");
 	out.printf("255");
 	out.printf("\n");
-
+	
+	
 	for(y=1; y<(density[0].length-1); y++)
 	{
 		for(x=1; x<(density.length-1); x++)
 		{				
-			out.printf("%03d %03d %03d",cell[y][x][0],cell[y][x][1],cell[y][x][2]);
-			if(x<=(density.length-2)) {
-			out.printf(" ");
-			}	       		    
+			/**
+			 * Fill water cells with blue.
+			 **/
+				if(neighbours[y][x]==-1)
+				{
+				out.printf("%03d %03d %03d ",0,0,255);
+				}
+				else{
+				
+				out.printf("%03d %03d %03d ",(int)(density[y][x]*scale),(int)(density[y][x]*scale),(int)(density[y][x]*scale));
+
+				}
+					    
+				
 		}
-		out.printf("\n");
 	}
 	out.close();    	
-    }
+   }
     
 
 
