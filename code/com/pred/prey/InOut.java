@@ -23,12 +23,15 @@ import java.io.UnsupportedEncodingException;
 public class InOut {
 	private int[][] intBuffer;
 	private int[][] neighbours;
-	private int m, n; /** Dimensions of the data file and the storage arrays.
+	private int m, n;
 	/**
-	 * Path to the data file to be read. It file must be outside the "src" folder, in the level just above.
+	 * Dimensions of the data file and the storage arrays. /** Path to the data
+	 * file to be read. It file must be outside the "src" folder, in the level
+	 * just above.
 	 */
 	private String defaultFile = "./small.dat";
-	//private String defaultFile = "./islands.dat";
+
+	// private String defaultFile = "./islands.dat";
 
 	/**
 	 * Constructor
@@ -37,14 +40,15 @@ public class InOut {
 		loadLandscape(pathToFile);
 		countNeighbours();
 	}
-	
+
 	public InOut() {
 		loadLandscape(defaultFile);
 		countNeighbours();
 	}
 
 	/**
-	 * Load the bitmask landscape file, parse it, read the file dimensions and stores the data into multidimensional arrays
+	 * Load the bitmask landscape file, parse it, read the file dimensions and
+	 * stores the data into multidimensional arrays
 	 * 
 	 * @param maskFileIn
 	 *            The absolute path to the file to be read
@@ -61,15 +65,19 @@ public class InOut {
 			System.out.println("Default: small.dat");
 			maskFile = new File(defaultFile);
 		}
-		
-		if (maskFileIn.length() > 0) {
-			maskFile = new File(maskFileIn);
+
+		try {
+			if (maskFileIn.length() > 0) {
+				maskFile = new File(maskFileIn);
+			}
+		} catch (NullPointerException npe) {
+			npe.getMessage();
 		}
 
 		try {
-			FileInputStream fis = new FileInputStream(maskFile);			
+			FileInputStream fis = new FileInputStream(maskFile);
 			BufferedReader br = null;
-			
+
 			try {
 				isr = new InputStreamReader(fis, "UTF8");
 			} catch (UnsupportedEncodingException uee) {
@@ -80,26 +88,27 @@ public class InOut {
 
 			try {
 				while ((s = br.readLine()) != null) {
-					tokens = s.split(" ");					
-					
+					tokens = s.split(" ");
+
 					if (lineNo == 0) {
 						// Parse the dimensions of the file
-						n = Integer.parseInt(tokens[0]);						
+						n = Integer.parseInt(tokens[0]);
 						m = Integer.parseInt(tokens[1]);
-						
+
 						intBuffer = new int[m + 2][n + 2];
 						lineNo++;
-						
-						initialiseIntBuffer();						
-					} else if (lineNo > 0 ) {
-						for (int j = 1; j < tokens.length - 1 ; j++) {
-							intBuffer[lineNo][j] = Integer.parseInt(tokens[j - 1]);							
+
+						initialiseIntBuffer();
+					} else if (lineNo > 0) {
+						for (int j = 1; j < tokens.length - 1; j++) {
+							intBuffer[lineNo][j] = Integer
+									.parseInt(tokens[j - 1]);
 						}
-						
-						lineNo++;						
+
+						lineNo++;
 					}
 				}
-				
+
 				br.close();
 			} catch (IOException ioe) {
 				ioe.getMessage();
@@ -110,7 +119,7 @@ public class InOut {
 		}
 		return "ok";
 	}
-	
+
 	/**
 	 * Set the array storage for the data to zeroes
 	 */
@@ -123,19 +132,19 @@ public class InOut {
 	}
 
 	/**
-	 * Calculate the number of neighbours at each
-	 * location (vertically and horizontally) and fill in the array
+	 * Calculate the number of neighbours at each location (vertically and
+	 * horizontally) and fill in the array
 	 */
 	public void countNeighbours() {
 		neighbours = new int[m + 2][n + 2];
-		
+
 		// Set halos to zeros
-		for (int i = 0; i < neighbours.length; i++) { 														
+		for (int i = 0; i < neighbours.length; i++) {
 			for (int j = 0; j < neighbours[0].length; j++) {
 				neighbours[i][j] = -1;
 			}
 		}
-		
+
 		// Sum up neighbours
 		for (int i = 1; i < intBuffer.length - 1; i++) {
 			for (int j = 1; j < intBuffer[0].length - 1; j++) {
@@ -144,24 +153,23 @@ public class InOut {
 							+ intBuffer[i][j - 1] + intBuffer[i][j + 1]
 							+ intBuffer[i + 1][j];
 				}
-				//else {
-				//	neighbours[i][j] = -1;
-				//}				
+				// else {
+				// neighbours[i][j] = -1;
+				// }
 			}
 		}
 		/*
-		for (int i = 0; i < intBuffer.length; i++) { 			
-			for (int j = 0; j < intBuffer[0].length; j++) {
-				System.out.print(intBuffer[i][j]);
-			}
-			System.out.println();
-		}*/
+		 * for (int i = 0; i < intBuffer.length; i++) { for (int j = 0; j <
+		 * intBuffer[0].length; j++) { System.out.print(intBuffer[i][j]); }
+		 * System.out.println(); }
+		 */
 	}
 
 	/**
-	 * Setter for the array that stores the number of neighbours of each element.
-	 * If the value in the data mask is land = 1 then the algorithm calculates the number of neighbours (vertically and horizontally) 
-	 * and stores it in the array.
+	 * Setter for the array that stores the number of neighbours of each
+	 * element. If the value in the data mask is land = 1 then the algorithm
+	 * calculates the number of neighbours (vertically and horizontally) and
+	 * stores it in the array.
 	 * 
 	 * @param neighboursIn
 	 *            An array to be copied from
@@ -171,9 +179,10 @@ public class InOut {
 	}
 
 	/**
-	 * Getter for the array that stores the number of neighbours of each element.
-	 * If the value in the data mask is land = 1 then the algorithm calculates the number of neighbours (vertically and horizontally) 
-	 * and stores it in the array.
+	 * Getter for the array that stores the number of neighbours of each
+	 * element. If the value in the data mask is land = 1 then the algorithm
+	 * calculates the number of neighbours (vertically and horizontally) and
+	 * stores it in the array.
 	 * 
 	 * @return The reference to the array of neighbours
 	 */
@@ -182,10 +191,9 @@ public class InOut {
 	}
 
 	/**
-	 * Get the current value of the dimension m.
-	 * m is the first dimension of the data file being read
-	 * and will be used to build arrays to store the data.
-	 *  
+	 * Get the current value of the dimension m. m is the first dimension of the
+	 * data file being read and will be used to build arrays to store the data.
+	 * 
 	 * @return The first dimension read from the data file
 	 */
 	public int getM() {
@@ -193,19 +201,18 @@ public class InOut {
 	}
 
 	/**
-	 * Set the current value of the dimension m.
-	 * m is the first dimension of the data file being read
-	 * and will be used to build arrays to store the data.
+	 * Set the current value of the dimension m. m is the first dimension of the
+	 * data file being read and will be used to build arrays to store the data.
 	 */
 	public void setM(int m) {
 		this.m = m;
 	}
 
 	/**
-	 * Get the current value of the dimension n.
-	 * n is the second dimension of the data file being read
-	 * and will be used to build arrays to store the data.
-	 *  
+	 * Get the current value of the dimension n. n is the second dimension of
+	 * the data file being read and will be used to build arrays to store the
+	 * data.
+	 * 
 	 * @return The second dimension read from the data file
 	 */
 	public int getN() {
@@ -213,27 +220,31 @@ public class InOut {
 	}
 
 	/**
-	 * Set the current value of the dimension n.
-	 * n is the second dimension of the data file being read
-	 * and will be used to build arrays to store the data.
+	 * Set the current value of the dimension n. n is the second dimension of
+	 * the data file being read and will be used to build arrays to store the
+	 * data.
 	 */
 	public void setN(int n) {
 		this.n = n;
 	}
 
 	/**
-	 * Get intBuffer: a double dimensional array that stores the values read from the data file
+	 * Get intBuffer: a double dimensional array that stores the values read
+	 * from the data file
 	 * 
-	 * @return The data from the file in a double dimensional array without spaces
+	 * @return The data from the file in a double dimensional array without
+	 *         spaces
 	 */
 	public int[][] getIntBuffer() {
 		return intBuffer;
 	}
 
 	/**
-	 * Set intBuffer: a double dimensional array that stores the values read from the data file
+	 * Set intBuffer: a double dimensional array that stores the values read
+	 * from the data file
 	 * 
-	 * @return The data from the file in a double dimensional array without spaces
+	 * @return The data from the file in a double dimensional array without
+	 *         spaces
 	 */
 	public void setIntBuffer(int[][] intBuffer) {
 		this.intBuffer = intBuffer;

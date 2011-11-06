@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.pred.tests;
 
 import static org.junit.Assert.*;
@@ -13,8 +10,10 @@ import com.pred.prey.PredPrey;
 import com.pred.prey.SwingTest;
 
 /**
- * @author jorge
+ * Junit tescase for the PredPrey class
  * 
+ * @author Jorge M.
+ * @version 1.0, November 6th, 2011 
  */
 public class TestPredPrey {
 	private PredPrey pd;
@@ -25,6 +24,7 @@ public class TestPredPrey {
 	/**
 	 * @throws java.lang.Exception
 	 */
+	@SuppressWarnings("static-access")
 	@Before
 	public void setUp() throws Exception {
 		noAnimals = 2;
@@ -43,6 +43,8 @@ public class TestPredPrey {
 		pd.setDiffCo(diffCo);
 		pd.setDiffusionRate(diffusionRate);
 		pd.createAnimals();
+		pd.createGrid();
+		pd.createOutput();
 	}
 
 	/**
@@ -57,14 +59,6 @@ public class TestPredPrey {
 	}
 
 	/**
-	 * Test method for {@link com.pred.prey.PredPrey#main(java.lang.String[])}.
-	 */
-	@Test
-	public final void testMain() {
-		// fail("Not yet implemented"); // TODO
-	}
-
-	/**
 	 * Test method for {@link com.pred.prey.PredPrey#createAnimals()}.
 	 */
 	@Test
@@ -74,28 +68,30 @@ public class TestPredPrey {
 		assertEquals("Puma", pd.getAnimals()[1].getName());
 		assertEquals(diffCo[0], pd.getAnimals()[0].getDiffCo());
 		assertEquals(diffCo[1], pd.getAnimals()[1].getDiffCo());
-/*		for (int x = 0; x < (pd.getAnimals()[0].getDiffCo().length); x++) {
-			//for (int y = 0; y < (pd.getAnimals()[0].getDiffCo().length); y++) {
-				System.out.println(pd.getAnimals()[0].getDiffCo()[x]);
-				System.out.println(pd.getAnimals()[1].getDiffCo()[x]);
-			}
-		}*/
+		
+		assertEquals("Hare", pd.getAnimals()[0].getName());
+		assertEquals("Puma", pd.getAnimals()[1].getName());
 	}
 
 	/**
 	 * Test method for {@link com.pred.prey.PredPrey#createGrid()}.
 	 */
+	@SuppressWarnings("static-access")
 	@Test
 	public final void testCreateGrid() {
-		// fail("Not yet implemented"); // TODO
+		assertNotNull(pd.getIo());
+		assertNotNull(pd.getIo().getNeighbours());
+		assertNotNull(pd.getGrid());
+		assertNotNull(pd.getStep());
 	}
 
 	/**
 	 * Test method for {@link com.pred.prey.PredPrey#createOutput()}.
 	 */
+	@SuppressWarnings("static-access")
 	@Test
 	public final void testCreateOutput() {
-		// fail("Not yet implemented"); // TODO
+		assertNotNull(pd.getOutput());
 	}
 
 }
