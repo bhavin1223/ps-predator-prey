@@ -5,7 +5,7 @@ import java.io.*;
 /**
  * Method to write output in ppm files.
  * 
- * @author Milena Put your name here if you work on this class
+ * @author Milena, Tom Put your name here if you work on this class
  * @version 6.0, October, 28th 2011
  * @since 1.0
  */
@@ -19,23 +19,6 @@ public class Output {
 
 	public Output() {
 	}
-
-	/**
-	 * Constructor for the image cells. The third dimension [3] is introduced to
-	 * account for the contribution of red/green/blue colours to each image
-	 * cell.
-	 * 
-	 * @param x
-	 *            Row index
-	 * @param y
-	 *            Column index
-	 * @param red
-	 *            pixel
-	 * @param green
-	 *            pixel
-	 * @param blue
-	 *            pixel
-	 **/
 
 	/**
 	 * Method to write densities into a PPM file In the final output, water will
@@ -126,8 +109,8 @@ public class Output {
 		PrintWriter out = null;
 		
 		try {
-			out = new PrintWriter(new BufferedWriter(new FileWriter(outputName,
-					true)));
+			out = new PrintWriter(new FileWriter(outputName,
+					true));
 		} catch (IOException ioe) {
 			ioe.getMessage();
 		}
@@ -141,8 +124,7 @@ public class Output {
 		average = sum
 				/ ((double) (density.length - 1) * (double) (density[0].length - 1));
 
-		out.printf(time + " " + average);
-		out.printf("\n");
+		out.printf("%f %f\n", time, average);
 		out.close();
 	}
 
