@@ -79,8 +79,7 @@ public class PredPrey {
 							"./outputs/Mean" + animals[k].getName()
 									+ "Densities", animals[k].getDensities(), i);
 					output.printPpm("./outputs/" + animals[k].getName()
-							+ stepnum + ".ppm", animals[k].getDensities(),
-							colour);
+					+ stepnum + ".ppm", animals[k].getDensities(),io.getNeighbours(),colour);
 				}
 
 			}

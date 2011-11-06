@@ -43,7 +43,7 @@ public class Output{
      **/
 
     
-    public void printPpm(String outputName, double[][] density, String colour) throws Exception { 	
+    public void printPpm(String outputName, double[][] density, int[][] neighbours, String colour) throws Exception { 	
 
 
 	/**
@@ -76,7 +76,7 @@ public class Output{
 			/**
 			 * Fill water cells with blue.
 			 **/
-			if(density[y][x]==0)
+			if(neighbours[y][x]==-1)
 			{
 				cell[y][x][0] = (int) 000;
 				cell[y][x][1] = (int) 000;
