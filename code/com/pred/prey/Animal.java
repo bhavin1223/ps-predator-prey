@@ -24,6 +24,11 @@ public class Animal {
 	 * Diffusion rate of this animal;
 	 */
 	private double diffusionRate;
+	
+	/**
+	* Can warn the user if timestep is too large
+	*/
+	boolean bigChange = false;
 
 	/**
 	 * Coefficients scaling how amounts of the different animals effect this
@@ -143,32 +148,19 @@ public class Animal {
 		/**
 		 * Calculates the diffusion of the animal
 		 */
-//		if (j - 1 > 0) {
 			newDensity += dt * getDiffusionRate() * getDensity(i, j - 1);
-//		}
-
-//		if (j + 1 < getDensities()[i].length) {
 			newDensity += dt * getDiffusionRate() * getDensity(i, j + 1);
-//		}
-
-//		if (i - 1 > 0) {
 			newDensity += dt * getDiffusionRate() * getDensity(i - 1, j);
-//		}
-
-//		if (i + 1 < getDensities().length) {
 			newDensity += dt * getDiffusionRate() * getDensity(i + 1, j);
-//		}
+			newDensity -= dt * getDiffusionRate() * neighbours * oldDensity;
 
-		newDensity -= dt * getDiffusionRate() * neighbours * oldDensity;
 
-		// System.out.println(oldDensity);
-		// System.out.println(dt*getDiffusionRate()*neighbours*oldDensity);
-		// System.out.println(dt*getDiffusionRate()*neighbours*oldDensity);
-
+		// Need to stop densities going negative
 		if (newDensity >= 0) {
 			nextDensities[i][j] = newDensity;
 		} else {
 			nextDensities[i][j] = 0;
+			bigChange=true;
 		}
 	}
 

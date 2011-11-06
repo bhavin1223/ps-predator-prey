@@ -86,7 +86,10 @@ public class PredPrey {
 
 		}
 
-		System.out.println("done");
+		if(animals[0].bigChange){
+					System.out.println("\n*** Warning:\nVery large changes in local density occurred over single iterations, suggest you use a smaller timestep\n***\n");
+					}
+		System.out.println("...done");
 
 	}
 
