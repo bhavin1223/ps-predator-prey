@@ -110,19 +110,19 @@ public class GridAlg {
 			getAnimals()[i].initiateDensities(getNeighbours().length,
 					getNeighbours()[0].length);
 
-			for (int j = 0; j < getNeighbours().length; j++) {
+			for (int x = 0; x < getNeighbours()[0].length; x++) {
 			
-				for (int k = 0; k < getNeighbours()[0].length; k++) {
+				for (int y = 0; y < getNeighbours().length; y++) {
 				
-					if (getNeighbours(j, k) == -1) {
+					if (getNeighbours(y, x) == -1) {
 						randomValue = 0;
 					} else {
 						randomValue = distributedRandom(0, 10);
 					}
 
 					
-					getAnimals()[i].setDensity(j, k, randomValue);
-					getAnimals()[i].setNextDensity(j, k, randomValue);
+					getAnimals()[i].setDensity(y, x, randomValue);
+					getAnimals()[i].setNextDensity(y, x, randomValue);
 				}
 			}
 		}
@@ -160,11 +160,11 @@ public class GridAlg {
 		for (int i = 0; i < animals.length; i++) {
 
 			// Loop over all of the cells, calculating the next densities
-			for (int j = 1; j < (getNeighbours().length-1); j++) {
-				for (int k = 1; k < (getNeighbours()[0].length-1); k++) {
-					if (getNeighbours(j, k) != -1) {
-						animals[i].calcNextDensity(j, k, dt, animals,
-								neighbours[j][k]);
+			for (int x = 1; x < (getNeighbours()[0].length-1); x++) {
+				for (int y = 1; y < (getNeighbours().length-1); y++) {
+					if (getNeighbours(y, x) != -1) {
+						animals[i].calcNextDensity(y, x, dt, animals,
+								neighbours[y][x]);
 						// if(animals[i].getNextDensities()[j][k]!=0){
 						// System.out.println(animals[i].getName() + " "
 						// +animals[i].getNextDensities()[j][k]);
@@ -198,11 +198,11 @@ public class GridAlg {
 		for (int i = 0; i < animals.length; i++) {
 
 			// Loop over all of the cells, calculating the next densities
-			for (int j = 0; j < getNeighbours().length; j++) {
-				for (int k = 0; k < getNeighbours()[j].length; k++) {
-					if (getNeighbours(j, k) != -1) {
-						animals[i].calcNextDensity(j, k, dt, animals,
-								neighbours[j][k]);
+			for (int x = 0; x < getNeighbours()[0].length; x++) {
+				for (int y = 0; y < getNeighbours().length; y++) {
+					if (getNeighbours(y, x) != -1) {
+						animals[i].calcNextDensity(y, x, dt, animals,
+								neighbours[y][x]);
 					}
 				}
 			}

@@ -23,7 +23,7 @@ import java.io.UnsupportedEncodingException;
 public class InOut {
 	private int[][] intBuffer;
 	private int[][] neighbours;
-	private int m, n;
+	private int cols, rows;
 	/**
 	 * Dimensions of the data file and the storage arrays. /** Path to the data
 	 * file to be read. It file must be outside the "src" folder, in the level
@@ -92,17 +92,17 @@ public class InOut {
 
 					if (lineNo == 0) {
 						// Parse the dimensions of the file
-						n = Integer.parseInt(tokens[0]);
-						m = Integer.parseInt(tokens[1]);
+						cols = Integer.parseInt(tokens[0]);
+						rows = Integer.parseInt(tokens[1]);
 
-						intBuffer = new int[m + 2][n + 2];
+						intBuffer = new int[rows + 2][cols + 2];
 						lineNo++;
 
 						initialiseIntBuffer();
 					} else if (lineNo > 0) {
-						for (int j = 1; j < tokens.length - 1; j++) {
-							intBuffer[lineNo][j] = Integer
-									.parseInt(tokens[j - 1]);
+						for (int x = 1; x < tokens.length - 1; x++) {
+							intBuffer[lineNo][x] = Integer
+									.parseInt(tokens[x - 1]);
 						}
 
 						lineNo++;
@@ -124,9 +124,9 @@ public class InOut {
 	 * Set the array storage for the data to zeroes
 	 */
 	public void initialiseIntBuffer() {
-		for (int i = 0; i < intBuffer.length; i++) {
-			for (int j = 0; j < intBuffer[0].length; j++) {
-				intBuffer[i][j] = 0;
+		for (int x = 0; x < intBuffer[0].length; x++) {
+			for (int y = 0; y < intBuffer.length; y++) {
+				intBuffer[y][x] = 0;
 			}
 		}
 	}
@@ -136,22 +136,22 @@ public class InOut {
 	 * horizontally) and fill in the array
 	 */
 	public void countNeighbours() {
-		neighbours = new int[m + 2][n + 2];
+		neighbours = new int[rows + 2][cols + 2];
 
 		// Set halos to zeros
-		for (int i = 0; i < neighbours.length; i++) {
-			for (int j = 0; j < neighbours[0].length; j++) {
-				neighbours[i][j] = -1;
+		for (int x = 0; x < neighbours[0].length; x++) {
+			for (int y = 0; y < neighbours.length; y++) {
+				neighbours[y][x] = -1;
 			}
 		}
 
 		// Sum up neighbours
-		for (int i = 1; i < intBuffer.length - 1; i++) {
-			for (int j = 1; j < intBuffer[0].length - 1; j++) {
-				if (intBuffer[i][j] == 1) {
-					neighbours[i][j] = intBuffer[i - 1][j]
-							+ intBuffer[i][j - 1] + intBuffer[i][j + 1]
-							+ intBuffer[i + 1][j];
+		for (int x = 1; x < intBuffer[0].length - 1; x++) {
+			for (int y = 1; y < intBuffer.length - 1; y++) {
+				if (intBuffer[y][x] == 1) {
+					neighbours[y][x] = intBuffer[y - 1][x]
+							+ intBuffer[y][x - 1] + intBuffer[y][x + 1]
+							+ intBuffer[y + 1][x];
 				}
 				// else {
 				// neighbours[i][j] = -1;
@@ -196,16 +196,16 @@ public class InOut {
 	 * 
 	 * @return The first dimension read from the data file
 	 */
-	public int getM() {
-		return m;
+	public int getcols() {
+		return cols;
 	}
 
 	/**
 	 * Set the current value of the dimension m. m is the first dimension of the
 	 * data file being read and will be used to build arrays to store the data.
 	 */
-	public void setM(int m) {
-		this.m = m;
+	public void setcols(int cols) {
+		this.cols = cols;
 	}
 
 	/**
@@ -215,8 +215,8 @@ public class InOut {
 	 * 
 	 * @return The second dimension read from the data file
 	 */
-	public int getN() {
-		return n;
+	public int getrows() {
+		return rows;
 	}
 
 	/**
@@ -224,8 +224,8 @@ public class InOut {
 	 * the data file being read and will be used to build arrays to store the
 	 * data.
 	 */
-	public void setN(int n) {
-		this.n = n;
+	public void setrows(int nrows) {
+		this.rows = rows;
 	}
 
 	/**

@@ -128,9 +128,9 @@ public class Animal {
 	 * @param neighbours
 	 *            The number of land neighbours cell i, j has.
 	 */
-	public void calcNextDensity(int i, int j, double dt, Animal[] animals,
+	public void calcNextDensity(int y, int x, double dt, Animal[] animals,
 			int neighbours) { //
-		double oldDensity = getDensity(i, j);
+		double oldDensity = getDensity(y, x);
 		double newDensity = oldDensity;
 
 		/**
@@ -140,7 +140,7 @@ public class Animal {
 			if (animals[k] == this) {
 				newDensity += dt * getDiffCo()[k] * oldDensity;
 			} else {
-				newDensity += dt * getDiffCo()[k] * animals[k].getDensity(i, j)
+				newDensity += dt * getDiffCo()[k] * animals[k].getDensity(y, x)
 						* oldDensity;
 			}
 		}
@@ -148,18 +148,18 @@ public class Animal {
 		/**
 		 * Calculates the diffusion of the animal
 		 */
-			newDensity += dt * getDiffusionRate() * getDensity(i, j - 1);
-			newDensity += dt * getDiffusionRate() * getDensity(i, j + 1);
-			newDensity += dt * getDiffusionRate() * getDensity(i - 1, j);
-			newDensity += dt * getDiffusionRate() * getDensity(i + 1, j);
+			newDensity += dt * getDiffusionRate() * getDensity(y, x - 1);
+			newDensity += dt * getDiffusionRate() * getDensity(y, x + 1);
+			newDensity += dt * getDiffusionRate() * getDensity(y - 1, x);
+			newDensity += dt * getDiffusionRate() * getDensity(y + 1, x);
 			newDensity -= dt * getDiffusionRate() * neighbours * oldDensity;
 
 
 		// Need to stop densities going negative
 		if (newDensity >= 0) {
-			nextDensities[i][j] = newDensity;
+			nextDensities[y][x] = newDensity;
 		} else {
-			nextDensities[i][j] = 0;
+			nextDensities[y][x] = 0;
 			bigChange=true;
 		}
 	}
@@ -169,9 +169,9 @@ public class Animal {
 	 * nextDensities array.
 	 */
 	public void applyTimeStep() {
-		for (int i = 0; i < densities.length; i++) {
-			for (int j = 0; j < densities[0].length; j++) {
-				densities[i][j] = nextDensities[i][j];
+		for (int x = 0; x < densities[0].length; x++) {
+			for (int y = 0; y < densities.length; y++) {
+				densities[y][x] = nextDensities[y][x];
 			}
 		}
 	}
@@ -207,9 +207,9 @@ public class Animal {
 	 * @param densities
 	 *            The densities of the animals being set across the grid.
 	 */
-	public void initiateDensities(int i, int j) {
-		this.densities = new double[i][j];
-		this.nextDensities = new double[i][j];
+	public void initiateDensities(int y, int x) {
+		this.densities = new double[y][x];
+		this.nextDensities = new double[y][x];
 	}
 
 	/**
@@ -245,8 +245,8 @@ public class Animal {
 	 *            Column index
 	 * @return Value of density at grid point
 	 */
-	public double getDensity(int i, int j) {
-		return densities[i][j];
+	public double getDensity(int y, int x) {
+		return densities[y][x];
 	}
 
 	/**

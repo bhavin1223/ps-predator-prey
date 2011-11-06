@@ -54,7 +54,6 @@ public class PredPrey {
 			setStep(Double.parseDouble(args[6]));
 			T = Integer.parseInt(args[7]);
 			fileName = args[8];
-
 			createAnimals();
 			createGrid();
 			createOutput();
@@ -70,6 +69,9 @@ public class PredPrey {
 		System.out.println("Simulating populations...");
 
 		int stepnum = 0;
+		
+		System.out.println(animals[0].getDensities().length);
+		System.out.println(getIo().getNeighbours().length);
 
 		for (double i = 0; i < t; i += getStep()) {
 		

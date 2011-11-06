@@ -14,7 +14,6 @@ public class Output {
 	int x, y;
 	double maxValue, minValue;
 
-	int[][][] cell;
 	double[][] density;
 
 	public Output() {
@@ -52,8 +51,8 @@ public class Output {
 		 **/
 		maxValue = 0;
 		minValue = 10; // have to guess at a good starting point here
-		for (x = 1; x < (density.length - 1); x++) {
-			for (y = 1; y < (density[0].length - 1); y++) {
+		for (x = 1; x < (density[0].length - 1); x++) {
+			for (y = 1; y < (density.length - 1); y++) {
 				if (density[y][x] > maxValue) {
 					maxValue = density[y][x];
 				}
@@ -76,14 +75,15 @@ public class Output {
 			bufferedWriter.write("P3");
 
 			bufferedWriter.newLine();
-			bufferedWriter.write((density.length - 2) + " "
-					+ (density[0].length - 2));
+			bufferedWriter.write((density[0].length - 2) + " "
+					+ (density.length - 2));
 			bufferedWriter.newLine();
 			bufferedWriter.write("255");
 			bufferedWriter.newLine();
 
-			for (y = 1; y < (density[0].length - 1); y++) {
-				for (x = 1; x < (density.length - 1); x++) {
+			for (y = 1; y < (density.length - 1); y++) {
+				for (x = 1; x < (density[0].length - 1); x++) {
+
 					/**
 					 * Fill water cells with blue.
 					 **/
@@ -129,8 +129,8 @@ public class Output {
 			ioe.getMessage();
 		}
 
-		for (x = 1; x < (density.length - 1); x++) {
-			for (y = 1; y < (density[x].length - 1); y++) {
+		for (x = 1; x < (density[0].length - 1); x++) {
+			for (y = 1; y < (density.length - 1); y++) {
 				sum += density[y][x];
 			}
 		}
