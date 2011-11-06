@@ -31,6 +31,20 @@ public class Output {
 	 * @param colour
 	 *            optional
 	 **/
+	
+	public void cleanDirectory(String dirname) {
+		
+		File directory = new File(dirname);
+		File[] files = directory.listFiles();
+		
+		for (File file : files) {
+			if (!file.delete()) {
+			//failed to delete file
+			System.out.println("Failed to delete "+file);
+			}
+		}	
+	}
+	
 	public void printPpm(String outputName, double[][] density,
 			int[][] neighbours) {
 		/**

@@ -60,9 +60,13 @@ public class PredPrey {
 			createOutput();
 		} else {
 			throw new IllegalArgumentException(
-					"Number of arguments should be 0 or 8");
+					"Number of arguments should be 0 or 9");
 		}
 
+		System.out.println("Cleaning output directory...");
+		
+		getOutput().cleanDirectory("./outputs/");
+		
 		System.out.println("Simulating populations...");
 
 		int stepnum = 0;
