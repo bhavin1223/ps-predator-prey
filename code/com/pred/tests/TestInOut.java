@@ -51,17 +51,17 @@ public class TestInOut extends TestCase {
 	@Test
 	public void testIntBuffer() {
 		if (fName.equals("/home/jorge/Library/PS/Coursework/small.dat")) {
-			assertEquals(50, IOtest.getM());
-			assertEquals(50, IOtest.getN());
+			assertEquals(50, IOtest.getrows());
+			assertEquals(50, IOtest.getcols());
 		} else if (fName
 				.equals("/home/jorge/Library/PS/Coursework/islands.dat")) {
-			assertEquals(1000, IOtest.getN());
-			assertEquals(800, IOtest.getM());
+			assertEquals(1000, IOtest.getcols());
+			assertEquals(800, IOtest.getrows());
 		}
 
 		assertNotNull(IOtest.getIntBuffer());
-		assertEquals(IOtest.getM() + 2, IOtest.getIntBuffer().length);
-		assertEquals(IOtest.getN() + 2, IOtest.getIntBuffer()[0].length);
+		assertEquals(IOtest.getrows() + 2, IOtest.getIntBuffer().length);
+		assertEquals(IOtest.getcols() + 2, IOtest.getIntBuffer()[0].length);
 
 		if (fName.equals("/home/jorge/Library/PS/Coursework/small.dat")) {
 			assertEquals(0, IOtest.getIntBuffer()[10][21]);
