@@ -11,7 +11,7 @@ public class Output{
 
  
     int x, y;
-    double maxValue;
+    double maxValue, minValue;
    
     int [][][] cell;
     double [][] density;   
@@ -50,6 +50,7 @@ public class Output{
 	 * Calculate the maximum density.
 	 **/
 	maxValue=0;
+	minValue=10; // have to guess at a good starting point here
 	for(x=1; x<(density.length-1); x++)
 	    {
 		for(y=1; y<(density[0].length-1); y++)
@@ -58,22 +59,27 @@ public class Output{
 			    {
 				maxValue = density[y][x];
 			    }
+			if((density[y][x]<minValue) && (neighbours[y][x]!=-1))
+			    {
+				minValue = density[y][x];
+			    }
 		    }
 	    }
-	double scale=255/maxValue;
+	double scale=255/(maxValue-minValue);
 		
 	 /**
 	 * Print the values in a ppm file.
 	 **/
-	PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(outputName)));
-
-	out.printf("P3");
-	out.printf("\n");
-	out.printf(""+(density.length-2)+" "+(density[0].length-2));
-	out.printf("\n");
-	out.printf("255");
-	out.printf("\n");
+	 			
+	BufferedWriter bufferedWriter = null;
+   bufferedWriter= new BufferedWriter(new FileWriter(outputName,true));
 	
+	bufferedWriter.write("P3");
+		bufferedWriter.newLine();
+	bufferedWriter.write((density.length-2)+" "+(density[0].length-2));
+		bufferedWriter.newLine();
+	bufferedWriter.write("255");
+		bufferedWriter.newLine();
 	
 	for(y=1; y<(density[0].length-1); y++)
 	{
@@ -84,18 +90,21 @@ public class Output{
 			 **/
 				if(neighbours[y][x]==-1)
 				{
-				out.printf("%03d %03d %03d ",0,0,255);
+				bufferedWriter.write("0 0 255 ");
 				}
 				else{
 				
-				out.printf("%03d %03d %03d ",(int)(density[y][x]*scale),(int)(density[y][x]*scale),(int)(density[y][x]*scale));
+				bufferedWriter.write((int)((density[y][x]-minValue)*scale)+" "
+				+(int)((density[y][x]-minValue)*scale)+" "+(int)((density[y][x]-minValue)*scale)+" ");
 
 				}
 					    
 				
 		}
+		bufferedWriter.newLine();
 	}
-	out.close();    	
+	bufferedWriter.flush();
+	bufferedWriter.close();    	
    }
     
 
