@@ -13,7 +13,7 @@ import java.io.*;
 public class Output {
 	int x, y;
 	double maxValue, minValue;
-
+	boolean direrror = false;
 	double[][] density;
 
 	public Output() {
@@ -32,9 +32,15 @@ public class Output {
 	 **/
 	
 	public void cleanDirectory(String dirname) {
-		
+	
 		File directory = new File(dirname);
+
+		if(directory.exists()) {
+
+		
 		File[] files = directory.listFiles();
+		
+		System.out.println("Cleaning "+dirname+" directory...");
 		
 		for (File file : files) {
 			if (!file.delete()) {
@@ -42,6 +48,16 @@ public class Output {
 			System.out.println("Failed to delete "+file);
 			}
 		}	
+
+		}
+		else 
+		{
+		System.out.println("No output directory found, creating "+dirname+" directory.");
+			if(!directory.mkdir()){
+			direrror=true;
+			}
+		}
+	
 	}
 	
 	public void printPpm(String outputName, double[][] density,

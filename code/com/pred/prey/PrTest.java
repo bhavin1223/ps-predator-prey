@@ -301,7 +301,6 @@ class InputFrame extends JFrame
 					{
 						
 						readValues();
-						System.out.println("...");
 						// no need to see the GUI after simulation have started
 						setVisible(false);
 						if (range.isSelected())

@@ -19,6 +19,7 @@ public class PredPrey {
 	private static Output output;
 	private static double t = 500;
 	private static int T=20;
+	private static String dirname;
 
 	/**
 	 * Controls the IO and Algorithm classes.
@@ -30,8 +31,6 @@ public class PredPrey {
 	{
 		try
 		{
-			
-			System.out.println("...");
 			noAnimals = 2;
 
 			diffCo = new double[2][2];
@@ -49,10 +48,15 @@ public class PredPrey {
 			createAnimals();
 			createGrid();
 			createOutput();
+			
+			dirname="./outputs";
 
-			System.out.println("Cleaning output directory...");
-
-			getOutput().cleanDirectory("./outputs/");
+			
+			getOutput().cleanDirectory(dirname);
+			if(output.direrror) {
+			System.out.println("Failed to create "+dirname+" directory, output will be generated in working directory. Sorry!");
+			dirname=".";
+			}
 		
 			System.out.println("Simulating populations...");
 
@@ -66,9 +70,9 @@ public class PredPrey {
 						{
 
 							getOutput().printMeanDensity(
-									"./outputs/Mean" + animals[k].getName()
+									dirname+"/Mean" + animals[k].getName()
 											+ "Densities", animals[k].getDensities(), i);
-							getOutput().printPpm("./outputs/" + animals[k].getName()
+							getOutput().printPpm(dirname+"/" + animals[k].getName()
 							+ stepnum + ".ppm", animals[k].getDensities(),getIo().getNeighbours());
 						}
 
@@ -100,28 +104,25 @@ public class PredPrey {
 
 			diffCo = new double[2][2];
 			diffusionRate = new double[2];
-
 			
-
-			System.out.println("Cleaning output directories...");
-		
+			
 			for (int l=0; l<parRange.length; l++)
 			{
-				getOutput().cleanDirectory("./outputs"+(l+1)+"/");
+			
+			dirname="./outputs"+l;
+
+			getOutput().cleanDirectory(dirname);
+			if(output.direrror) {
+			System.out.println("Failed to create "+dirname+" directory, output will be generated in working directory. Sorry!");
+			dirname=".";
 			}
-			
-			System.out.println("Simulating populations...");
 
-			int stepnum = 0;
-		
-			
-			for (int l=0; l<parRange.length; l++)
-			{
+
 				diffCo[0][0] = parameters[0];
 				diffCo[0][1] = parameters[1];
-				diffusionRate[0] = parameters[2];
-				diffCo[1][0] = parameters[3];
-				diffCo[1][1] = parameters[4];
+				diffusionRate[0] = parameters[4];
+				diffCo[1][0] = parameters[2];
+				diffCo[1][1] = parameters[3];
 				diffusionRate[1] = parameters[5];
 				step = parameters[6];
 				T = (int) parameters[7];
@@ -131,8 +132,8 @@ public class PredPrey {
 				createGrid();
 				createOutput();
 				
-				System.out.println(animals[0].getDensities().length);
-				System.out.println(getIo().getNeighbours().length);
+				int stepnum = 0;
+				System.out.println("Simulating populations...");
 	
 				for (double i = 0; i < t; i += getStep()) {
 				
@@ -142,9 +143,9 @@ public class PredPrey {
 							{
 	
 								getOutput().printMeanDensity(
-										"./outputs"+(l+1)+"/Mean" + animals[k].getName()
+										dirname+"/Mean" + animals[k].getName()
 												+ "Densities", animals[k].getDensities(), i);
-								getOutput().printPpm("./outputs"+(l+1)+"/" + animals[k].getName()
+								getOutput().printPpm(dirname+"/" + animals[k].getName()
 								+ stepnum + ".ppm", animals[k].getDensities(),getIo().getNeighbours());
 							}
 	
