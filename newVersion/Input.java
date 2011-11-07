@@ -71,7 +71,7 @@ public class Input extends JFrame implements ActionListener {
 		labels[5] = new JLabel("Puma Diffustion Rate (l)");
 		labels[6] = new JLabel("Time Step (dt)");
 		labels[7] = new JLabel("Number of Outputs");
-		labels[8] = new JLabel("Steps Per Outputs");
+		labels[8] = new JLabel("Steps Per Output");
 		labels[9] = new JLabel("Input File Name");
 		labels[10] = new JLabel("Output File Name (Excluding File Type)");
 		
