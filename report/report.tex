@@ -113,20 +113,24 @@ H & PH \end{array} \right)\]
            % Here is some stuff about input and output. Not finished yet. Still needs some things to be added (or removed). Feel free to change it! 
       
       Computers cannot deal with continuous data; therefore, when modelling any kind of a system, discrete approximations must be used instead. This means that to see, for example, how a particular system evolves in time one needs to represent it by a sequence of events occurring one after another and separated by discrete time steps. The system considered in this project is a "world" or landscape consisting of land and water, the former being inhabited by a population of pumas (predators) and hares (prey).
-      In our model the "world" is represented by a rectangular grid of alterable dimensions N \times N, where N can be as large as 2000.
+      \newline{}
+      In our model the "world" is represented by a rectangular grid of alterable dimensions $N \times N$, where $N$ can be as large as 2000.
       We designed the code in a way such that it can read in an ASCII file that contains a set of numbers, those being either 0 or 1 and representing water and land, respectively, parses them and stores in a two-dimensional array. This means that the code can be used to model landscapes of different sizes with various distributions of land and water.
+      \newline{}
       The boundary conditions are assigned to the model by setting the values for density of both, pumas and hares, to 0 at the edges of the grid.      
+      \newline{}
       The initial values for the densities of pumas and hares are chosen randomly from a range of numbers between ******dMin and dMax ****** and distributed across the land cells. All these tasks are implemented in methods within the InOut class.
-      The initial values for parameters that appear in the partial differential equations governing the evolution of the system with time can be set up by the user, who will be able to interact with the program by means of Graphical User Interface (GUI). Specifically, it is allowed for the user to initialise the values for the birth, death and diffusion rates of both types of animals as well as the time step (dt), which controls how often the system is updated with new data.  The user can also control the frequency of creating the output files, by choosing a value for the parameter T in the GUI window. The output gets created every T time steps. We have also included an optional "range" feature which allows the user to set a range of initial values for all the differential coefficients and an increment. In this case the code will run several times creating separate outputs for every simulation. 
+      The initial values for parameters that appear in the partial differential equations governing the evolution of the system with time can be set up by the user, who will be able to interact with the program by means of Graphical User Interface (GUI). Specifically, it is allowed for the user to initialise the values for the birth, death and diffusion rates of both types of animals as well as the time step ($dt$), which controls how often the system is updated with new data.  The user can also control the frequency of creating the output files, by choosing a value for the parameter $T$ in the GUI window. The output gets created every $T$ time steps. We have also included an optional "range" feature which allows the user to set a range of initial values for all the differential coefficients and an increment. In this case the code will run several times creating separate outputs for every simulation. 
+      \newline{}
       Alternatively, the user can execute the code directly from within the terminal using the command line ******list of arguments or a file??*******. In the next section we talk about the GUI in more detail. 
-      \newline
-      \newline
+      \newline{}
+      \newline{}
       
-      The methods responsible for creating the output are included in the Output class. Depending on the user's preference, the code will create one output directory (for single initial values) or a number of such directories (for the range of initial values), i.e. one for each run. In both cases the user will be able to view the distribution of both populations across the landscape every T time steps. The form of the output is a number of *.ppm files which can be viewed as an image, or "map", similar to that showed in the ****FIGURE******.
-      
+      The methods responsible for creating the output are included in the Output class. Depending on the user's preference, the code will create one output directory (for single initial values) or a number of such directories (for the range of initial values), i.e. one for each run. In both cases the user will be able to view the distribution of both populations across the landscape every $T$ time steps. The form of the output is a number of *.ppm files which can be viewed as an image, or "map", similar to that showed in the ****FIGURE******.
+      \newline{}
       % We could put one of the images here. or two maybe, one for pumas and one for hares?
-      
-      The number of the *.ppm files created depends on the initial parameters specified by the user, dt and T and the total time of a single run *****fixed?******. To maximise the level of output clarity we decided to make separate landscape "maps" for each type of animal, here pumas and hares. In each "map" the pixels corresponding to water cells are shown in blue, while the land cells are shown white. The variation in density of pumas/hares across the land cells is represented by different shades of grey, with black colour corresponding to the maximum value.
+      \newline{}
+      The number of the *.ppm files created depends on the initial parameters specified by the user, $dt$ and $T$ and the total time of a single run *****fixed?******. To maximise the level of output clarity we decided to make separate landscape "maps" for each type of animal, here pumas and hares. In each "map" the pixels corresponding to water cells are shown in blue, while the land cells are shown white. The variation in density of pumas/hares across the land cells is represented by different shades of grey, with black colour corresponding to the maximum value.
 
       
       	
