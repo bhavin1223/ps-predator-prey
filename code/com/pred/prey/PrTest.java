@@ -1,4 +1,6 @@
 package com.pred.prey;
+import com.pred.prey.PredPrey;
+
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.*;
@@ -11,6 +13,12 @@ import java.io.*;
  */
 class InputFrame extends JFrame
 {
+	
+	int noAnimals = 2;
+ 	private double[][] diffCo = new double[noAnimals][noAnimals];
+	private double[] diffusionRate = new double[noAnimals];
+	private double step;
+	private String file;
 	/** nParameters is number of parameters set by user, for this task 
 	 * 	permanently set to 7
 	 */
@@ -47,7 +55,7 @@ class InputFrame extends JFrame
 	JPanel inputPlane, input2Plane, buttonPlane;
 	/** parameters holds input in double precision floating points
 	 */
-	double parameters[] = new double[7];
+	double parameters[] = new double[nParameters+1];
 	/** special case if a user wants to iterate the code over a range of
 	 * values, parameterRange holds all the values of that parameter
 	 */
@@ -69,25 +77,31 @@ class InputFrame extends JFrame
 	/** Labeling textfield that is responsible for prompting for 
 	 * step size to iterate a parameter over
 	 */
-	JLabel stepLabel = new JLabel("step");
+	JLabel stepLabel = new JLabel("range step");
 	/** textfield that is responsible for prompting for 
 	 * step size to iterate a parameter over
 	 */
-	JTextField step = new JTextField();
+	JTextField stepField = new JTextField();
+	JTextField TField = new JTextField("50");
+	JLabel TLabel = new JLabel("<html> steps before <br> output <html>");
 	
+	 JTextField fileNameField = new JTextField("./small.dat");
+	 JLabel fileNameLabel = new JLabel("Input map from: ");
 	/** readValues reads values for the parameters and converts them
 	 * into doubles to be put into parameters array
 	 */
-	 
+	
 	
 
 	public void readValues()
 	{
 		// This loop reads all the inputs 
-		for (int i=0; i<nParameters; i++)
+		for (int i=0; i<(nParameters); i++)
 		{
 			parameters[i] = Double.parseDouble(inputTextField[i].getText());
+			
 		}
+		parameters[nParameters] = Double.parseDouble(TField.getText());
 		// if range is selected, additionally parameterRange is read
 		// using the bounds and step set by user
 		if (range.isSelected())
@@ -96,7 +110,7 @@ class InputFrame extends JFrame
 			double lowerBound = Double.parseDouble(inputTextField[choise2Indicator].getText());
 			//upperBound is specified in the right text field
 			double upperBound = Double.parseDouble(inputTextField2[choise2Indicator].getText());
-			double stepDouble = Double.parseDouble(step.getText());
+			double stepDouble = Double.parseDouble(stepField.getText());
 			// n can lose up to 1 point but can be neglected for large n
 			n = (int) ((upperBound-lowerBound)/stepDouble);
 			parameterRange = new double[n];
@@ -106,6 +120,8 @@ class InputFrame extends JFrame
 				parameterRange[i] = lowerBound + i*stepDouble;
 			}
 		}
+		
+		file = fileNameField.getText();
 	}
 	/** creates labels for all the text field inputs accordingly
 	 */
@@ -183,16 +199,22 @@ class InputFrame extends JFrame
 		buttonPlane.add(start);
 		buttonPlane.add(preSet);
 		buttonPlane.add(range);
+		buttonPlane.add(fileNameLabel);
+		buttonPlane.add(fileNameField);
+		buttonPlane.add(TLabel);
+		buttonPlane.add(TField);
 		//step text field seemed to fit best on the button panel although
 		// has more to do with input2.
 		buttonPlane.add(stepLabel);
-		buttonPlane.add(step);
+		buttonPlane.add(stepField);
 		//Initially needs not to be seen only to be seen when range is pressed
 		stepLabel.setVisible(false);
-		step.setVisible(false);
+		stepField.setVisible(false);
 		//for some reason text field takes half a screen if
 		// dimensions are not specified
-		step.setMaximumSize(new Dimension(150, 20));
+		fileNameField.setMaximumSize(new Dimension(230, 20));
+		stepField.setMaximumSize(new Dimension(230, 20));
+		TField.setMaximumSize(new Dimension(230, 20));
 		// selecting presed as default
 		preSet.setSelected(true);
 
@@ -242,6 +264,7 @@ class InputFrame extends JFrame
 	 */
 	public void buttonActions()
 	{
+		
 		// action for range: show second panel of input, show step input.
 		range.addActionListener(new ActionListener()
 			{
@@ -250,7 +273,7 @@ class InputFrame extends JFrame
 				{
 					input2Plane.setVisible(true);
 					stepLabel.setVisible(true);
-					step.setVisible(true);
+					stepField.setVisible(true);
 				}
 			});
 		// action for preSet: hide second panel of input along with step input
@@ -261,21 +284,31 @@ class InputFrame extends JFrame
 				{
 					input2Plane.setVisible(false);
 					stepLabel.setVisible(false);
-					step.setVisible(false);
+					stepField.setVisible(false);
 				}
 			});
 		// Start button: read all the inputs and start the simulation
 		start.addActionListener(new ActionListener()
 			{
 				
-				public void actionPerformed(ActionEvent e)
+				public void actionPerformed(ActionEvent e) 
 				{
+					try
+					{
+						
 					// checking if all the inputs are doubles
 					if (isInputAcceptable())
 					{
+						
 						readValues();
+						System.out.println("...");
 						// no need to see the GUI after simulation have started
 						setVisible(false);
+						if (range.isSelected())
+						{PredPrey.run(parameters, file, parameterRange, choise2Indicator);}
+						else
+						{PredPrey.run(parameters, file);}
+						setVisible(true);
 					}
 					// if some inputs are not doubles, an error message is shown
 					// allowing the user to try again
@@ -286,6 +319,12 @@ class InputFrame extends JFrame
 					"There seems to be a problem with your input, please try again",
 					"Error", JOptionPane.ERROR_MESSAGE);
 					}
+				}
+				catch (Exception a)
+				{
+					System.out.println("Something's gone wrong");
+					//System.out.println(a.getMessage());
+				}
 				}
 			});
 		// The following code did not work when put in the loop so 
@@ -415,7 +454,7 @@ class InputFrame extends JFrame
 		// 
 		if ((range.isSelected()) && 
 		((isDouble(inputTextField2[choise2Indicator].getText())==false) ||
-		(isDouble(step.getText()) == false)))
+		(isDouble(stepField.getText()) == false)))
 		{
 			temp = false;
 		}
@@ -450,7 +489,7 @@ class InputFrame extends JFrame
 		content.add(input2Plane);
 		content.add(buttonPlane);
 		// seems to be the best default size
-		this.setSize(600, 200);
+		this.setSize(600, 230);
 		// making sure the GUI is in the center of a scrreen.
 		this.setLocationRelativeTo(null);
 		// before the frame is shown, displaying a short message to the
@@ -464,11 +503,13 @@ class InputFrame extends JFrame
 		
 	}
 	
+	
 }
 public class PrTest 
 {
 	public static void main(String args[])
 	{
 		new InputFrame();
+
 	}
 }
