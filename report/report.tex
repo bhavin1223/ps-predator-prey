@@ -68,18 +68,18 @@ inputencoding=utf8
 
 % i just wrote this to get the report started - feel free to change or add to it
 
-In this task we worked as a group to implement a 2D, sequential predator-prey algorithm with spatial diffusion
-in Java. We tried to design the program in such a way as to take advantage of Java's object-orientated, modular nature. 
+In this task we worked as a group to implement a 2D sequential predator-prey algorithm with spatial diffusion
+in Java. We tried to design the program in such a way to take advantage of Java's object-orientated, modular nature. 
 Due to the large size of our group we also decided to develop a GUI for the program, although the code was designed 
-in such a way as to be usable from the command line as well. -----is it?-----\newline{}
+in to be usable from the command line as well. -----is it?-----\newline{}
 
 There is always some compromise between readability and performance in coding, and we tried to keep this balance in mind
 when designing our code. We made best use of class structure whilst still keeping our implementation of the given 
 algorithm as efficient as possible.\newline{}
 
-The predator prey algorithm implemented in this project crudely models the interaction between population densities of different animals, specifically Hares and Pumas. Each population has a self-interaction coefficient (birth for Hares, death for Pumas) and a coefficient describing how it interacts with other species' populations. \newline{}
+The predator prey algorithm implemented in this project crudely models the interaction between population densities of different animals, specifically hares and pumas. Each population has a self-interaction coefficient (birth for Hares, death for Pumas) and a coefficient describing how it interacts with other species' populations. \newline{}
 
-These populations exist on a `world' consisting of land and water, and are also able to diffuse across land squares with a rate determined by a diffusion coefficient. Thus, each population has N+1 coefficients which determine it's behaviour, where N is the number of animals.
+These populations exist in a `world' consisting of land and water and are also able to diffuse across land squares with a rate determined by a diffusion coefficient. Thus, each population has N+1 coefficients which determine its behaviour, where N is the number of animals.
 
 \chapter{Model} %dmitry
 
@@ -106,7 +106,7 @@ H & PH \end{array} \right)\]
    \section{Code}
       \subsection{Structure} %simon (dmitry to make flowchart)
       %not sure if this is quite right but a first go at the code structure explanaion
-          The language our group decided to code the predator-prey model in was java. Using java gave us easy access to numerous tools for creating a gui, JAVAdoc API and the main advantage for most of us was the familiarity of working with object orientated code. Object orientation provided us with the opportunity to design the central workings of the code with extensive extendibility, leaving just the user interface specifically designed for the problem at hand. The main code was split into Input, Output, GUI, Animal and Grid Algorithm classes classes which covers the different requirements of the program. A main class, PredPrey, governs the creation of occurrences of all of the other classes in the order required.  When running to program there is an option to run with or without a GUI, this is  implemented by either passing the input file names in the command line when running the program or not. If the arguments are passed, the input parameters are read from the file, if they are not then the user can input them in themselves. The parameters required by the user are the coefficients that govern the central update equation, the time step, diffusion rates of Pumas and Hares and the differential interaction coefficients between the animals, all described in ***section***.
+          The language our group decided to code the predator-prey model in was java. Using Java gave us easy access to numerous tools such as Javadoc and Swing for creating GUIs, and the main advantage for most of us was the familiarity of working with object oriented code design. Object orientation provided us with the opportunity to design the central workings of the code with extensive extendibility, leaving just the user interface specifically designed for the problem at hand. The main code was split into Input, Output, GUI, Animal and Grid Algorithm classes classes which covers the different requirements of the program. A main class, PredPrey, governs the creation of occurrences of all of the other classes in the order required.  When running to program there is an option to run with or without a GUI, this is  implemented by either passing the input file names in the command line when running the program or not. If the arguments are passed, the input parameters are read from the file, if they are not then the user can input them in themselves. The parameters required by the user are the coefficients that govern the central update equation, the time step, diffusion rates of Pumas and Hares and the differential interaction coefficients between the animals, all described in ***section***.
           The input class is responsible for reading the file which holds where the land and water are. It reads the information from the file into a two dimensional array and from there calculates the number of nearest neighbours each cell has and holds that in a new two dimensional array. Water cells are held as -1 to differentiate between land cells with no neighbours and water. This array of neighbours is all that is required by the rest of the program.
           The Animal class holds it's name and all the information required about each animal and their interactions with others. Upon creation an object of the animal class is passed the number of animals in the simulation and the size of the map; initialising the arrays to hold the animals density distribution and interaction coefficients to the correct size. The values are then passed from the GUI/input file using setter methods, to set the differential coefficients, diffusion coefficients and time step for the animal. The Animal classes main function is that it holds the method which is called to update the densities in a cell on the grid. This class has been designed so that a program can be extended from this one to take any number of animals interacting to first order with each other.
           The Grid Algebra class governs methods for updating the animal densities across the  grid. The constructor takes an array of animals passed from the main class and the 2 dimensional array of neighbours passed from the input class. Upon creation the GridAlg class initialises the densities of each animal in each grid cell to a uniformly distributed random number between 0 and 1, if different density distributions were required for each animal it would be easy to edit the code to accommodate this. A couple of different methods of updating the grid are held in the class, either updating in parallel, for all animals (all of the old densities are replaced by new one's at the same time) or updating the animals one by one. Other update methods which would be interesting to investigate would be updating the cells one by one and updating random cells and or animals. In this experiment only the fully parallel update is used for investigation.
@@ -149,13 +149,13 @@ H & PH \end{array} \right)\]
       \subsection{GUI} %dmitry
    
    \section{Tools}
+Eclipse, ant, Java Junit 
       \subsection{SVN} %matt
-      \subsection{Makefile} %tom
+      \subsection{Ant File} %tom, Jorge 
       \subsection{Unit Testing} %jorge
-      Every class of the project form a functional unit according to the design elaborated at the beginning of the \newline{}
-  has been tested using the Java JUnit framework \newline{}
-The libraries necessary to the tests are thus accessed from the test cases using Java import statements and extending the TestCase superclass in the class declaration:
+      Every class of the project form a functional unit according to the design elaborated at the beginning of the project. In order to ensure the software's good functioning and correct behaviour, all classes have been tested using the Java JUnit framework with test cases to tackle programming errors and code bugs.
 
+The libraries necessary to the tests are thus accessed from the test cases using Java import statements and extending the TestCase superclass in the class declaration:
 \begin{lstlisting}[language=Java,caption= Test case headers]
 import org.junit.Before;
 import org.junit.Test;
@@ -165,9 +165,9 @@ public class TestAnimal extends TestCase {
 ...
 \end{lstlisting}
 
-Then the test cases, for each class, follow the normal directives in use for Unit testing with JUnit. The most relevant methods were submitted to thorough tests, where their properties, return values and correct functioning were evaluated by comparing the actual results they provide with the expected ones. These procedures were implemented by test methods in each test case using the format required by the JUnit standards. 
+The test cases, for each class, follow the normal directives in use for Unit testing with JUnit. The most relevant methods were submitted to thorough tests, where their properties, return values and correct functioning were evaluated by comparing the actual results they provide with the expected ones. These procedures were implemented by test methods in each test case using the format required by the JUnit standards. 
 
-Every test case included a setup() method that builds the initial object and its different parameters. Directives like @Before and @Test for every method declaration were thus inserted in the code were appropriate. The functioning of a method is then assessed comparing the expected results with the actual ones with JUnit testing methods such as AssertEquals(), AssertNotNull(), etc.
+Every test case includes a setup() method that builds the initial object and its different parameters. Directives like @Before and @Test for every method declaration were thus inserted in the code were appropriate. The functioning of a method is then assessed comparing the expected results with the actual ones with JUnit testing methods such as AssertEquals(), AssertNotNull(), etc...
 
 \begin{lstlisting}[language=Java,caption= Use of JUnit directives in test cases]
 @Before
@@ -175,7 +175,6 @@ public void setUp() {
     ...
     testAnimal = new Animal(numbAnimals);
     testAnimal.setName("Puma");
-    testAnimal.setDiffCo(diffCoIn);
     ...
 @Test
 public void testAnimal() {
@@ -185,10 +184,12 @@ public void testAnimal() {
 ...
 \end{lstlisting}
 
+Where possible and where the tests were failing, we corrected and bettered the code until all tests passed correctly. We have employed several different methods and tools to debug the code, mainly with Eclipse IDE's debugger and JDB (Java Debugger) at the command line, that enabled us to verify the variables in use in classes and methods are holding the correct desired values during runtime. We have in this manner corrected many mistakes and wrong operations until the software was performing as expected. We also have used certain programming techniques such as Test Driven Development, unfortunately in just a few classes, although the procedure would deserve more time and practice to achieve a reasonable degree of maturity and efficiency to prove a powerful tool. 
+
 \chapter{Performance Analysis}
    \section{Testing} %chen+tom
    
-   Tests were preformed in order to profile the code's performance and scalability. The unix \emph{time} command was 
+   Tests were performed in order to profile the code's performance and scalability. The unix \emph{time} command was 
    used to time the code runs, with `user' and `system' time being summed to find the total computation time.\newline{}
    
    The relationship between total computation time per cell and the number of cells was measured in order to quantify the overhead
