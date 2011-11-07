@@ -26,77 +26,149 @@ public class PredPrey {
 	 * @param args
 	 *            Program does not take command line arguments
 	 */
-	public static void main(String[] args) throws Exception {
-		if (args.length == 0) {
-			TestFrame gui = new TestFrame();
-			gui.setVisible(true);
-			while (gui.getRun() == false) {
-				System.out.println(gui.getRun());
-			}
-
-			setParameters(gui);
-			createAnimals();
-			createGrid();
-			createOutput();
-
-		} else if (args.length == 9) {
+	public static void run(double[] parameters, String fileNameIn) throws Exception 
+	{
+		try
+		{
+			
+			System.out.println("...");
 			noAnimals = 2;
 
 			diffCo = new double[2][2];
 			diffusionRate = new double[2];
 
-			diffCo[0][0] = Double.parseDouble(args[0]);
-			diffCo[0][1] = Double.parseDouble(args[1]);
-			diffusionRate[0] = Double.parseDouble(args[2]);
-			diffCo[1][0] = Double.parseDouble(args[3]);
-			diffCo[1][1] = Double.parseDouble(args[4]);
-			diffusionRate[1] = Double.parseDouble(args[5]);
-			setStep(Double.parseDouble(args[6]));
-			T = Integer.parseInt(args[7]);
-			fileName = args[8];
+			diffCo[0][0] = parameters[0];
+			diffCo[0][1] = parameters[1];
+			diffusionRate[0] = parameters[2];
+			diffCo[1][0] = parameters[3];
+			diffCo[1][1] = parameters[4];
+			diffusionRate[1] = parameters[5];
+			step = parameters[6];
+			T = (int) parameters[7];
+			fileName = fileNameIn;
 			createAnimals();
 			createGrid();
 			createOutput();
-		} else {
-			throw new IllegalArgumentException(
-					"Number of arguments should be 0 or 9");
-		}
 
-		System.out.println("Cleaning output directory...");
+			System.out.println("Cleaning output directory...");
 		
-		getOutput().cleanDirectory("./outputs/");
+			getOutput().cleanDirectory("./outputs/");
 		
-		System.out.println("Simulating populations...");
+			System.out.println("Simulating populations...");
 
-		int stepnum = 0;
+			int stepnum = 0;
 		
-		System.out.println(animals[0].getDensities().length);
-		System.out.println(getIo().getNeighbours().length);
+			System.out.println(animals[0].getDensities().length);
+			System.out.println(getIo().getNeighbours().length);
 
-		for (double i = 0; i < t; i += getStep()) {
-		
-				if ((stepnum % T == 0) || (stepnum == 0)) {
-					for (int k = 0; k < animals.length; k++) {
+			for (double i = 0; i < t; i += getStep()) {
+			
+					if ((stepnum % T == 0) || (stepnum == 0)) 
+					{
+						for (int k = 0; k < animals.length; k++) 
+						{
 
-						getOutput().printMeanDensity(
-								"./outputs/Mean" + animals[k].getName()
-										+ "Densities", animals[k].getDensities(), i);
-						getOutput().printPpm("./outputs/" + animals[k].getName()
-						+ stepnum + ".ppm", animals[k].getDensities(),getIo().getNeighbours());
+							getOutput().printMeanDensity(
+									"./outputs/Mean" + animals[k].getName()
+											+ "Densities", animals[k].getDensities(), i);
+							getOutput().printPpm("./outputs/" + animals[k].getName()
+							+ stepnum + ".ppm", animals[k].getDensities(),getIo().getNeighbours());
+						}
+
 					}
 
+				getGrid().syncUpdate();
+				stepnum += 1;
+
+			}
+
+			if(animals[0].bigChange)
+			{
+				System.out.println("\n*** Warning:\nVery large changes in local density occurred over single iterations, suggest you use a smaller timestep\n***\n");
+			}
+			System.out.println("...done");
+		}
+		catch(Exception e)
+		{
+			System.out.println("Something's gone wrong");
+			System.out.println(e.getMessage());
+		}
+
+	}
+	public static void run(double[] parameters, String fileNameIn, double[] parRange, int indicator) throws Exception 
+	{
+		try
+		{
+			noAnimals = 2;
+
+			diffCo = new double[2][2];
+			diffusionRate = new double[2];
+
+			
+
+			System.out.println("Cleaning output directories...");
+		
+			for (int l=0; l<parRange.length; l++)
+			{
+				getOutput().cleanDirectory("./outputs"+(l+1)+"/");
+			}
+			
+			System.out.println("Simulating populations...");
+
+			int stepnum = 0;
+		
+			
+			for (int l=0; l<parRange.length; l++)
+			{
+				diffCo[0][0] = parameters[0];
+				diffCo[0][1] = parameters[1];
+				diffusionRate[0] = parameters[2];
+				diffCo[1][0] = parameters[3];
+				diffCo[1][1] = parameters[4];
+				diffusionRate[1] = parameters[5];
+				step = parameters[6];
+				T = (int) parameters[7];
+				parameters[indicator] = parRange[l];
+				fileName = fileNameIn;
+				createAnimals();
+				createGrid();
+				createOutput();
+				
+				System.out.println(animals[0].getDensities().length);
+				System.out.println(getIo().getNeighbours().length);
+	
+				for (double i = 0; i < t; i += getStep()) {
+				
+						if ((stepnum % T == 0) || (stepnum == 0)) 
+						{
+							for (int k = 0; k < animals.length; k++) 
+							{
+	
+								getOutput().printMeanDensity(
+										"./outputs"+(l+1)+"/Mean" + animals[k].getName()
+												+ "Densities", animals[k].getDensities(), i);
+								getOutput().printPpm("./outputs"+(l+1)+"/" + animals[k].getName()
+								+ stepnum + ".ppm", animals[k].getDensities(),getIo().getNeighbours());
+							}
+	
+						}
+	
+					getGrid().syncUpdate();
+					stepnum += 1;
+	
 				}
-
-			getGrid().syncUpdate();
-			stepnum += 1;
-
-		}
-
-		if(animals[0].bigChange){
+	
+				if(animals[0].bigChange)
+				{
 					System.out.println("\n*** Warning:\nVery large changes in local density occurred over single iterations, suggest you use a smaller timestep\n***\n");
-					}
-		System.out.println("...done");
-
+				}
+			}
+			System.out.println("...done");
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
 	}
 
 	/**
@@ -105,13 +177,6 @@ public class PredPrey {
 	 * @param gui
 	 *            the gui for the program
 	 */
-	public static void setParameters(TestFrame gui) {
-		noAnimals = gui.getNoAnimals();
-		diffCo = gui.getDiffCo();
-		diffusionRate = gui.getDiffusion();
-		setStep(gui.getStep());
-		fileName = gui.getFileName();
-	}
 
 	public Animal[] getAnimals() {
 		return animals;
