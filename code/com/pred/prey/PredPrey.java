@@ -39,9 +39,9 @@ public class PredPrey {
 
 			diffCo[0][0] = parameters[0];
 			diffCo[0][1] = parameters[1];
-			diffusionRate[0] = parameters[2];
-			diffCo[1][0] = parameters[3];
-			diffCo[1][1] = parameters[4];
+			diffusionRate[0] = parameters[4];
+			diffCo[1][0] = parameters[2];
+			diffCo[1][1] = parameters[3];
 			diffusionRate[1] = parameters[5];
 			step = parameters[6];
 			T = (int) parameters[7];
@@ -51,16 +51,13 @@ public class PredPrey {
 			createOutput();
 
 			System.out.println("Cleaning output directory...");
-		
+
 			getOutput().cleanDirectory("./outputs/");
 		
 			System.out.println("Simulating populations...");
 
 			int stepnum = 0;
 		
-			System.out.println(animals[0].getDensities().length);
-			System.out.println(getIo().getNeighbours().length);
-
 			for (double i = 0; i < t; i += getStep()) {
 			
 					if ((stepnum % T == 0) || (stepnum == 0)) 

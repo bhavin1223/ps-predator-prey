@@ -226,9 +226,9 @@ class InputFrame extends JFrame
 		// As the default values are put in and they are unique, 
 		// putting them in manually
 		inputTextField[0] = new JTextField("0.08");
-		inputTextField[1] = new JTextField("0.04");
+		inputTextField[1] = new JTextField("-0.04");
 		inputTextField[2] = new JTextField("0.02");
-		inputTextField[3] = new JTextField("0.06");
+		inputTextField[3] = new JTextField("-0.06");
 		inputTextField[4] = new JTextField("0.2");
 		inputTextField[5] = new JTextField("0.2");
 		inputTextField[6] = new JTextField("0.4");
