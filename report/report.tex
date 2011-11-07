@@ -79,7 +79,7 @@ algorithm as efficient as possible.\newline{}
 
 The predator prey algorithm implemented in this project crudely models the interaction between population densities of different animals, specifically Hares and Pumas. Each population has a self-interaction coefficient (birth for Hares, death for Pumas) and a coefficient describing how it interacts with other species' populations. \newline{}
 
-These populations exist on a `world' consisting of land and water, and are also able to diffuse across land squares with a rate determined by a diffusion coefficent. Thus, each population has N+1 coefficients which determine it's behaviour, where N is the number of animals.
+These populations exist on a `world' consisting of land and water, and are also able to diffuse across land squares with a rate determined by a diffusion coefficient. Thus, each population has N+1 coefficients which determine it's behaviour, where N is the number of animals.
 
 \chapter{Model} %dmitry
 
@@ -112,9 +112,10 @@ H & PH \end{array} \right)\]
        
            % Here is some stuff about input and output. Not finished yet. Still needs some things to be added (or removed). Feel free to change it! 
       
-      Computers cannot deal with continuous data; therefore, when modelling any kind of a system, discrete approximations must be used instead. This means that to see, for example, how a particular system evolves in time one needs to represent it by a sequence of events occurring one after another and separated by discrete time steps. The system considered in this project is a "world" or landscape consisting of land and water, the former being inhabited by a population of pumas (predators) and hares (prey).
+      Computers cannot deal with continuous data; therefore, when modelling any kind of a system, discrete approximations must be used instead. This means that to see, for example, how a particular system evolves in time one needs to represent it by a sequence of events occurring one after another and separated by discrete time steps. 
+      %The system considered in this project is a "world" or landscape consisting of land and water, the former being inhabited by a population of pumas (predators) and hares (prey).
       \newline{}
-      In our model the "world" is represented by a rectangular grid of alterable dimensions $N \times N$, where $N$ can be as large as 2000.
+      In our model the "world", or landscape, is represented by a rectangular grid of alterable dimensions $N \times N$, where $N$ can be as large as 2000.
       We designed the code in a way such that it can read in an ASCII file that contains a set of numbers, those being either 0 or 1 and representing water and land, respectively, parses them and stores in a two-dimensional array. This means that the code can be used to model landscapes of different sizes with various distributions of land and water.
       \newline{}
       The boundary conditions are assigned to the model by setting the values for density of both, pumas and hares, to 0 at the edges of the grid.      
@@ -126,11 +127,14 @@ H & PH \end{array} \right)\]
       \newline{}
       \newline{}
       
-      The methods responsible for creating the output are included in the Output class. Depending on the user's preference, the code will create one output directory (for single initial values) or a number of such directories (for the range of initial values), i.e. one for each run. In both cases the user will be able to view the distribution of both populations across the landscape every $T$ time steps. The form of the output is a number of *.ppm files which can be viewed as an image, or "map", similar to that showed in the ****FIGURE******.
+      The methods responsible for creating the output are included in the Output class. Depending on the user's preference, the code will create one output directory (for single initial values) or a number of such directories (for the range of initial values), i.e. one for each run. In both cases the user will be able to view the distribution of both populations across the landscape every $T$ time steps. The form of the output is a number of *.ppm files which can be viewed as images, or "maps", similar to these showed in the ****FIGURE******.
       \newline{}
       % We could put one of the images here. or two maybe, one for pumas and one for hares?
       \newline{}
-      The number of the *.ppm files created depends on the initial parameters specified by the user, $dt$ and $T$ and the total time of a single run *****fixed?******. To maximise the level of output clarity we decided to make separate landscape "maps" for each type of animal, here pumas and hares. In each "map" the pixels corresponding to water cells are shown in blue, while the land cells are shown white. The variation in density of pumas/hares across the land cells is represented by different shades of grey, with black colour corresponding to the maximum value.
+      The number of the *.ppm files created depends on the initial parameters specified by the user, $dt$ and $T$. To maximise the level of output clarity we decided to make separate landscape "maps" for each type of animal, here pumas and hares. In each "map" the pixels corresponding to water cells are shown in blue, while the land cells are white. The variation in density of pumas/hares across the land cells is represented by different shades of grey, with black colour corresponding to the maximum value. 
+      \newline{}
+      For each type of animal, every $T$ time steps, the code also calculates the mean population density and writes it along with the corresponding time into a file. 
+      
 
       
       	
@@ -184,10 +188,10 @@ public void testAnimal() {
    The relationship between total computation time per cell and the number of cells was measured in order to quantify the overhead
    needed by the code (see Figure \ref{overhead}). We found that, below a grid size of $\sim$100 by 100, overhead became important, whereas at 
    larger grid sizes the computation time scaled linearly with the total number of cells. Any scaling worse than linear (such as 
-   total computation time being proportional to the NumberOfCells$^{1.2}$ would be a huge (and unecessary) inefficieny, especially with larger grids.\newline{}
+   total computation time being proportional to the NumberOfCells$^{1.2}$ would be a huge (and unnecessary) inefficiency, especially with larger grids.\newline{}
    
    Some overhead is inevitable in any code, but the amount of effort put into simplifying a problem (such as creating arrays of neighbours)
-   should depend on the expected size of the problem. Our code could probably have had less overhead, allowing it to run faster with smaller gridsizes,
+   should depend on the expected size of the problem. Our code could probably have had less overhead, allowing it to run faster with smaller grid sizes,
    but this would likely led to it having a worse (linear) scaling with cell number.
    
    
@@ -197,7 +201,7 @@ public void testAnimal() {
    \begin{figure}[h]
    
    \input{figs/overhead}
-   \caption{\label{overhead}This is a graph of total time spent on each cell, which shows that overheads such as array initialization
+   \caption{\label{overhead}This is a graph of total time spent on each cell, which shows that overheads such as array initialisation
    and output (i.e. things not directly involved in the simulation) take up a significant fraction of computation
    time with grids smaller than $\sim$100 by 100.}
    \end{figure}
