@@ -18,7 +18,7 @@ public class PredPrey {
 	private static GridAlg grid;
 	private static Output output;
 	private static double t = 500;
-	private static int T=20;
+	private static int T;
 	private static String dirname;
 
 	/**
@@ -101,23 +101,12 @@ public class PredPrey {
 		try
 		{
 			noAnimals = 2;
-
 			diffCo = new double[2][2];
 			diffusionRate = new double[2];
-			
 			
 			for (int l=0; l<parRange.length; l++)
 			{
 			
-			dirname="./outputs"+l;
-
-			getOutput().cleanDirectory(dirname);
-			if(output.direrror) {
-			System.out.println("Failed to create "+dirname+" directory, output will be generated in working directory. Sorry!");
-			dirname=".";
-			}
-
-
 				diffCo[0][0] = parameters[0];
 				diffCo[0][1] = parameters[1];
 				diffusionRate[0] = parameters[4];
@@ -132,6 +121,15 @@ public class PredPrey {
 				createGrid();
 				createOutput();
 				
+			
+			dirname="./outputs/"+l;
+
+			getOutput().cleanDirectory(dirname);
+			if(output.direrror) {
+			System.out.println("Failed to create "+dirname+" directory, output will be generated in working directory. Sorry!");
+			dirname=".";
+			}
+
 				int stepnum = 0;
 				System.out.println("Simulating populations...");
 	

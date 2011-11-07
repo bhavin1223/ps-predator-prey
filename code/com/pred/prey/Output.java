@@ -19,18 +19,11 @@ public class Output {
 	public Output() {
 	}
 
-	/**
-	 * Method to write densities into a PPM file In the final output, water will
-	 * be seen as blue and land as green cells. The change in density of animals
-	 * with position will be represented by different shades of grey (the higher
-	 * the density the darker the colour).
-	 * 
-	 * @param outputName
-	 * @param density
-	 * @param colour
-	 *            optional
-	 **/
-	
+  /**
+  * Creates directory 'dirname' if it doesn't exists,
+  * cleans it if it does.
+  * @param dirname
+  */
 	public void cleanDirectory(String dirname) {
 	
 		File directory = new File(dirname);
@@ -59,6 +52,14 @@ public class Output {
 		}
 	
 	}
+	
+	
+	 /**
+	 * Method to write densities into a PPM file. 
+	 * @param outputName
+	 * @param density
+	 * @param colour
+	 **/
 	
 	public void printPpm(String outputName, double[][] density,
 			int[][] neighbours) {
