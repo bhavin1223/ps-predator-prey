@@ -366,6 +366,10 @@ public class PredPrey {
 	public static void setOutput(Output output) {
 		PredPrey.output = output;
 	}
+  public static void main(String args[])
+	{
+		new InputFrame();
 
+	}
 
 }
