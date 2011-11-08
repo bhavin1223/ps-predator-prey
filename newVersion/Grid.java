@@ -15,6 +15,11 @@ public class Grid {
 	private int[][] landWater, neighbours;
 	private int numRows, numColumns;
 	
+	/**
+	 * Copies the land water mask into a 2D array or integer with the correct dimensions.
+	 * @param fileName
+	 * @return True if no error.
+	 */
 	public boolean readFromFile(String fileName) {
 		
 		String inLine;
@@ -66,7 +71,6 @@ public class Grid {
 		
 		// Return false if exception occurs
 		catch(Exception e) {
-			System.out.println("e33e3" + e.getMessage());
 			return false;
 		}
 		
@@ -75,7 +79,8 @@ public class Grid {
 	}
 	
 	/**
-	 * Calculates the number of land neighbours for each cell in the grid.
+	 * Calculates the number of land neighbours for each cell in the grid and stores in array
+	 * to be accessed later.
 	 */
 	public void calculateNeighbours() {
 		
