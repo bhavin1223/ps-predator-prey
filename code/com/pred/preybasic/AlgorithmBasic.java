@@ -131,21 +131,23 @@ public class AlgorithmBasic {
 		
 		// Loop over all of the cells (not the very edges as these are invalid)
 		double sumAdjacentH, sumAdjacentP;
+		int adjacentLand;
 		for(int i = 1; i < numRows+1; i++) {
 			for(int j = 1; j < numColumns+1; j++) {
 				
 				// Only perform calculations on cells that are land
 				if(map.isLand(i, j)){
 					
-					// Sum the adjacent densities for both animals
+					// Sum the adjacent densities for both animals and count the adjacent land cells
 					sumAdjacentH = H[i][j+1] + H[i][j-1] + H[i+1][j] + H[i-1][j];
 					sumAdjacentP = P[i][j+1] + P[i][j-1] + P[i+1][j] + P[i-1][j];
+					adjacentLand = map.getAdjacentLand(i, j);
 					
 					// Calculate the densities after the time step
 					HNext[i][j] = H[i][j] + dtr*H[i][j] - dta*H[i][j]*P[i][j] 
-							+ dtk*(sumAdjacentH - H[i][j]*map.getAdjacentLand(i, j));
+							+ dtk*(sumAdjacentH - H[i][j]*adjacentLand);
 					PNext[i][j] = P[i][j] + dtb*H[i][j]*P[i][j] - dtm*P[i][j] 
-							+ dtl*(sumAdjacentP - P[i][j]*map.getAdjacentLand(i, j));
+							+ dtl*(sumAdjacentP - P[i][j]*adjacentLand);
 				}
 			}
 		}
