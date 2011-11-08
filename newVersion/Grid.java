@@ -44,7 +44,7 @@ public class Grid {
 				neighbours[i][0] = 0;
 				neighbours[i][numColumns+1] = 0;
 			}
-			for(j = 1; j < numRows+1; j++) {
+			for(j = 1; j < numColumns+1; j++) {
 				landWater[0][j] = 0;
 				landWater[numRows+1][j] = 0;
 				neighbours[0][j] = 0;
@@ -66,6 +66,7 @@ public class Grid {
 		
 		// Return false if exception occurs
 		catch(Exception e) {
+			System.out.println("e33e3" + e.getMessage());
 			return false;
 		}
 		

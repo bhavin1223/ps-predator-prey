@@ -175,7 +175,7 @@ public class Algorithm {
 			PNext[i][0] = 0;
 			PNext[i][numColumns+1] = 0;
 		}
-		for(j = 1; j < numRows+1; j++) {
+		for(j = 1; j < numColumns+1; j++) {
 			H[0][j] = 0;
 			H[numRows+1][j] = 0;
 			P[0][j] = 0;
