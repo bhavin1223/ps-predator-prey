@@ -1,8 +1,7 @@
 package com.pred.prey;
 import com.pred.prey.PredPrey;
+import com.pred.preybasic.InputBasic;
 
-import javax.swing.JFrame;
-import javax.swing.JTextField;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -70,6 +69,9 @@ class InputFrame extends JFrame
 	JRadioButton preSet, range;
 	/** Start button which initiates computation
 	 */
+	
+	JButton basic;
+	
 	JButton start;
 	/** Members of cchoise2 button group
 	 */
@@ -192,6 +194,7 @@ class InputFrame extends JFrame
 		preSet = new JRadioButton("PreSet");
 		range = new JRadioButton("Range");
 		start = new JButton("Start");
+		basic = new JButton("Launch Basic Algorithm");
 		//adding radio buttons to the group
 		choise.add(preSet);
 		choise.add(range);
@@ -203,6 +206,7 @@ class InputFrame extends JFrame
 		buttonPlane.add(fileNameField);
 		buttonPlane.add(TLabel);
 		buttonPlane.add(TField);
+		buttonPlane.add(basic);
 		//step text field seemed to fit best on the button panel although
 		// has more to do with input2.
 		buttonPlane.add(stepLabel);
@@ -326,6 +330,17 @@ class InputFrame extends JFrame
 				}
 				}
 			});
+		
+		basic.addActionListener(new ActionListener()
+		{
+
+			public void actionPerformed(ActionEvent e)
+			{
+				dispose();
+				InputBasic window = new InputBasic();
+			}
+		});
+		
 		// The following code did not work when put in the loop so 
 		// it was written explicitely for every choise2 button below
 		// not the best solution in terms of lines of code but could
