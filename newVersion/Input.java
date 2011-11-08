@@ -63,7 +63,7 @@ public class Input extends JFrame implements ActionListener {
 		
 		// Labels
 		JLabel[] labels = new JLabel[numOptions];
-		labels[0] = new JLabel("Rate of Puma Population Increase (r)");
+		labels[0] = new JLabel("Hare Birth Rate (r)");
 		labels[1] = new JLabel("Predation Rate Coefficient (a)");
 		labels[2] = new JLabel("Puma Birth Rate (b)");
 		labels[3] = new JLabel("Puma Mortality Rate (m)");
