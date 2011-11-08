@@ -116,7 +116,7 @@ public class Algorithm {
 			fileNameHP = outputFile + "HP" + stepsSoFar + ".ppm";
 			
 			if(out.densitiesOut(fileNameH, fileNameP, fileNameHP, H, P)) {
-			GUI.printMessage("Block 1 completed (" + step + " steps performed).\n" +
+			GUI.printMessage("Block " + (b+1) + " completed (" + step + " steps performed).\n" +
 					"Densities saved to file " + fileNameH + " and " + fileNameP + " and " + fileNameHP + ".");
 			}
 			else GUI.printMessage("Unable to write to output file(s).\n");
