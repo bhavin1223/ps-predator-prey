@@ -57,8 +57,8 @@ public class Output {
 		// Get the minimum and maximum densities
 		for( i = 1; i < numRows+1; i++) {
 			for( j = 0; j < numColumns; j++) {
-				if(densities[i][j] > maxDensity) maxDensity = densities[i][j];
-				else if(densities[i][j] <= minDensity) minDensity = densities[i][j];
+				if((densities[i][j] > maxDensity) && map.isLand(i, j)) maxDensity = densities[i][j];
+				else if((densities[i][j] <= minDensity) && map.isLand(i, j)) minDensity = densities[i][j];
 			}
 		}
 		
@@ -128,12 +128,12 @@ public class Output {
 			for( j = 0; j < numColumns; j++) {
 				
 				// Check hare densities
-				if(H[i][j] > maxDensity) maxDensity = H[i][j];
-				else if(H[i][j] <= minDensity) minDensity = H[i][j];
+				if((H[i][j] > maxDensity) && map.isLand(i, j)) maxDensity = H[i][j];
+				else if((H[i][j] <= minDensity) && map.isLand(i, j)) minDensity = H[i][j];
 				
 				// Check puma densities
-				if(P[i][j] > maxDensity) maxDensity = P[i][j];
-				else if(P[i][j] <= minDensity) minDensity = P[i][j];
+				if((P[i][j] > maxDensity) && map.isLand(i, j)) maxDensity = P[i][j];
+				else if((P[i][j] <= minDensity) && map.isLand(i, j)) minDensity = P[i][j];
 			}
 		}
 		
