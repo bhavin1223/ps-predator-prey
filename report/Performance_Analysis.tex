@@ -11,10 +11,12 @@
 	 very easy in Java; this alone increased performance by a factor of 5-6 (see Figure \ref{buffering}).\newline{}
 	
   \begin{figure}[h]
+  \begin{center}
   \input{figs/buffering}
   \caption{\label{buffering}This graph shows the advantage of using a buffered file writer over repeated calls to the printf() method. 
   The data was generated from a simulation using a 100x100 grid, but results will be similar for all grid sizes, since write time and computation
   time (neglecting overhead) both scale linearly with the number of cells.}
+  \end{center}
   \end{figure} 
 
 	 In Figure \ref{overhead} we attempt to quantify the overhead in our code. This is done by calculating the total time spent on each cell in a 
@@ -28,10 +30,13 @@
 	 for small simulations.\newline{}
 	 
   \begin{figure}[h]
+  \begin{center}
   \input{figs/overhead}
   \caption{\label{overhead}This is a graph of total time spent on each cell, which shows that overheads such as array initialization
   take up a significant fraction of computation time with grids smaller than $\sim$100 by 100.}
+  \end{center}
   \end{figure}
+  
 	 
    The main conclusion we reached in our testing is that output, espcially large amounts of plain text, is \emph{expensive}. The performance of
    the program could be dramatically increased by having the output in a more efficient format. This can be shown more simply just by running the 
