@@ -12,7 +12,7 @@ import com.pred.prey.GridAlg;
 /**
  * JUnit test case for GridAlg.java
  * 
- * @author Jorge M.
+ * @author Jorge Moreira
  * @version 1.0, November 5th, 2011
  */
 public class TestGridAlg {
@@ -24,19 +24,26 @@ public class TestGridAlg {
 	Animal[] theseAnimals;
 	private int expected;
 	private double actual, previous;
+	private int m, n;
 	
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
-		neighbours = new int[5][5];
+		m = 5;
+		n = 6;
+		neighbours = new int[m + 2][n + 2];
 		diffCo = new double[2][2];
 		diffusionRate = new double[2];
 		
 		for (int i = 0; i < neighbours.length; i++) { 			
 			for (int j = 0; j < neighbours[0].length; j++) {
-				neighbours[i][j] = 4;
+				if (i == 0 || j == 0 || (i == n + 1) || (j == m + 1)) {
+					neighbours[i][j] = -1;
+				} else {
+					neighbours[i][j] = 4;
+				}
 			}
 		}
 		

@@ -48,10 +48,10 @@ public class Animal {
 	 * all input by the user in the GUI Only the number of animals in the
 	 * simulation needs to be initially given.
 	 */
-	public Animal(int numAnimals, int width, int height) {
+	public Animal(int numAnimals, int height, int width) {
 		diffCoefficients = new double[numAnimals];
-		densities = new double[width][height];
-		nextDensities = new double[width][height];
+		densities = new double[height][width];
+		nextDensities = new double[height][width];
 	}
 
 	/**
@@ -128,9 +128,9 @@ public class Animal {
 	 * @param neighbours
 	 *            The number of land neighbours cell i, j has.
 	 */
-	public void calcNextDensity(int y, int x, double dt, Animal[] animals,
+	public void calcNextDensity(int x, int y, double dt, Animal[] animals,
 			int neighbours) { //
-		double oldDensity = getDensity(y, x);
+		double oldDensity = getDensity(x, y);
 		double newDensity = oldDensity;
 
 		/**
@@ -140,7 +140,7 @@ public class Animal {
 			if (animals[k] == this) {
 				newDensity += dt * getDiffCo()[k] * oldDensity;
 			} else {
-				newDensity += dt * getDiffCo()[k] * animals[k].getDensity(y, x)
+				newDensity += dt * getDiffCo()[k] * animals[k].getDensity(x, y)
 						* oldDensity;
 			}
 		}
@@ -148,18 +148,17 @@ public class Animal {
 		/**
 		 * Calculates the diffusion of the animal
 		 */
-			newDensity += dt * getDiffusionRate() * getDensity(y, x - 1);
-			newDensity += dt * getDiffusionRate() * getDensity(y, x + 1);
-			newDensity += dt * getDiffusionRate() * getDensity(y - 1, x);
-			newDensity += dt * getDiffusionRate() * getDensity(y + 1, x);
+			newDensity += dt * getDiffusionRate() * getDensity(x, y - 1);
+			newDensity += dt * getDiffusionRate() * getDensity(x, y + 1);
+			newDensity += dt * getDiffusionRate() * getDensity(x - 1, y);
+			newDensity += dt * getDiffusionRate() * getDensity(x + 1, y);
 			newDensity -= dt * getDiffusionRate() * neighbours * oldDensity;
-
 
 		// Need to stop densities going negative
 		if (newDensity >= 0) {
-			nextDensities[y][x] = newDensity;
+			nextDensities[x][y] = newDensity;
 		} else {
-			nextDensities[y][x] = 0;
+			nextDensities[x][y] = 0;
 			bigChange=true;
 		}
 	}
@@ -169,9 +168,9 @@ public class Animal {
 	 * nextDensities array.
 	 */
 	public void applyTimeStep() {
-		for (int x = 0; x < densities[0].length; x++) {
-			for (int y = 0; y < densities.length; y++) {
-				densities[y][x] = nextDensities[y][x];
+		for (int x = 0; x < densities.length; x++) {
+			for (int y = 0; y < densities[0].length; y++) {
+				densities[x][y] = nextDensities[x][y];
 			}
 		}
 	}

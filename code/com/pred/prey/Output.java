@@ -80,24 +80,14 @@ public class Output {
 		maxValue = 0;
 		minValue = 10; // have to guess at a good starting point here
 		
-		for (x = 1; x < (density[0].length - 1); x++) 
-		{
-			for (y = 1; y < (density.length - 1); y++) 
-			{
-				/**
-				 * Calculate maximum density.
-				 **/
-				if (density[y][x] > maxValue)
-				{
-					maxValue = density[y][x];
+		for (x = 1; x < density.length - 1; x++) {
+			for (y = 1; y < density[0].length - 1; y++) {
+				if (density[x][y] > maxValue) {
+					maxValue = density[x][y];
 				}
 				
-				/**
-				 * Calculate minimum density.
-				 **/
-				if ((density[y][x] < minValue) && (neighbours[y][x] != -1)) 
-				{
-					minValue = density[y][x];
+				if ((density[x][y] < minValue) && (neighbours[x][y] != -1)) {
+					minValue = density[x][y];
 				}
 			}
 		}
@@ -119,37 +109,28 @@ public class Output {
 				bufferedWriter.write("P3");
 				bufferedWriter.newLine();
 			
-				bufferedWriter.write((density[0].length - 2) + " " + (density.length - 2));
+				bufferedWriter.write((density.length - 2) + " " + (density[0].length - 2));
 				bufferedWriter.newLine();
 			
 				bufferedWriter.write("255");
 				bufferedWriter.newLine();
 
-				for (y = 1; y < (density.length - 1); y++) 
-				{
-					for (x = 1; x < (density[0].length - 1); x++)
-					{
-						
+				for (x = 1; x < density.length - 1; x++) {
+					for (y = 1; y < density[0].length - 1; y++) {
+
 						/**
 						 * Fill water cells with blue.
 						 **/
-						if (neighbours[y][x] == -1) 
-						{
+						if (neighbours[x][y] == -1) {
 							bufferedWriter.write("0 0 255 ");
-						}
-						
-						/**
-						 * Fill land cells with grey with higher intensity corresponding to 
-						 * greater value of density in a given cell.
-						 **/
-						else
-						{
-							bufferedWriter.write((int) ((density[y][x] - minValue) * scale)
-										+ " "
-										+ (int) ((density[y][x] - minValue) * scale)
-										+ " "
-										+ (int) ((density[y][x] - minValue) * scale)
-										+ " ");
+						} else {
+							bufferedWriter
+									.write((int) ((density[x][y] - minValue) * scale)
+											+ " "
+											+ (int) ((density[x][y] - minValue) * scale)
+											+ " "
+											+ (int) ((density[x][y] - minValue) * scale)
+											+ " ");
 						}
 
 					}
