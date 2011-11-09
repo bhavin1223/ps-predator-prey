@@ -18,7 +18,7 @@ public class PredPrey {
 	private static GridAlg grid;
 	private static Output output;
 	private static double t = 500;
-	private static int T;
+	private static int T=20;
 
 	/**
 	 * Controls the IO and Algorithm classes.
@@ -31,6 +31,7 @@ public class PredPrey {
 		try
 		{
 			
+			System.out.println("...");
 			noAnimals = 2;
 
 			diffCo = new double[2][2];
@@ -38,9 +39,9 @@ public class PredPrey {
 
 			diffCo[0][0] = parameters[0];
 			diffCo[0][1] = parameters[1];
-			diffusionRate[0] = parameters[4];
-			diffCo[1][0] = parameters[2];
-			diffCo[1][1] = parameters[3];
+			diffusionRate[0] = parameters[2];
+			diffCo[1][0] = parameters[3];
+			diffCo[1][1] = parameters[4];
 			diffusionRate[1] = parameters[5];
 			step = parameters[6];
 			T = (int) parameters[7];
@@ -57,6 +58,8 @@ public class PredPrey {
 
 			int stepnum = 0;
 		
+			System.out.println(animals[0].getDensities().length);
+			System.out.println(getIo().getNeighbours().length);
 
 			for (double i = 0; i < t; i += getStep()) {
 			
@@ -119,9 +122,9 @@ public class PredPrey {
 			{
 				diffCo[0][0] = parameters[0];
 				diffCo[0][1] = parameters[1];
-				diffusionRate[0] = parameters[4];
-				diffCo[1][0] = parameters[2];
-				diffCo[1][1] = parameters[3];
+				diffusionRate[0] = parameters[2];
+				diffCo[1][0] = parameters[3];
+				diffCo[1][1] = parameters[4];
 				diffusionRate[1] = parameters[5];
 				step = parameters[6];
 				T = (int) parameters[7];
@@ -131,7 +134,9 @@ public class PredPrey {
 				createGrid();
 				createOutput();
 				
-
+				System.out.println(animals[0].getDensities().length);
+				System.out.println(getIo().getNeighbours().length);
+	
 				for (double i = 0; i < t; i += getStep()) {
 				
 						if ((stepnum % T == 0) || (stepnum == 0)) 
