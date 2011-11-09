@@ -137,12 +137,12 @@ H & PH \end{array} \right)\]
       \newline{}
       
       The methods responsible for creating the output are included in the Output class. Depending on the user's preference, the code will create one output directory (for single initial values) or a number of such directories (for the range of initial values), i.e. one for each run. In both cases the user will be able to view the distribution of both populations across the landscape every $T$ time steps. The form of the output is a number of *.ppm files which can be viewed as images, or "maps", similar to these showed in the figure below.
-      \newline{}
+     % \newline{}
       
       \begin{figure}[H]
       \begin{center}
-      \includegraphics[width=100mm,height=130mm]{figs/hare.pdf}
-      \caption{This figure shows one of the output files created during a simulation using a $100 \times 100$ grid and default initial conditions. Various shades of grey represent the density of hares after 50 time steps, with a tie step set to 0.4.}
+      \includegraphics[width=100mm,height=130mm]{figs/hare.eps}
+      \caption{This figure shows one of the output files created during a simulation using a $100 \times 100$ grid and default initial conditions. Various shades of grey represent the density of hares after 50 time steps, with a time step set to 0.4.}
       \end{center}
       \end{figure}
       
