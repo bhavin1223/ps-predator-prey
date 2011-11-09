@@ -8,7 +8,7 @@ set output 'density.tex'
 set yrange [0:2]
 set xrange [0:500]
 
-set size 1
+set size 0.8
 
 set ylabel 'Density'
 set xlabel 'Time [s]'

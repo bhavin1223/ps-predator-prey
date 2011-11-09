@@ -8,7 +8,7 @@ set output 'overhead.tex'
 set xrange [0:6]
 set yrange [-3.5:0]
 
-set size 1
+set size 1,0.9
 
 set ylabel 'log$_{10}$ Time/Cell [s]'
 set xlabel 'log$_{10}$ Number of Cells'

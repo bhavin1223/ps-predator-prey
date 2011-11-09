@@ -8,7 +8,7 @@ set output 'buffering.tex'
 set xrange[0:1000]
 set yrange[0.2:1.4]
 
-set size 1
+set size 1,0.9
 
 set xlabel 'Output Frequency (Timesteps)'
 set ylabel 'log$_{10}$ Run Time [s]'
