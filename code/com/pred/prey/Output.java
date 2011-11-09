@@ -45,7 +45,7 @@ public class Output {
 				if (!file.delete())
 				{
 					//failed to delete file
-					System.out.println(file+" not deleted");
+					System.out.println("   "+file+" not deleted");
 				}
 			}	
 
