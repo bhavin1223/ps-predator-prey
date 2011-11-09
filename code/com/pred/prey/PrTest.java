@@ -1,7 +1,8 @@
 package com.pred.prey;
 import com.pred.prey.PredPrey;
-import com.pred.preybasic.InputBasic;
 
+import javax.swing.JFrame;
+import javax.swing.JTextField;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -171,6 +172,7 @@ class InputFrame extends JFrame
 		// second text field along with the choise buttons are on a 
 		// separate panel so they can always be hidden easily
 		input2Plane = new JPanel();
+		
 		setTextField2();
 		createChoise2();
 		// Adding in order so that text field is always on the left, button
@@ -180,6 +182,7 @@ class InputFrame extends JFrame
 			input2Plane.add(inputTextField2[i]);
 			input2Plane.add(choiseButton[i]);
 		}
+		
 	}
 	/** Method to construct a plane with all the buttons
 	 */
@@ -206,7 +209,6 @@ class InputFrame extends JFrame
 		buttonPlane.add(fileNameField);
 		buttonPlane.add(TLabel);
 		buttonPlane.add(TField);
-		buttonPlane.add(basic);
 		//step text field seemed to fit best on the button panel although
 		// has more to do with input2.
 		buttonPlane.add(stepLabel);
@@ -216,6 +218,7 @@ class InputFrame extends JFrame
 		stepField.setVisible(false);
 		//for some reason text field takes half a screen if
 		// dimensions are not specified
+		start.setMinimumSize(new Dimension(250,20));
 		fileNameField.setMaximumSize(new Dimension(230, 20));
 		stepField.setMaximumSize(new Dimension(230, 20));
 		TField.setMaximumSize(new Dimension(230, 20));
@@ -244,7 +247,7 @@ class InputFrame extends JFrame
 	{
 		// No default values needed so can use a loop
 		for (int i=0; i<nParameters; i++)
-		{ inputTextField2[i] = new JTextField(); }
+		{ inputTextField2[i] = new JTextField("    "); }
 	}
 	/** Method creates radio buttons to choose ranged input
 	 */
@@ -255,7 +258,7 @@ class InputFrame extends JFrame
 		choise2 = new ButtonGroup();
 		for (int i=0; i<nParameters; i++)
 		{
-			choiseButton[i] = new JRadioButton("");
+			choiseButton[i] = new JRadioButton("    ");
 			choise2.add(choiseButton[i]);
 		}
 		// the first button is selected, also only first input displayed
@@ -272,12 +275,14 @@ class InputFrame extends JFrame
 		// action for range: show second panel of input, show step input.
 		range.addActionListener(new ActionListener()
 			{
- 
+				
 				public void actionPerformed(ActionEvent e)
 				{
+					setSize(510, 230);
 					input2Plane.setVisible(true);
 					stepLabel.setVisible(true);
 					stepField.setVisible(true);
+					input2Plane.setPreferredSize(new Dimension(200, 230));
 				}
 			});
 		// action for preSet: hide second panel of input along with step input
@@ -286,6 +291,7 @@ class InputFrame extends JFrame
  
 				public void actionPerformed(ActionEvent e)
 				{
+					setSize(430, 230);
 					input2Plane.setVisible(false);
 					stepLabel.setVisible(false);
 					stepField.setVisible(false);
@@ -305,6 +311,7 @@ class InputFrame extends JFrame
 					{
 						
 						readValues();
+						System.out.println("...");
 						// no need to see the GUI after simulation have started
 						setVisible(false);
 						if (range.isSelected())
@@ -330,7 +337,7 @@ class InputFrame extends JFrame
 				}
 				}
 			});
-		
+		/*
 		basic.addActionListener(new ActionListener()
 		{
 
@@ -339,7 +346,7 @@ class InputFrame extends JFrame
 				dispose();
 				InputBasic window = new InputBasic();
 			}
-		});
+		});*/
 		
 		// The following code did not work when put in the loop so 
 		// it was written explicitely for every choise2 button below
@@ -478,9 +485,13 @@ class InputFrame extends JFrame
 	 */
 	InputFrame()
 	{
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Container content = this.getContentPane();
+		JPanel fullPlane = new JPanel();
+		setTitle("Predator Prey Simulation");
 		// The frame contains panels aligned horizontally
 		content.setLayout(new BoxLayout(content,BoxLayout.X_AXIS));
+		//content.setLayout(new BorderLayout(BorderLayout.CENTER));
 		// creating all the panels
 		createButtonPlane();
 		createInputPlane();
@@ -500,10 +511,11 @@ class InputFrame extends JFrame
 	
 		// adding all the planes to the frame
 		content.add(inputPlane);
+
 		content.add(input2Plane);
 		content.add(buttonPlane);
 		// seems to be the best default size
-		this.setSize(600, 230);
+		this.setSize(430, 230);
 		// making sure the GUI is in the center of a scrreen.
 		this.setLocationRelativeTo(null);
 		// before the frame is shown, displaying a short message to the
@@ -518,12 +530,4 @@ class InputFrame extends JFrame
 	}
 	
 	
-}
-public class PrTest 
-{
-	public static void main(String args[])
-	{
-		new InputFrame();
-
-	}
 }
