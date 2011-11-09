@@ -18,8 +18,7 @@ public class PredPrey {
 	private static GridAlg grid;
 	private static Output output;
 	private static double t = 500;
-	private static int T;
-	private static String dirname;
+	private static int T=20;
 
 	/**
 	 * Controls the IO and Algorithm classes.
@@ -31,6 +30,8 @@ public class PredPrey {
 	{
 		try
 		{
+			
+			System.out.println("...");
 			noAnimals = 2;
 
 			diffCo = new double[2][2];
@@ -38,9 +39,9 @@ public class PredPrey {
 
 			diffCo[0][0] = parameters[0];
 			diffCo[0][1] = parameters[1];
-			diffusionRate[0] = parameters[4];
-			diffCo[1][0] = parameters[2];
-			diffCo[1][1] = parameters[3];
+			diffusionRate[0] = parameters[2];
+			diffCo[1][0] = parameters[3];
+			diffCo[1][1] = parameters[4];
 			diffusionRate[1] = parameters[5];
 			step = parameters[6];
 			T = (int) parameters[7];
@@ -48,20 +49,18 @@ public class PredPrey {
 			createAnimals();
 			createGrid();
 			createOutput();
-			
-			dirname="./outputs";
 
-			
-			getOutput().cleanDirectory(dirname);
-			if(output.direrror) {
-			System.out.println("Failed to create "+dirname+" directory, output will be generated in working directory. Sorry!");
-			dirname=".";
-			}
+			System.out.println("Cleaning output directory...");
+		
+			getOutput().cleanDirectory("./outputs/");
 		
 			System.out.println("Simulating populations...");
 
 			int stepnum = 0;
 		
+			System.out.println(animals[0].getDensities().length);
+			System.out.println(getIo().getNeighbours().length);
+
 			for (double i = 0; i < t; i += getStep()) {
 			
 					if ((stepnum % T == 0) || (stepnum == 0)) 
@@ -70,9 +69,9 @@ public class PredPrey {
 						{
 
 							getOutput().printMeanDensity(
-									dirname+"/Mean" + animals[k].getName()
+									"./outputs/Mean" + animals[k].getName()
 											+ "Densities", animals[k].getDensities(), i);
-							getOutput().printPpm(dirname+"/" + animals[k].getName()
+							getOutput().printPpm("./outputs/" + animals[k].getName()
 							+ stepnum + ".ppm", animals[k].getDensities(),getIo().getNeighbours());
 						}
 
@@ -101,17 +100,31 @@ public class PredPrey {
 		try
 		{
 			noAnimals = 2;
+
 			diffCo = new double[2][2];
 			diffusionRate = new double[2];
+
+			
+
+			System.out.println("Cleaning output directories...");
+		
+			for (int l=0; l<parRange.length; l++)
+			{
+				getOutput().cleanDirectory("./outputs"+(l+1)+"/");
+			}
+			
+			System.out.println("Simulating populations...");
+
+			int stepnum = 0;
+		
 			
 			for (int l=0; l<parRange.length; l++)
 			{
-			
 				diffCo[0][0] = parameters[0];
 				diffCo[0][1] = parameters[1];
-				diffusionRate[0] = parameters[4];
-				diffCo[1][0] = parameters[2];
-				diffCo[1][1] = parameters[3];
+				diffusionRate[0] = parameters[2];
+				diffCo[1][0] = parameters[3];
+				diffCo[1][1] = parameters[4];
 				diffusionRate[1] = parameters[5];
 				step = parameters[6];
 				T = (int) parameters[7];
@@ -121,17 +134,8 @@ public class PredPrey {
 				createGrid();
 				createOutput();
 				
-			
-			dirname="./outputs/"+l;
-
-			getOutput().cleanDirectory(dirname);
-			if(output.direrror) {
-			System.out.println("Failed to create "+dirname+" directory, output will be generated in working directory. Sorry!");
-			dirname=".";
-			}
-
-				int stepnum = 0;
-				System.out.println("Simulating populations...");
+				System.out.println(animals[0].getDensities().length);
+				System.out.println(getIo().getNeighbours().length);
 	
 				for (double i = 0; i < t; i += getStep()) {
 				
@@ -141,9 +145,9 @@ public class PredPrey {
 							{
 	
 								getOutput().printMeanDensity(
-										dirname+"/Mean" + animals[k].getName()
+										"./outputs"+(l+1)+"/Mean" + animals[k].getName()
 												+ "Densities", animals[k].getDensities(), i);
-								getOutput().printPpm(dirname+"/" + animals[k].getName()
+								getOutput().printPpm("./outputs"+(l+1)+"/" + animals[k].getName()
 								+ stepnum + ".ppm", animals[k].getDensities(),getIo().getNeighbours());
 							}
 	
@@ -362,10 +366,18 @@ public class PredPrey {
 	public static void setOutput(Output output) {
 		PredPrey.output = output;
 	}
-  public static void main(String args[])
+
+
+
+public static void main(String args[])
 	{
-		new InputFrame();
-
+		if (args.length == 0)
+		{
+			new InputFrame();
+		}
+		else
+		{ 
+			System.out.println("File Selected");
+		}
 	}
-
 }
