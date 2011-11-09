@@ -117,6 +117,13 @@ public class MapReader {
 	/**
 	 * Set the array storage for the data to zeroes
 	 */
+/*	public void initialiseIntBuffer() {
+		for (int x = 0; x < intBuffer[0].length; x++) {
+			for (int y = 0; y < intBuffer.length; y++) {
+				intBuffer[y][x] = 0;
+			}
+		}
+	}*/
 	public void initialiseIntBuffer() {
 		for (int x = 0; x < intBuffer.length; x++) {
 			for (int y = 0; y < intBuffer[0].length; y++) {
