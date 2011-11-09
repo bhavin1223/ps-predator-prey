@@ -1,30 +1,41 @@
-\section{Testing} %chen+tom
+\section{Performance Analysis} %chen+tom
    
-   Tests were performed in order to profile the code's performance and scalability. The unix \emph{time} command was 
-   used to time the code runs, with `user' and `system' time being summed to find the total computation time.\newline{}
-   
-   The relationship between total computation time per cell and the number of cells was measured in order to quantify the overhead
-   needed by the code (see Figure \ref{overhead}). We found that, below a grid size of $\sim$100 by 100, overhead became important, whereas at 
-   larger grid sizes the computation time scaled linearly with the total number of cells. Any scaling worse than linear (such as 
-   total computation time being proportional to the NumberOfCells$^{1.2}$ would be a huge (and unnecessary) inefficiency, especially with larger grids.\newline{}
-   
-   Some overhead is inevitable in any code, but the amount of effort put into simplifying a problem (such as creating arrays of neighbours)
-   should depend on the expected size of the problem. Our code could probably have had less overhead, allowing it to run faster with smaller grid sizes,
-   but this would likely led to it having a worse (linear) scaling with cell number.
-   
-   
-   
-   \section{Analysis} %tom+chen
-   
-   \begin{figure}[h]
-   
-   \input{figs/overhead}
-   \caption{\label{overhead}This is a graph of total time spent on each cell, which shows that overheads such as array initialisation
-   and output (i.e. things not directly involved in the simulation) take up a significant fraction of computation
-   time with grids smaller than $\sim$100 by 100.}
-   \end{figure}
+    Because most optimisation in Java is done at runtime using Just-In-Time (JIT) compilation, there is not much to choose from in the way
+  	 of compiler flags. However, the way in which a problem is laid out is always very important; the main effect of performance testing
+ 	 was to identify inefficiencies within the code itself, such as unnecessary loops and calls to methods.\newline{}
+ 	
+ 	 Profiling of the code was done mostly with NetBeans and the unix \emph{time} command. Parameters were varied to asses the effect of a number of 
+ 	 factors, most notably overhead, output write time, and the effect of map size and complexity.\newline{}
+ 
+ 	 One of the main things which we identified	very quickly as a bottleneck was the output . Fortunately, implementing a bufered writer is
+	 very easy in Java; this alone increased performance by a factor of 5-6 (see Figure \ref{buffering}).\newline{}
+	
+  \begin{figure}[H]
+  \input{figs/buffering}
+  \caption{\label{buffering}This graph shows the advantage of using a buffered file writer over repeated calls to the printf() method. 
+  The data was generated from a simulation using a 100x100 grid but results will be similar for all grid sizes, since write time and computation
+  time (neglecting overhead) both scale linearly with the number of cells. }
+  \end{figure} 
 
-  
-
-
+	 In Figure \ref{overhead} we attempt to quantify the overhead in our code. This is done by calculating the total time spent on each cell in a 
+	 simulation, relative to the size of the simulation. With this metric, the code actually becomes `slower' for smaller simulations. This is 
+	 because a significant fraction of the simulation time is being spent on finding arrays of neigbhours and other `non essential' tasks. The graph
+	 shows that our code only begins to run as efficiently as possible once grids of $\sim$100x100 are used, above which the simulation time scales
+	 almost exactly as the number of cells (the flat part of Figure \ref{overhead}).\newline{}
+	 
+	 A `perfect' algorithm would spend the same amount of time on each cell regardless of grid size, but our code expends some effort on simplifying the problem 
+	 at the start of a run by creating the neighbours array. This allows it to be slightly faster on large grids, but adds overhead which becomes non-negligible 
+	 for small simulations.  
+	 
+  \begin{figure}[H]
+  \input{figs/overhead}
+  \caption{\label{overhead}This is a graph of total time spent on each cell, which shows that overheads such as array initialization
+  take up a significant fraction of computation time with grids smaller than $\sim$100 by 100.}
+  \end{figure}
+	 
+   The main conclusion we reached in our testing is that output, espcially large amounts of plain text, is \emph{expensive}. The performance of
+   the program could be dramatically increased by having the output in a more efficient format. This can be shown more simply just by running the 
+   code with an output frequency of 20 timesteps compared with an output frequency of 2000 timesteps (a single output for a t=0..500, timestep=0.4
+   simulation). This give times of $\sim$38.0 and $\sim$31.5 seconds respectively, even with buffered output. This then accounts for 
+   $\sim$ 17\% of the computation time of a simulation, which is less than ideal.  \newline{}
 
