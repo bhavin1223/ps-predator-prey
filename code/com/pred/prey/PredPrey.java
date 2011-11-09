@@ -14,7 +14,7 @@ public class PredPrey {
 	private static int noAnimals;
 	private static Animal[] animals;
 	private static String fileName;
-	private static InOut io;
+	private static MapReader io;
 	private static GridAlg grid;
 	private static Output output;
 	private static double t = 500;
@@ -203,7 +203,7 @@ public class PredPrey {
 	}
 
 	public static void createGrid() {
-		setIo(new InOut(fileName));
+		setIo(new MapReader(fileName));
 		int[][] neighbours = getIo().getNeighbours();
 		setGrid(new GridAlg(neighbours, animals));
 		getGrid().setStep(getStep());
@@ -296,7 +296,7 @@ public class PredPrey {
 	 * 
 	 * @return io	The class responsible for reading/parsing
 	 */
-	public static InOut getIo() {
+	public static MapReader getIo() {
 		return io;
 	}
 
@@ -305,7 +305,7 @@ public class PredPrey {
 	 * 
 	 * @param A class responsible for reading/parsing
 	 */
-	public static void setIo(InOut io) {
+	public static void setIo(MapReader io) {
 		PredPrey.io = io;
 	}
 
