@@ -50,6 +50,7 @@ public class PredPrey {
 			step = parameters[6];
 			T = (int) parameters[7];
 			fileName = fileNameIn;
+			setIo(new MapReader(fileName));
 			createAnimals();
 			createGrid();
 			createOutput();
@@ -187,7 +188,7 @@ public class PredPrey {
 	}
 
 	/**
-	 * Creates the animals as specified by the gui
+	 * Creates the animals as specified by the gui or file
 	 */
 	public  void createAnimals() {
 		animals = new Animal[noAnimals];
@@ -196,6 +197,7 @@ public class PredPrey {
 			animals[i] = new Animal(noAnimals);
 			animals[i].setDiffCo(diffCo[i]);
 			animals[i].setDiffusionRate(diffusionRate[i]);
+			animals[i].initiateDensities(getIo().getNeighbours().length,getIo().getNeighbours()[0].length);
 		}
 	
 		 animals[0].setName("Hare"); 
@@ -203,7 +205,6 @@ public class PredPrey {
 	}
 
 	public  void createGrid() {
-		setIo(new MapReader(fileName));
 		int[][] neighbours = getIo().getNeighbours();
 		setGrid(new GridAlg(neighbours, animals));
 		getGrid().setStep(getStep());
@@ -408,15 +409,15 @@ public class PredPrey {
 		return params;
 	}
 
-public static void main(String args[]) {
+    public static void main(String args[]) {
 	
-		// Launch GUI or take options from file depending on command line arguments
-		if (args.length == 0) new InputFrame();
-		else { 
-			PredPrey pp = new PredPrey();
-			double[] params = pp.getSettings();
-			String inputFile = args[0];
-			pp.run(params, inputFile);
-		}
+	// Launch GUI or take options from file depending on command line arguments
+	if (args.length == 0) new InputFrame();
+	else { 
+	    PredPrey pp = new PredPrey();
+	    double[] params = pp.getSettings();
+	    String inputFile = args[0];
+	    pp.run(params, inputFile);
 	}
+    }
 }

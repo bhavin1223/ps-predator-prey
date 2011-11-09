@@ -104,12 +104,15 @@ public class GridAlg {
 	 * distributed number. Only the land squares are filled with animals.
 	 */
 	public void initaliseDensities() {
+
 		double randomValue;
 
+		//loops over all of the animals
 		for (int i = 0; i < getAnimals().length; i++) {
 			getAnimals()[i].initiateDensities(getNeighbours().length,
 					getNeighbours()[0].length);
 
+			//loops over all of the cells filling with a random density
 			for (int x = 0; x < getNeighbours()[0].length; x++) {
 			
 				for (int y = 0; y < getNeighbours().length; y++) {
@@ -129,7 +132,7 @@ public class GridAlg {
 	}
 
 	/**
-	 * Method for creating random densities which will fill the density array.
+	 * Method for creating random pseudo-normally distributed densities which will fill the density array.
 	 * 
 	 * @param dMin
 	 *            Bottom of the range of possible numbers
@@ -163,12 +166,7 @@ public class GridAlg {
 			for (int x = 1; x < (getNeighbours()[0].length-1); x++) {
 				for (int y = 1; y < (getNeighbours().length-1); y++) {
 					if (getNeighbours(y, x) != -1) {
-						animals[i].calcNextDensity(y, x, dt, animals,
-								neighbours[y][x]);
-						// if(animals[i].getNextDensities()[j][k]!=0){
-						// System.out.println(animals[i].getName() + " "
-						// +animals[i].getNextDensities()[j][k]);
-						// }
+					    animals[i].calcNextDensity(y, x, dt, animals,neighbours[y][x]);
 					}
 				}
 			}
@@ -180,13 +178,6 @@ public class GridAlg {
 		}
 
 	}
-
-	/*
-	 * Not sure why we need two different methods here. The one below is best?
-	 * Two different methods to see how the algorithm behaves under each update
-	 * order. The one above is possibly more correct as animals are eaten,
-	 * reproduce and die in the same step.
-	 */
 
 	/**
 	 * Updates the grid and in parallel. Runs sequentially through the cells for
