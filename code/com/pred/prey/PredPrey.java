@@ -56,6 +56,8 @@ public class PredPrey {
 			createOutput();
 		
 			getOutput().cleanDirectory("./outputs/");
+			
+			getOutput().GetLandArea(getIo().getNeighbours());
 		
 			System.out.print("Simulating populations...");
 

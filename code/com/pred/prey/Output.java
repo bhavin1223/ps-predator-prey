@@ -15,6 +15,7 @@ public class Output {
 	int x, y;
 	double maxValue, minValue;
 	boolean direrror = false;
+	int landarea=0;
 	double[][] density;
 
 	public Output() {
@@ -191,10 +192,28 @@ public class Output {
 			}
 		}
 
-		average = sum/ ((double) (density.length - 2) * (double) (density[0].length - 2));
+		average = sum/landarea;
 
 		out.printf("%f %f\n", time, average);
 		out.close();
+	}
+	
+	/**
+	 * Method to write the average density with corresponding time to a file.
+	 * @param neighbours
+	 **/
+	public void GetLandArea(int[][] neighbours) {
+	
+		for (y = 1; y < (neighbours.length - 1); y++) {
+			for (x = 1; x < (neighbours[0].length - 1); x++) {
+			
+				if(neighbours[y][x] != -1 ) {
+				landarea++;
+				}
+			
+			}
+		}
+	
 	}
 
 }

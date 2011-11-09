@@ -15,5 +15,5 @@ set xlabel 'Time [s]'
 
 set title 'Population Density vs. Time'
 
-plot './outputs/MeanHareDensities' u 1:2 smooth csplines lw 3 title 'Hares', './outputs/MeanPumaDensities' u 1:2 smooth csplines lw 3 title 'Pumas'
+plot './outputs/MeanHareDensities' u 1:2  w l lw 3 title 'Hares', './outputs/MeanPumaDensities' u 1:2 w l lw 3 title 'Pumas'
 
