@@ -51,7 +51,8 @@ public class GridAlg {
 	/**
 	 * Sets the array of animals to an input density array
 	 * 
-	 * @param
+	 * @param animals
+	 *           array of animals setting to the grids animals.
 	 */
 	public void setAnimals(Animal[] animals) {
 		this.animals = animals;
@@ -66,10 +67,18 @@ public class GridAlg {
 		return this.animals;
 	}
 
+	/**
+	 * Returns the time step
+	 */
 	public double getStep() {
 		return this.dt;
 	}
 
+
+	/**
+	 * Sets the time step
+	 * 
+	 */
 	public void setStep(double step) {
 		this.dt = step;
 	}
@@ -87,6 +96,11 @@ public class GridAlg {
 		return neighbours[i][j];
 	}
 
+	/**
+	 * Returns the array of land neighbours.
+	 * 
+	 * @return neighbours Number of land neighbours point i,j has.
+	 */    
 	public int[][] getNeighbours() {
 		return neighbours;
 	}
@@ -109,9 +123,7 @@ public class GridAlg {
 
 		//loops over all of the animals
 		for (int i = 0; i < getAnimals().length; i++) {
-			getAnimals()[i].initiateDensities(getNeighbours().length,
-					getNeighbours()[0].length);
-
+		
 			//loops over all of the cells filling with a random density
 			for (int x = 0; x < getNeighbours()[0].length; x++) {
 			
@@ -123,7 +135,7 @@ public class GridAlg {
 						randomValue = distributedRandom(0, 10);
 					}
 
-					
+					//sets the random value to the array
 					getAnimals()[i].setDensity(y, x, randomValue);
 					getAnimals()[i].setNextDensity(y, x, randomValue);
 				}

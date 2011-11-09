@@ -1,7 +1,5 @@
 package com.pred.prey;
 
-import java.util.Random;
-
 /**
  * Class governs the structure of an animal density update.
  * 
@@ -31,10 +29,8 @@ public class Animal {
 	boolean bigChange = false;
 
 	/**
-	 * Coefficients scaling how amounts of the different animals effect this
-	 * animal. Matrix is rectangular N*N+1 where N is the number of types of
-	 * animals First row are linear coefficients and the rest are cross
-	 * quadratic terms Most of the grid will be 0 e.g. birth and death rates.
+	 * Coefficients scaling how densitied of the different animals effect this
+	 * animal. An array with a coeficient for each animal in the simulation.
 	 */
 	private double[] diffCoefficients;
 
@@ -42,17 +38,6 @@ public class Animal {
 	 * The name of the animal
 	 */
 	private String name;
-
-	/**
-	 * USE THIS Creates an animal with no parameters initially input as they are
-	 * all input by the user in the GUI Only the number of animals in the
-	 * simulation needs to be initially given.
-	 */
-	public Animal(int numAnimals, int width, int height) {
-		diffCoefficients = new double[numAnimals];
-		densities = new double[width][height];
-		nextDensities = new double[width][height];
-	}
 
 	/**
 	 * USE THIS Creates an animal with no parameters initially input as they are
@@ -81,36 +66,6 @@ public class Animal {
 		setDiffusionRate(diffusionRate);
 		setDiffCo(diffCo);
 		setNextDensities(densities);
-	}
-
-	/**
-	 * The initial density array and diffusion rate must be specified when an
-	 * animal is created.
-	 * 
-	 * @param densities
-	 *            Initial density array
-	 * @param diffusionRate
-	 *            Rate this animal moves out/in to the cell
-	 */
-	public Animal(double[][] densities, double diffusionRate) {
-		setDensities(densities);
-		setDiffusionRate(diffusionRate);
-		setNextDensities(densities);
-	}
-
-	/**
-	 * The initial density array and diffusion rate must be specified when an
-	 * animal is created.
-	 * 
-	 * @param densities
-	 *            Initial density array
-	 * @param diffusionRate
-	 *            Rate this animal moves out/in to the cell
-	 */
-	public Animal(Animal animal) {
-		setDensities(animal.getDensities());
-		setDiffusionRate(animal.getDiffusionRate());
-		setNextDensities(animal.getDensities());
 	}
 
 	/**
@@ -148,11 +103,11 @@ public class Animal {
 		/**
 		 * Calculates the diffusion of the animal
 		 */
-			newDensity += dt * getDiffusionRate() * getDensity(y, x - 1);
-			newDensity += dt * getDiffusionRate() * getDensity(y, x + 1);
-			newDensity += dt * getDiffusionRate() * getDensity(y - 1, x);
-			newDensity += dt * getDiffusionRate() * getDensity(y + 1, x);
-			newDensity -= dt * getDiffusionRate() * neighbours * oldDensity;
+		newDensity += dt * getDiffusionRate() * getDensity(y, x - 1);
+		newDensity += dt * getDiffusionRate() * getDensity(y, x + 1);
+		newDensity += dt * getDiffusionRate() * getDensity(y - 1, x);
+		newDensity += dt * getDiffusionRate() * getDensity(y + 1, x);
+		newDensity -= dt * getDiffusionRate() * neighbours * oldDensity;
 
 
 		// Need to stop densities going negative
