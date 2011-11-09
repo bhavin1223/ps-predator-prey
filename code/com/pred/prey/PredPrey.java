@@ -96,6 +96,9 @@ public class PredPrey {
 		}
 
 	}
+	
+	// Second (very similar) version of the run method used 
+	// to simulate a range of parameters
 	public  void run(double[] parameters, String fileNameIn, double[] parRange, int indicator) throws Exception 
 	{
 		try

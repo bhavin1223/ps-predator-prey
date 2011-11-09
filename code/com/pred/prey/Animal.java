@@ -170,7 +170,7 @@ public class Animal {
 	 */
 	public void applyTimeStep() {
 
-				densities = nextDensities;
+				densities = nextDensities.clone();
 
 	}
 
