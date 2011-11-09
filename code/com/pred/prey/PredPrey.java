@@ -102,16 +102,17 @@ public class PredPrey {
 	
 	// Second (very similar) version of the run method used 
 	// to simulate a range of parameters
-	public  void run(double[] parameters, String fileNameIn, double[] parRange, int indicator) throws Exception 
+	public  void run(double[] parameters, String fileNameIn, double[] parRange, int indicator) 
 	{
-		try
-		{
+//		try
+//		{
 			noAnimals = 2;
 
 			diffCo = new double[2][2];
 			diffusionRate = new double[2];
 
 		
+			createOutput();
 			for (int l=0; l<parRange.length; l++)
 			{
 				getOutput().cleanDirectory("./outputs"+(l+1)+"/");
@@ -134,9 +135,9 @@ public class PredPrey {
 				T = (int) parameters[7];
 				parameters[indicator] = parRange[l];
 				fileName = fileNameIn;
+				setIo(new MapReader(fileName));
 				createAnimals();
 				createGrid();
-				createOutput();
 	
 				for (double i = 0; i < t; i += getStep()) {
 				
@@ -167,11 +168,11 @@ public class PredPrey {
 				}
 			}
 			System.out.println("...done");
-		}
-		catch(Exception e)
-		{
-			System.out.println(e.getMessage());
-		}
+//		}
+//		catch(Exception e)
+//		{
+//			System.out.println(e.getMessage());
+//		}
 	}
 
 	/**
