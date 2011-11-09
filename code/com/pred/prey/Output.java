@@ -37,14 +37,14 @@ public class Output {
 		{
 			File[] files = directory.listFiles();
 		
-			System.out.println("Cleaning "+dirname+" directory...");
+			System.out.println("   Cleaning "+dirname+" directory...");
 		
 			for (File file : files) 
 			{
 				if (!file.delete())
 				{
 					//failed to delete file
-					System.out.println("Failed to delete "+file);
+					System.out.println("   Failed to delete "+file);
 				}
 			}	
 
@@ -54,7 +54,7 @@ public class Output {
 		 **/
 		else 
 		{
-			System.out.println("No output directory found, creating "+dirname+" directory.");
+			System.out.println("   No output directory found, creating "+dirname+" directory.");
 			
 			if(!directory.mkdir())
 			{
