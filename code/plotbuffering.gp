@@ -15,5 +15,5 @@ set ylabel 'log$_{10}$ Run Time [s]'
 
 set title 'Effect of Buffered File Writing'
 
-plot './output_timing100.dat' u 1:(log10($2)) smooth bezier title '100x100 Buffered', './output_timing100.dat' u 1:(log10($3)) smooth bezier title '100x100 Unbuffered'
+plot './output_timing100.dat' u 1:(log10($2)) smooth bezier lw 3 title '100x100 Buffered', './output_timing100.dat' u 1:(log10($3)) smooth bezier lw 3 title '100x100 Unbuffered'
 
