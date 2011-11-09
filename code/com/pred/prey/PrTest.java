@@ -313,12 +313,11 @@ class InputFrame extends JFrame
 						readValues();
 						System.out.println("...");
 						// no need to see the GUI after simulation have started
-						setVisible(false);
-						if (range.isSelected())
-						{PredPrey.run(parameters, file, parameterRange, choise2Indicator);}
-						else
-						{PredPrey.run(parameters, file);}
-						setVisible(true);
+						System.out.println("Algorithm running please wait...");
+						PredPrey pp = new PredPrey();
+						if (range.isSelected()) pp.run(parameters, file, parameterRange, choise2Indicator);
+						else pp.run(parameters, file);
+						System.out.println("Algorithm complete.");
 					}
 					// if some inputs are not doubles, an error message is shown
 					// allowing the user to try again

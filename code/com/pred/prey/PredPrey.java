@@ -13,17 +13,17 @@ import java.io.InputStreamReader;
  * @since 1.0
  */
 public class PredPrey {
-	private static double[][] diffCo;
-	private static double[] diffusionRate;
-	private static double step;
-	private static int noAnimals;
-	private static Animal[] animals;
-	private static String fileName;
-	private static MapReader io;
-	private static GridAlg grid;
-	private static Output output;
-	private static double t = 500;
-	private static int T=20;
+	private  double[][] diffCo;
+	private  double[] diffusionRate;
+	private  double step;
+	private  int noAnimals;
+	private  Animal[] animals;
+	private  String fileName;
+	private  MapReader io;
+	private  GridAlg grid;
+	private  Output output;
+	private  double t = 500;
+	private  int T=20;
 
 	/**
 	 * Controls the IO and Algorithm classes.
@@ -31,7 +31,7 @@ public class PredPrey {
 	 * @param args
 	 *            Program does not take command line arguments
 	 */
-	public static void run(double[] parameters, String fileNameIn)
+	public  void run(double[] parameters, String fileNameIn)
 	{
 		try
 		{
@@ -96,7 +96,7 @@ public class PredPrey {
 		}
 
 	}
-	public static void run(double[] parameters, String fileNameIn, double[] parRange, int indicator) throws Exception 
+	public  void run(double[] parameters, String fileNameIn, double[] parRange, int indicator) throws Exception 
 	{
 		try
 		{
@@ -186,7 +186,7 @@ public class PredPrey {
 	/**
 	 * Creates the animals as specified by the gui
 	 */
-	public static void createAnimals() {
+	public  void createAnimals() {
 		animals = new Animal[noAnimals];
 
 		for (int i = 0; i < noAnimals; i++) {
@@ -199,14 +199,14 @@ public class PredPrey {
 		 animals[1].setName("Puma");
 	}
 
-	public static void createGrid() {
+	public  void createGrid() {
 		setIo(new MapReader(fileName));
 		int[][] neighbours = getIo().getNeighbours();
 		setGrid(new GridAlg(neighbours, animals));
 		getGrid().setStep(getStep());
 	}
 
-	public static void createOutput() {
+	public  void createOutput() {
 		setOutput(new Output());
 	}
 
@@ -293,7 +293,7 @@ public class PredPrey {
 	 * 
 	 * @return io	The class responsible for reading/parsing
 	 */
-	public static MapReader getIo() {
+	public  MapReader getIo() {
 		return io;
 	}
 
@@ -302,8 +302,8 @@ public class PredPrey {
 	 * 
 	 * @param A class responsible for reading/parsing
 	 */
-	public static void setIo(MapReader io) {
-		PredPrey.io = io;
+	public  void setIo(MapReader io) {
+		this.io = io;
 	}
 
 	/**
@@ -313,7 +313,7 @@ public class PredPrey {
 	 * 
 	 * @return The class that runs the algorithm
 	 */
-	public static GridAlg getGrid() {
+	public  GridAlg getGrid() {
 		return grid;
 	}
 
@@ -324,8 +324,8 @@ public class PredPrey {
 	 * 
 	 * @param grid S class that runs the algorithm
 	 */
-	public static void setGrid(GridAlg grid) {
-		PredPrey.grid = grid;
+	public  void setGrid(GridAlg grid) {
+		this.grid = grid;
 	}
 
 	/**
@@ -333,7 +333,7 @@ public class PredPrey {
 	 * 
 	 * @return A double precision time step 
 	 */
-	public static double getStep() {
+	public  double getStep() {
 		return step;
 	}
 
@@ -342,8 +342,8 @@ public class PredPrey {
 	 * 
 	 * @param step A double precision time step
 	 */
-	public static void setStep(double step) {
-		PredPrey.step = step;
+	public  void setStep(double step) {
+		this.step = step;
 	}
 
 	/**
@@ -351,7 +351,7 @@ public class PredPrey {
 	 * 
 	 * @return A class that creates visualisations of the results
 	 */
-	public static Output getOutput() {
+	public  Output getOutput() {
 		return output;
 	}
 
@@ -360,15 +360,15 @@ public class PredPrey {
 	 * 
 	 * @param output	An Ouput class that creates visualisations of the results
 	 */
-	public static void setOutput(Output output) {
-		PredPrey.output = output;
+	public  void setOutput(Output output) {
+		this.output = output;
 	}
 	
 	/**
 	 * Returns the options listed in the settings.txt file in the correct format for the program.
 	 * @return Parameters array.
 	 */
-	private static double[] getSettings() {
+	private  double[] getSettings() {
 		
 		double[] params;
 		String inLine, fileName = "settings.txt";
@@ -410,9 +410,10 @@ public static void main(String args[]) {
 		// Launch GUI or take options from file depending on command line arguments
 		if (args.length == 0) new InputFrame();
 		else { 
-			double[] params = getSettings();
+			PredPrey pp = new PredPrey();
+			double[] params = pp.getSettings();
 			String inputFile = args[0];
-			run(params, inputFile);
+			pp.run(params, inputFile);
 		}
 	}
 }
