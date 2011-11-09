@@ -5,10 +5,8 @@ set terminal epslatex leveldefault color blacktext \
    
 set output 'density.tex'
 
-set yrange [0:2]
+set yrange [0:5]
 set xrange [0:500]
-
-set size 0.8
 
 set ylabel 'Density'
 set xlabel 'Time [s]'

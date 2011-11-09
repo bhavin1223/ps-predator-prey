@@ -132,7 +132,7 @@ public class GridAlg {
 					if (getNeighbours(y, x) == -1) {
 						randomValue = 0;
 					} else {
-						randomValue = distributedRandom(0, 10);
+						randomValue = random.nextDouble()*5;
 					}
 
 					//sets the random value to the array
@@ -141,28 +141,6 @@ public class GridAlg {
 				}
 			}
 		}
-	}
-
-	/**
-	 * Method for creating random pseudo-normally distributed densities which will fill the density array.
-	 * 
-	 * @param dMin
-	 *            Bottom of the range of possible numbers
-	 * @param dMax
-	 *            Top of the range of numbers
-	 * @return
-	 */
-	public double distributedRandom(double dMin, double dMax) {
-		double ranNum = 0;
-
-		for (int i = 0; i < 3; i++) {
-			ranNum += random.nextDouble() * (dMax - dMin);
-		}
-
-		ranNum = ranNum / 3;
-		ranNum += dMin;
-
-		return ranNum;
 	}
 
 	/**

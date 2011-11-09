@@ -113,14 +113,15 @@ public class PredPrey {
 
 		
 			createOutput();
+			
+			int stepnum = 0;
+						
 			for (int l=0; l<parRange.length; l++)
 			{
 				getOutput().cleanDirectory("./outputs"+(l+1)+"/");
 			}
 			
 			System.out.print("Simulating populations...");
-
-			int stepnum = 0;
 		
 			
 			for (int l=0; l<parRange.length; l++)
