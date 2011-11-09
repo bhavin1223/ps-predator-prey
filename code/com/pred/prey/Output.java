@@ -185,15 +185,13 @@ public class Output {
 			ioe.getMessage();
 			}
 
-		for (x = 1; x < (density[0].length - 1); x++) 
-		{
-			for (y = 1; y < (density.length - 1); y++) 
-			{
-				sum += density[y][x];
+		for (x = 1; x < (density.length - 1); x++) {
+			for (y = 1; y < (density[0].length - 1); y++) {
+				sum += density[x][y];
 			}
 		}
 
-		average = sum/ ((double) (density.length - 1) * (double) (density[0].length - 1));
+		average = sum/ ((double) (density.length - 2) * (double) (density[0].length - 2));
 
 		out.printf("%f %f\n", time, average);
 		out.close();

@@ -12,15 +12,10 @@ import java.io.UnsupportedEncodingException;
  * Read a .dat file in and parse the data into (an) array(s).
  * 
  * @author Jorge M.
- * @version 2.0, October, 29th 2011
+ * @version 2.1, November, 9th 2011
  * @since 1.0
  */
-
-/*
- * May split into additional classes especially for GUI (thinking of
- * actionlisteners JPanel extensions etc.
- */
-public class InOut {
+public class MapReader {
 	private int[][] intBuffer;
 	private int[][] neighbours;
 	private int cols, rows;
@@ -30,18 +25,17 @@ public class InOut {
 	 * just above.
 	 */
 	private String defaultFile = "./small.dat";
-
 	// private String defaultFile = "./islands.dat";
 
 	/**
 	 * Constructor
 	 */
-	public InOut(String pathToFile) {
+	public MapReader(String pathToFile) {
 		loadLandscape(pathToFile);
 		countNeighbours();
 	}
 
-	public InOut() {
+	public MapReader() {
 		loadLandscape(defaultFile);
 		countNeighbours();
 	}
@@ -123,14 +117,21 @@ public class InOut {
 	/**
 	 * Set the array storage for the data to zeroes
 	 */
-	public void initialiseIntBuffer() {
+/*	public void initialiseIntBuffer() {
 		for (int x = 0; x < intBuffer[0].length; x++) {
 			for (int y = 0; y < intBuffer.length; y++) {
 				intBuffer[y][x] = 0;
 			}
 		}
+	}*/
+	public void initialiseIntBuffer() {
+		for (int x = 0; x < intBuffer.length; x++) {
+			for (int y = 0; y < intBuffer[0].length; y++) {
+				intBuffer[x][y] = 0;
+			}
+		}
 	}
-
+	
 	/**
 	 * Calculate the number of neighbours at each location (vertically and
 	 * horizontally) and fill in the array
@@ -139,30 +140,22 @@ public class InOut {
 		neighbours = new int[rows + 2][cols + 2];
 
 		// Set halos to zeros
-		for (int x = 0; x < neighbours[0].length; x++) {
-			for (int y = 0; y < neighbours.length; y++) {
-				neighbours[y][x] = -1;
+		for (int x = 0; x < neighbours.length; x++) {
+			for (int y = 0; y < neighbours[0].length; y++) {
+				neighbours[x][y] = -1;
 			}
 		}
 
 		// Sum up neighbours
-		for (int x = 1; x < intBuffer[0].length - 1; x++) {
-			for (int y = 1; y < intBuffer.length - 1; y++) {
-				if (intBuffer[y][x] == 1) {
-					neighbours[y][x] = intBuffer[y - 1][x]
-							+ intBuffer[y][x - 1] + intBuffer[y][x + 1]
-							+ intBuffer[y + 1][x];
+		for (int x = 1; x < intBuffer.length - 1; x++) {
+			for (int y = 1; y < intBuffer[0].length - 1; y++) {
+				if (intBuffer[x][y] == 1) {
+					neighbours[x][y] = intBuffer[x - 1][y]
+							+ intBuffer[x][y - 1] + intBuffer[x][y + 1]
+							+ intBuffer[x + 1][y];
 				}
-				// else {
-				// neighbours[i][j] = -1;
-				// }
 			}
 		}
-		/*
-		 * for (int i = 0; i < intBuffer.length; i++) { for (int j = 0; j <
-		 * intBuffer[0].length; j++) { System.out.print(intBuffer[i][j]); }
-		 * System.out.println(); }
-		 */
 	}
 
 	/**
