@@ -119,6 +119,7 @@ public class PredPrey {
 			for (int l=0; l<parRange.length; l++)
 			{
 				getOutput().cleanDirectory("./outputs"+(l+1)+"/");
+				
 			}
 			
 			System.out.print("Simulating populations...");
@@ -139,6 +140,8 @@ public class PredPrey {
 				setIo(new MapReader(fileName));
 				createAnimals();
 				createGrid();
+				
+				getOutput().GetLandArea(getIo().getNeighbours());
 	
 				for (double i = 0; i < t; i += getStep()) {
 				
