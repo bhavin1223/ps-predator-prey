@@ -3,6 +3,7 @@
 \author{Names Here}
 \date{November 2011}
 
+\usepackage{graphicx}
 \usepackage{tikz}
 \usepackage[margin=3.2cm]{geometry}
 \usepackage{float}
@@ -135,10 +136,17 @@ H & PH \end{array} \right)\]
       \newline{}
       \newline{}
       
-      The methods responsible for creating the output are included in the Output class. Depending on the user's preference, the code will create one output directory (for single initial values) or a number of such directories (for the range of initial values), i.e. one for each run. In both cases the user will be able to view the distribution of both populations across the landscape every $T$ time steps. The form of the output is a number of *.ppm files which can be viewed as images, or "maps", similar to these showed in the ****FIGURE******.
+      The methods responsible for creating the output are included in the Output class. Depending on the user's preference, the code will create one output directory (for single initial values) or a number of such directories (for the range of initial values), i.e. one for each run. In both cases the user will be able to view the distribution of both populations across the landscape every $T$ time steps. The form of the output is a number of *.ppm files which can be viewed as images, or "maps", similar to these showed in the figure below.
       \newline{}
-      % We could put one of the images here. or two maybe, one for pumas and one for hares?
-      \newline{}
+      
+      \begin{figure}[H]
+      \begin{center}
+      \includegraphics[width=100mm,height=130mm]{figs/hare.pdf}
+      \caption{This figure shows one of the output files created during a simulation using a $100 \times 100$ grid and default initial conditions. Various shades of grey represent the density of hares after 50 time steps, with a tie step set to 0.4.}
+      \end{center}
+      \end{figure}
+      
+     % \newline{}
       The number of the *.ppm files created depends on the initial parameters specified by the user, $dt$ and $T$. To maximise the level of output clarity we decided to make separate landscape "maps" for each type of animal, here pumas and hares. In each "map" the pixels corresponding to water cells are shown in blue, while the land cells are white. The variation in density of pumas/hares across the land cells is represented by different shades of grey, with black colour corresponding to the maximum value. 
       \newline{}
       For each type of animal, every $T$ time steps, the code also calculates the mean population density and writes it along with the corresponding time into a file. 
