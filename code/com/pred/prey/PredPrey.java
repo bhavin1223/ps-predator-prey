@@ -36,7 +36,6 @@ public class PredPrey {
 		try
 		{
 			
-			System.out.println("...");
 			noAnimals = 2;
 
 			diffCo = new double[2][2];
@@ -54,17 +53,12 @@ public class PredPrey {
 			createAnimals();
 			createGrid();
 			createOutput();
-
-			System.out.println("Cleaning output directory...");
 		
 			getOutput().cleanDirectory("./outputs/");
 		
-			System.out.println("Simulating populations...");
+			System.out.print("Simulating populations...");
 
 			int stepnum = 0;
-		
-			System.out.println(animals[0].getDensities().length);
-			System.out.println(getIo().getNeighbours().length);
 
 			for (double i = 0; i < t; i += getStep()) {
 			
@@ -78,7 +72,9 @@ public class PredPrey {
 											+ "Densities", animals[k].getDensities(), i);
 							getOutput().printPpm("./outputs/" + animals[k].getName()
 							+ stepnum + ".ppm", animals[k].getDensities(),getIo().getNeighbours());
+							
 						}
+													System.out.print('.');
 
 					}
 
@@ -109,16 +105,13 @@ public class PredPrey {
 			diffCo = new double[2][2];
 			diffusionRate = new double[2];
 
-			
-
-			System.out.println("Cleaning output directories...");
 		
 			for (int l=0; l<parRange.length; l++)
 			{
 				getOutput().cleanDirectory("./outputs"+(l+1)+"/");
 			}
 			
-			System.out.println("Simulating populations...");
+			System.out.print("Simulating populations...");
 
 			int stepnum = 0;
 		
@@ -138,9 +131,6 @@ public class PredPrey {
 				createAnimals();
 				createGrid();
 				createOutput();
-				
-				System.out.println(animals[0].getDensities().length);
-				System.out.println(getIo().getNeighbours().length);
 	
 				for (double i = 0; i < t; i += getStep()) {
 				
@@ -154,7 +144,9 @@ public class PredPrey {
 												+ "Densities", animals[k].getDensities(), i);
 								getOutput().printPpm("./outputs"+(l+1)+"/" + animals[k].getName()
 								+ stepnum + ".ppm", animals[k].getDensities(),getIo().getNeighbours());
+								
 							}
+															System.out.print('.');
 	
 						}
 	
