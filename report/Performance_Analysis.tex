@@ -1,7 +1,7 @@
 \section{Performance Analysis} %chen+tom
    
     Because most optimisation in Java is done at runtime using Just-In-Time (JIT) compilation, there is not much to choose from in the way
-  	 of compiler flags. The way in which a problem is laid out is always very important, however; our main aim in performance testing
+  	 of compiler flags. The way in which a problem is laid out is always very important, however, so our main aim in performance testing
  	 was to identify inefficiencies within the code itself, such as unnecessary loops and calls to methods.\newline{}
  	
  	 Profiling of the code was done mostly with NetBeans and the unix \emph{time} command. Parameters were varied to asses the effect of a number of 
@@ -9,6 +9,12 @@
  
  	 One of the main things which we identified	very quickly as a bottleneck was the output . Fortunately, implementing a bufered writer is
 	 very easy in Java; this alone increased performance by a factor of 5-6 (see Figure \ref{buffering}).\newline{}
+	 
+	The performance of the program could be increased even further by having the output in a more efficient format. This can be shown more 
+   simply by running the code with an output frequency of 50 timesteps compared with an output frequency of 5000 timesteps (a single output for a t=0..500, timestep=0.4
+   simulation). This give run times of $\sim$21.5 and $\sim$17.0 seconds respectively, even with buffered output. This output then accounts for 
+   $\sim$ 17\% of the computation time of a simulation, which is obviously not ideal.  \newline{}
+
 	
   \begin{figure}[h]
   \begin{center}
@@ -37,10 +43,3 @@
   \end{center}
   \end{figure}
   
-	 
-   The main conclusion we reached in our testing is that output, espcially large amounts of plain text, is \emph{expensive}. The performance of
-   the program could be dramatically increased by having the output in a more efficient format. This can be shown more simply just by running the 
-   code with an output frequency of 20 timesteps compared with an output frequency of 2000 timesteps (a single output for a t=0..500, timestep=0.4
-   simulation). This give run times of $\sim$38.0 and $\sim$31.5 seconds respectively, even with buffered output. This output then accounts for 
-   $\sim$ 17\% of the computation time of a simulation, which obviously not ideal.  \newline{}
-
