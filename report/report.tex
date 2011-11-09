@@ -115,8 +115,32 @@ H & PH \end{array} \right)\]
           The Grid Algebra class governs methods for updating the animal densities across the  grid. The constructor takes an array of animals passed from the main class and the 2 dimensional array of neighbours passed from the input class. Upon creation the GridAlg class initialises the densities of each animal in each grid cell to a uniformly distributed random number between 0 and 1, if different density distributions were required for each animal it would be easy to edit the code to accommodate this. A couple of different methods of updating the grid are held in the class, either updating in parallel, for all animals (all of the old densities are replaced by new one's at the same time) or updating the animals one by one. Other update methods which would be interesting to investigate would be updating the cells one by one and updating random cells and or animals. In this experiment only the fully parallel update is used for investigation.
           The output class takes the density distribution of the animals every ***time steps, calculates and outputs the average density as well as an image of the density distribution. All that is passed to methods in this class from the program is the density array of an animal and a file name for saving as output. 
       \subsection{Algorithm} %matt
-      The equations shown in the problem Model are specific to Hares and Pumas located in the cells of the world grid. Out initial approach was to write a computational algorithm that simply iterated the equations for the density arrays of the two animals. The next stage in the development was creating an abstract Animal class, for which subclasses provided implementation of the kernel specific to that animal. It was soon noticed that this abstraction could be removed, and the problem generalised even further resulting in the current algorithm... TBC
-      \subsection{Input/Output} %milena
+      The equations shown in the problem Model are specific to Hares and Pumas located in the cells of the world grid. Out initial approach was to write a computational algorithm that simply iterated the equations for the density arrays of the two animals. The next stage in the development was creating an abstract Animal class, for which subclasses provided the implementation of the kernel specific to that animal. It was soon noticed that this abstraction could be removed, and the problem generalised even further resulting in the current algorithm: A general Animal class is used to represent any species present in the world. Instances of Animal are created at runtime for all such species. These objects contain all of the information about the animal, most importantly: \begin{lstlisting}[language=Java]
+private double[][] densities // The density of the animal in each cell      
+private double diffusionRate // The diffusion rate of the animal
+private double diffCo[] // An array of coefficients that control how each of the 
+					    // other animals effects this animal
+\end{lstlisting}
+      To ilustrate more clearly what diffusionRate and diffCo[] are, their values are shown below for the simple Hare Puma case:
+      
+      
+Hare:
+
+diffusionRate = k (see Model)
+diffCo[0] = r
+diffCo[1] = -a
+
+Puma:
+
+diffusionRate = l
+diffCo[0] = b
+diffCo[1] = -m
+
+
+The governing class (PredPrey) creates an array of Animals, passing each their diffusion rate, and the array \code{diffCo} governing how the of the other animals effect them. Armed with these tools, the Animal objects are able to iterate the equations shown in the model themselves. As long as the constants governing the effect of each animal on others are known, the size of the array of Animals can be increased to as many as desired.
+	At each time step, the code loops over the animals, invoking the calcNextDensity() method... TBC  
+
+\subsection{Input/Output} %milena
       
           
        
