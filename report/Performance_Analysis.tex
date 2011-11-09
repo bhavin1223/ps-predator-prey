@@ -1,0 +1,30 @@
+\section{Testing} %chen+tom
+   
+   Tests were performed in order to profile the code's performance and scalability. The unix \emph{time} command was 
+   used to time the code runs, with `user' and `system' time being summed to find the total computation time.\newline{}
+   
+   The relationship between total computation time per cell and the number of cells was measured in order to quantify the overhead
+   needed by the code (see Figure \ref{overhead}). We found that, below a grid size of $\sim$100 by 100, overhead became important, whereas at 
+   larger grid sizes the computation time scaled linearly with the total number of cells. Any scaling worse than linear (such as 
+   total computation time being proportional to the NumberOfCells$^{1.2}$ would be a huge (and unnecessary) inefficiency, especially with larger grids.\newline{}
+   
+   Some overhead is inevitable in any code, but the amount of effort put into simplifying a problem (such as creating arrays of neighbours)
+   should depend on the expected size of the problem. Our code could probably have had less overhead, allowing it to run faster with smaller grid sizes,
+   but this would likely led to it having a worse (linear) scaling with cell number.
+   
+   
+   
+   \section{Analysis} %tom+chen
+   
+   \begin{figure}[h]
+   
+   \input{figs/overhead}
+   \caption{\label{overhead}This is a graph of total time spent on each cell, which shows that overheads such as array initialisation
+   and output (i.e. things not directly involved in the simulation) take up a significant fraction of computation
+   time with grids smaller than $\sim$100 by 100.}
+   \end{figure}
+
+  
+
+
+
