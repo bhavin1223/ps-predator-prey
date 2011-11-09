@@ -169,11 +169,9 @@ public class Animal {
 	 * nextDensities array.
 	 */
 	public void applyTimeStep() {
-		for (int x = 0; x < densities[0].length; x++) {
-			for (int y = 0; y < densities.length; y++) {
-				densities[y][x] = nextDensities[y][x];
-			}
-		}
+
+				densities = nextDensities;
+
 	}
 
 	/**
