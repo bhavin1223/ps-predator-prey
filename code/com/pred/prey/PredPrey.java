@@ -1,5 +1,10 @@
 package com.pred.prey;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+
 /**
  * Contains the main method. Controls the various components of the program.
  * 
@@ -26,7 +31,7 @@ public class PredPrey {
 	 * @param args
 	 *            Program does not take command line arguments
 	 */
-	public static void run(double[] parameters, String fileNameIn) throws Exception 
+	public static void run(double[] parameters, String fileNameIn)
 	{
 		try
 		{
@@ -366,18 +371,56 @@ public class PredPrey {
 	public static void setOutput(Output output) {
 		PredPrey.output = output;
 	}
-
-
-
-public static void main(String args[])
-	{
-		if (args.length == 0)
-		{
-			new InputFrame();
+	
+	/**
+	 * Returns the options listed in the settings.txt file in the correct format for the program.
+	 * @return Parameters array.
+	 */
+	private static double[] getSettings() {
+		
+		double[] params;
+		String inLine, fileName = "settings.txt";
+		String[] tokens;
+		
+		int numParams = 8;
+		params = new double[numParams];
+		
+		// Perform the read in a catch block in case of exceptions
+		try {
+		
+			// Create a new buffered reader
+			File inFile = new File(fileName);
+			FileInputStream fis = new FileInputStream(inFile);
+			InputStreamReader isr = new InputStreamReader(fis, "UTF8");
+			BufferedReader br = new BufferedReader(isr);
+			
+			// Loop over the lines, reading the parameters into the array
+			for(int i = 0; i < numParams; i++) {
+				inLine = br.readLine();
+				tokens = inLine.split("=");
+				params[i] = Double.parseDouble(tokens[1].replaceAll(" ", ""));
+			}
+			
+			// Close the reader
+			br.close();
 		}
-		else
-		{ 
-			System.out.println("File Selected");
+
+		// Catch errors
+		catch(Exception e) {
+			System.out.println("Error reading from settings file.");
+			System.exit(0);
+		}	
+		return params;
+	}
+
+public static void main(String args[]) {
+	
+		// Launch GUI or take options from file depending on command line arguments
+		if (args.length == 0) new InputFrame();
+		else { 
+			double[] params = getSettings();
+			String inputFile = args[0];
+			run(params, inputFile);
 		}
 	}
 }

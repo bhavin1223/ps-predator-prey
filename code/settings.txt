@@ -1,0 +1,8 @@
+Hare birth rate = 0.08
+Puma predation rate = -0.04
+Puma birth rate = 0.02
+Puma death rate = -0.06
+Hare diffusion rate = 0.2
+Puma diffusion rate = 0.2
+Time step = 0.4
+Steps between outputs = 50
