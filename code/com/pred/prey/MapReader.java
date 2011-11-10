@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
 /**
- * Read a .dat file in and parse the data into (an) array(s).
+ * Reads a .dat file in and parse the data into (an) array(s).
  * 
  * @author Jorge M.
  * @version 2.1, November, 9th 2011
@@ -29,12 +29,17 @@ public class MapReader {
 
 	/**
 	 * Constructor
+	 * 
+	 * @param	The path name to the file to be loaded
 	 */
 	public MapReader(String pathToFile) {
 		loadLandscape(pathToFile);
 		countNeighbours();
 	}
 
+	/**
+	 * Constructor
+	 */
 	public MapReader() {
 		loadLandscape(defaultFile);
 		countNeighbours();
@@ -140,6 +145,7 @@ public class MapReader {
 				}
 			}
 		}
+	
 	}
 
 	/**
@@ -202,7 +208,7 @@ public class MapReader {
 	 * data.
 	 */
 	public void setrows(int nrows) {
-		this.rows = rows;
+		this.rows = nrows;
 	}
 
 	/**
