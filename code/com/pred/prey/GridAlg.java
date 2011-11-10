@@ -188,4 +188,23 @@ public class GridAlg {
 			animals[i].applyTimeStep();
 		}
 	}
+
+    public void randomUpdate() {
+
+	int randomX;
+	int randomY;
+	int randomAnimal;
+
+	for (int i =0; i< (getNeighbours().length - 1)*(getNeighbours()[0].length - 1)*animals.length) {
+
+	    randomX = random.nextInt(getNeighbours().length-2)+1;
+	    randomY = random.nextInt(getNeighbours()[0].length-2)+1;
+	    randomAnimal = random.nextInt(animals.length);
+	    if(getNeighbours(randomY,randomX)!= -1) {
+		animals[randomAnimal].calcNextDensity(randomY,randomX,dt,animals,neighbours[randomY][randomX]);
+		animals[randomAnimal].setDensity(randomY,randomX,animals[randomAnimal].getDensity(randomY,randomX);
+	    }
+	}
+    }
+
 }
