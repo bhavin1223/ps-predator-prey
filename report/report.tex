@@ -165,30 +165,50 @@ The output class takes the density distribution of the animals every ***time ste
  A main class, PredPrey, governs the creation of occurrences of all of the other classes in the order required.  When running to program there is an option to run with or without a GUI, this is  implemented by either passing the input file names in the command line when running the program or not. If the arguments are passed, the input parameters are read from the file, if they are not then the user can input them in themselves. The parameters required by the user are the coefficients that govern the central update equation, the time step, diffusion rates of Pumas and Hares and the differential interaction coefficients between the animals, all described in ***section***.
       \subsection{Algorithm} %matt
       The equations shown in the problem Model are specific to Hares and Pumas located in the cells of the world grid. Out initial approach was to write a computational algorithm that simply iterated the equations for the density arrays of the two animals. The next stage in the development was creating an abstract Animal class, for which subclasses provided the implementation of the kernel specific to that animal. It was soon noticed that this abstraction could be removed, and the problem generalised even further resulting in the current algorithm: A general Animal class is used to represent any species present in the world. Instances of Animal are created at runtime for all such species. These objects contain all of the information about the animal, most importantly: 
-\begin{lstlisting}[language=Java,caption= Animal.java]
-private double[][] densities // The density of the animal in each cell      
-private double diffusionRate // The diffusion rate of the animal
-private double diffCo[] // An array of coefficients that control how each of the other animals effects this animal
+\begin{lstlisting}[language=Java,caption=The fundamental fields of the animal class.]
+// The density of the animal in each cell
+double[][] densities
+// The diffusion rate of the animal     
+double diffusionRate
+// The coeficients controling the effect of other animals on the animal
+double diffCo[] 
 \end{lstlisting}
 
-      To illustrate more clearly what diffusionRate and diffCo[] are, their values are shown below for the simple Hare Puma case:
+      To illustrate more clearly what values diffusionRate and diffCo[] take, they are shown for the simple hare puma case that was used for the entirety of testing.
       
-      
-Hare:
-
-diffusionRate = k (see Model)
-diffCo[0] = r
-diffCo[1] = -a
-
-Puma:
-
+\begin{lstlisting}[language=Java,caption=Behavioural coefficients for the hare instance of animal.]
+diffusionRate = k
+diffCo[0] = r		 // How hares effects the hare
+diffCo[1] = -a		// How pumas effects the hare
+\end{lstlisting} \begin{lstlisting}[language=Java,caption=Behavioural coefficients for the puma instance of animal.]
 diffusionRate = l
-diffCo[0] = b
-diffCo[1] = -m
+diffCo[0] = b			 // How hares effect the puma
+diffCo[1] = -m			// How pumas effect the puma
+\end{lstlisting}
 
+The governing class (PredPrey) creates an array of Animals, passing each their diffusion rate, and the array diffCo dictating how the of the other animals effect them. Armed with these tools, the Animal objects are able to iterate the equations shown in the model themselves. As long as the constants governing the effect of each animal on others are known, the size of the array of Animals can be increased to as many as desired. At each time step, the code loops over the animals, invoking the calcNextDensity() method. Part of this method is shown in listing 3.4.
 
-The governing class (PredPrey) creates an array of Animals, passing each their diffusion rate, and the array diffCo governing how the of the other animals effect them. Armed with these tools, the Animal objects are able to iterate the equations shown in the model themselves. As long as the constants governing the effect of each animal on others are known, the size of the array of Animals can be increased to as many as desired.
-	At each time step, the code loops over the animals, invoking the calcNextDensity() method... TBC  
+\begin{lstlisting}[language=Java,caption=The key part of the computational kernel within animal - called when the density for a single cell is to be updated to the next time step.]
+// Loop over the total number of animals/behavioral coefficients.
+for (int k = 0; k < animals.length; k++) {
+			
+		/*
+		Add the contribution to the new density depending on the weather 
+		the animal is this or not.
+		*/
+		if (animals[k] == this) {
+				newDensity += dt*getDiffCo()[k]*oldDensity;
+		} 
+		else {
+				newDensity += dt*getDiffCo()[k]*animals[k].getDensity(y, x)*oldDensity;
+		}
+}
+
+// Add the contribution based on the animals diffusion rate
+...
+...
+...
+\end{lstlisting} 
 
 \subsection{Input/Output} %milena
       
