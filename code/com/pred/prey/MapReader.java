@@ -88,6 +88,11 @@ public class MapReader {
 						// Parse the dimensions of the file
 						cols = Integer.parseInt(tokens[0]);
 						rows = Integer.parseInt(tokens[1]);
+						
+						if (cols > 2000 || rows > 2000) {
+							System.out.println("Data set with dimensions bigger than 2000");
+							return "big";
+						}
 
 						intBuffer = new int[rows + 2][cols + 2];
 						lineNo++;
