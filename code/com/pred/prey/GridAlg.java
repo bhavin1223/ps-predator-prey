@@ -6,10 +6,6 @@ import java.util.Random;
  * Runs the algorithm corresponding to the user's input with the user defined
  * settings. Also performs measurements on the efficiency of the chosen
  * algorithm.
- * 
- * @author Put your name here if you work on this class
- * @version 1.2, October, 30th 2011
- * @since 1.0
  */
 public class GridAlg {
 	
@@ -19,7 +15,7 @@ public class GridAlg {
 	private Animal[] animals;
 
 	/**
-	 * Array containing the neighbours each grid point should check for density
+	 * Array containing the neighbours. Each grid point should check for density
 	 * updates based on land and water.
 	 */
 	private int[][] neighbours;
@@ -38,6 +34,8 @@ public class GridAlg {
 	 * Class constructor - Version taking an array of animals as argument and
 	 * the Neighbours Array from the input grid.
 	 * 
+	 * @param neighbours	The array holding the number of neighbours for each land element	
+	 * @param animals		The array holding the animal object present on land
 	 */
 	public GridAlg(int[][] neighbours, Animal[] animals) {
 		setNeighbours(neighbours);
@@ -57,6 +55,8 @@ public class GridAlg {
 	}
 
 	/**
+	 * Animals holds the animal objects being assessed
+	 * 
 	 * @return Returns the array of animals on the map.
 	 */
 	public Animal[] getAnimals() {
@@ -65,6 +65,8 @@ public class GridAlg {
 
 	/**
 	 * Returns the time step
+	 * 
+	 * @return	The time increment
 	 */
 	public double getStep() {
 		return this.dt;
@@ -74,6 +76,7 @@ public class GridAlg {
 	/**
 	 * Sets the time step
 	 * 
+	 * @param step 	The time increment 
 	 */
 	public void setStep(double step) {
 		this.dt = step;
