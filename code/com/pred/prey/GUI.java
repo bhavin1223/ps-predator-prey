@@ -12,7 +12,7 @@ import java.awt.*;
  * @author 
  *
  */
-class InputFrame extends JFrame
+public class GUI extends JFrame
 {
 	
 	/**
@@ -462,7 +462,7 @@ class InputFrame extends JFrame
 	}
 	/** Constructor
 	 */
-	InputFrame()
+	GUI()
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Container content = this.getContentPane();

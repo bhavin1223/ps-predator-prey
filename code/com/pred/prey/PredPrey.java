@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 /**
  * Contains the main method. Controls the various components of the program.
  * 
- * @author Put your name here if you worked on this class
+ * @author 
  * @version 1.5, November, 6th 2011
  * @since 1.0
  */
@@ -25,12 +25,15 @@ public class PredPrey {
 	private  double t = 500;
 	private  int T=20;
 
-	
+	/**
+	 * Takes the parameters from the user interface and runs the simulation.
+	 * @param parameters
+	 * @param fileNameIn
+	 */
 	public  void run(double[] parameters, String fileNameIn)
 	{
 		try
 		{
-			
 			noAnimals = 2;
 
 			diffCo = new double[2][2];
@@ -401,7 +404,7 @@ public class PredPrey {
     public static void main(String args[]) {
 	
 	// Launch GUI or take options from file depending on command line arguments
-	if (args.length == 0) new InputFrame();
+	if (args.length == 0) new GUI();
 	else { 
 	    PredPrey pp = new PredPrey();
 	    double[] params = pp.getSettings();
