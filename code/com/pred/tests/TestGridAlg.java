@@ -59,6 +59,7 @@ public class TestGridAlg {
 			theseAnimals[i] = new Animal(noAnimals);
 			theseAnimals[i].setDiffCo(diffCo[i]);
 			theseAnimals[i].setDiffusionRate(diffusionRate[i]);
+      theseAnimals[i].initiateDensities(neighbours.length, neighbours[0].length);
 		}
 		
 		grid = new GridAlg(neighbours, theseAnimals);
