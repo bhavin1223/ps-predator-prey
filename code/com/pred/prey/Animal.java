@@ -3,7 +3,7 @@ package com.pred.prey;
 /**
  * Class governs the structure of an animal density update.
  * 
- * @author Matt, Simon Put your name here if you work on this class
+ * @author Matt, Simon
  * 
  */
 public class Animal {
@@ -70,7 +70,9 @@ public class Animal {
 
 	/**
 	 * Calculates the density at location i, j after a time step of dt. Stores
-	 * the result in the 2D nextDensites array.
+	 * the result in the 2D nextDensites array so as not to overwrite the old
+	 * density. The old density is still required to calculate the next density
+	 * of adjacent cells.
 	 * 
 	 * @param i
 	 *            Row index
@@ -83,26 +85,25 @@ public class Animal {
 	 * @param neighbours
 	 *            The number of land neighbours cell i, j has.
 	 */
-	public void calcNextDensity(int y, int x, double dt, Animal[] animals,
-			int neighbours) {
+	public void calcNextDensity(int y, int x, double dt, Animal[] animals, int neighbours) {
+		
+		// Store the current density
 		double oldDensity = getDensity(y, x);
 		double newDensity = oldDensity;
 
-		/**
-		 * Runs through the coefficients
-		 */
+		// Loop over the total number of animals/behavioral coefficients
 		for (int k = 0; k < animals.length; k++) {
+			
+			// Add the contribution to the new density depending on the weather the animal of the same type or not
 			if (animals[k] == this) {
 				newDensity += dt * getDiffCo()[k] * oldDensity;
-			} else {
-				newDensity += dt * getDiffCo()[k] * animals[k].getDensity(y, x)
-						* oldDensity;
+			} 
+			else {
+				newDensity += dt * getDiffCo()[k] * animals[k].getDensity(y, x) * oldDensity;
 			}
 		}
 
-		/**
-		 * Calculates the diffusion of the animal
-		 */
+		// Add the contribution based on the animals diffusion rate
 		newDensity += dt * getDiffusionRate() * getDensity(y, x - 1);
 		newDensity += dt * getDiffusionRate() * getDensity(y, x + 1);
 		newDensity += dt * getDiffusionRate() * getDensity(y - 1, x);
