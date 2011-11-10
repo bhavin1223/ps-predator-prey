@@ -29,8 +29,8 @@ public class Animal {
 	boolean bigChange = false;
 
 	/**
-	 * Coefficients scaling how densitied of the different animals effect this
-	 * animal. An array with a coeficient for each animal in the simulation.
+	 * Coefficients scaling how densities of the different animals effect this
+	 * animal. An array with a coefficient for each animal in the simulation.
 	 */
 	private double[] diffCoefficients;
 
@@ -153,8 +153,7 @@ public class Animal {
 	}
 
 	/**
-	 * Sets the densities of all grid points from the distributions defined in
-	 * the 'customrand' method
+	 * Create the densities arrays
 	 * 
 	 */
 	public void initiateDensities(int y, int x) {
@@ -163,8 +162,9 @@ public class Animal {
 	}
 
 	/**
-	 * Sets the densities of all grid points from a premade array
+	 * Densities is an array of double precision values holding the animal densities
 	 * 
+	 * @return	The array holding the densities for the animal
 	 */
 	public double[][] getDensities() {
 		return densities;
@@ -218,6 +218,8 @@ public class Animal {
 
 	/**
 	 * Sets the coefficients controlling the changes of population with time.
+	 * 
+	 * @param	An array od coefficients to be copied from
 	 */
 	public void setDiffCo(double[] diffCo) {
 		this.diffCoefficients = diffCo;
@@ -240,7 +242,7 @@ public class Animal {
 	}
 
 	/**
-	 * new densities holds the density values after applying time step delta t.
+	 * Next densities holds the density values after applying time step delta t.
 	 * 
 	 */
 	public void setNextDensities(double[][] nextDensitiesIn) {
