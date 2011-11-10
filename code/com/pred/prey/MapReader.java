@@ -52,7 +52,6 @@ public class MapReader {
 		File maskFile = null;
 		String[] tokens = null;
 		String s;
-		int lineNo = 0; // line counter
 		InputStreamReader isr = null;
 
 		if (maskFileIn == null) {
@@ -81,34 +80,32 @@ public class MapReader {
 			br = new BufferedReader(isr);
 
 			try {
-				while ((s = br.readLine()) != null) {
+					s = br.readLine();
 					tokens = s.split(" ");
 
-					if (lineNo == 0) {
-						// Parse the dimensions of the file
-						cols = Integer.parseInt(tokens[0]);
-						rows = Integer.parseInt(tokens[1]);
+					// Parse the dimensions of the file
+					cols = Integer.parseInt(tokens[0]);
+					rows = Integer.parseInt(tokens[1]);
 						
-						if (cols > 2000 || rows > 2000) {
-							System.out.println("Data set with dimensions bigger than 2000");
-							return "big";
-						}
-
-						intBuffer = new int[rows + 2][cols + 2];
-						lineNo++;
-
-						initialiseIntBuffer();
-					} else if (lineNo > 0) {
-						for (int x = 0; x < tokens.length; x++) {
-							intBuffer[lineNo][x+1] = Integer
-									.parseInt(tokens[x]);
-						}
-
-						lineNo++;
+					if (cols > 2000 || rows > 2000) {
+						System.out.println("Data set with dimensions bigger than 2000");
+						return "big";
 					}
-				}
 
+					intBuffer = new int[rows+2][cols+2];
+									
+					for(int i=0; i<rows; i++) {
+						s = br.readLine();
+						tokens = s.split(" ");
+						for(int j=0; j<cols; j++) {
+							
+							intBuffer[i+1][j+1] = Integer.parseInt(tokens[j]);
+							
+						}
+					}
+				
 				br.close();
+				
 			} catch (IOException ioe) {
 				ioe.getMessage();
 			}
@@ -117,24 +114,6 @@ public class MapReader {
 					+ fnfe.getMessage());
 		}
 		return "ok";
-	}
-
-	/**
-	 * Set the array storage for the data to zeroes
-	 */
-/*	public void initialiseIntBuffer() {
-		for (int x = 0; x < intBuffer[0].length; x++) {
-			for (int y = 0; y < intBuffer.length; y++) {
-				intBuffer[y][x] = 0;
-			}
-		}
-	}*/
-	public void initialiseIntBuffer() {
-		for (int x = 0; x < intBuffer.length; x++) {
-			for (int y = 0; y < intBuffer[0].length; y++) {
-				intBuffer[x][y] = 0;
-			}
-		}
 	}
 	
 	/**
@@ -150,10 +129,10 @@ public class MapReader {
 				neighbours[x][y] = -1;
 			}
 		}
-
+		
 		// Sum up neighbours
-		for (int x = 1; x < intBuffer.length - 1; x++) {
-			for (int y = 1; y < intBuffer[0].length - 1; y++) {
+		for (int x = 1; x < rows+1; x++) {
+			for (int y = 1; y < cols+1; y++) {
 				if (intBuffer[x][y] == 1) {
 					neighbours[x][y] = intBuffer[x - 1][y]
 							+ intBuffer[x][y - 1] + intBuffer[x][y + 1]
