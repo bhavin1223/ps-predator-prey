@@ -28,12 +28,11 @@ public class Output {
   /**
   * Method to create a directory 'dirname' if it doesn't exists already,
   * or to clean it if it does.
-  * @param dirname
+  * 
+  * @param dirname 	The path to the directory 	
   **/
-	public void cleanDirectory(String dirname) {
-	
+	public void cleanDirectory(String dirname) {	
 		File directory = new File(dirname);
-
 		
 		//Check if directory 'dirname' exists and if it does, delete all files it contains.
 		if(directory.exists()) 
@@ -71,8 +70,11 @@ public class Output {
 	 * Method to write densities of animals into a PPM file.
 	 * The densities are rescaled so that the maximum value is 255
 	 * and used as intensity values (three for each pixel, for red, green and blue). 
-	 * @param outputName
-	 * @param density
+	 * 
+	 * @param outputName 	The name of the file to be printed out
+	 * @param density		The double precision array holding the density values
+	 * @param neighbours	The double precision array holding the number of neighbours
+	 * 
 	 **/
 	public void printPpm(String outputName, double[][] density, int[][] neighbours) {
 		
@@ -163,11 +165,12 @@ public class Output {
 	
 	/**
 	 * Method to write the average density with corresponding time to a file.
-	 * @param outputName
-	 * @param density
-	 * @param time
+	 * 
+	 * @param outputName 	The name of the file to be printed out
+	 * @param density		The double precision array holding the density values
+	 * @param time			The time at which the densities are valid
 	 **/
-	public void printMeanDensity(String outputName, double[][] density,double time) {		
+	public void printMeanDensity(String outputName, double[][] density,double time) {	
 		
 		double sum = 0;
 		double average;
@@ -195,7 +198,8 @@ public class Output {
 	
 	/**
 	 * Method to write the average density with corresponding time to a file.
-	 * @param neighbours
+	 * 
+	 * @param neighbours	The double precision array holding the number of neighbours
 	 **/
 	public void calcLandArea(int[][] neighbours) {
 	
