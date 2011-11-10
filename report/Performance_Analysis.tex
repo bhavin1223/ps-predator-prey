@@ -45,10 +45,11 @@
   
   \begin{figure}[h]
   \begin{center}
-  \subfloat[]{\includegraphics[width=65mm]{figs/emptypic.png}}
+  \subfloat[]{\includegraphics[width=40mm]{figs/emptypic.png}}
   \subfloat[]{\input{figs/empty}}
-  \caption{\label{overhead}This is a graph of total time spent on each cell, which shows that overheads such as array initialization
-  take up a significant fraction of computation time with grids smaller than $\sim$100 by 100.}
+  \caption{\label{empty}This shows the effect of fill percentage on run time. The six panels in a) are the input maps used, all of which were
+  300x300. As expected, the computation time increases fairly linearly with
+  the amount of land, since the bulk of the main algorithm is only run for land cells.}
   \end{center}
   \end{figure}
   
