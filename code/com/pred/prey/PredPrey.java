@@ -27,8 +27,9 @@ public class PredPrey {
 
 	/**
 	 * Takes the parameters from the user interface and runs the simulation.
-	 * @param parameters
-	 * @param fileNameIn
+	 * 
+	 * @param parameters	The user input in an array of parameters
+	 * @param fileNameIn	The path to the data file that contains the land map 
 	 */
 	public  void run(double[] parameters, String fileNameIn)
 	{
@@ -98,12 +99,16 @@ public class PredPrey {
 
 	}
 	
-	// Second (very similar) version of the run method used 
-	// to simulate a range of parameters
+	/**
+	 * Takes the parameters from the user interface and runs the simulation.
+	 * 
+	 * @param parameters	The user input in an array of parameters
+	 * @param fileNameIn	The path to the data file that contains the land map 
+	 * @param parRange 		Holds all the parameters ranging from lower limit to upper limit provided by GUI
+	 * @param indicator 	Denotes which element of the parameters array is ranging
+	 */
 	public  void run(double[] parameters, String fileNameIn, double[] parRange, int indicator) 
 	{
-//		try
-//		{
 			noAnimals = 2;
 
 			diffCo = new double[2][2];
@@ -197,12 +202,18 @@ public class PredPrey {
 		 animals[1].setName("Puma");
 	}
 
+	/**
+	 * Build a grid object that runs the algorithm
+	 */
 	public  void createGrid() {
 		int[][] neighbours = getIo().getNeighbours();
 		setGrid(new GridAlg(neighbours, animals));
 		getGrid().setStep(getStep());
 	}
 
+	/**
+	 * Build a new Output object that deals with the printing out of images
+	 */
 	public  void createOutput() {
 		setOutput(new Output());
 	}
@@ -362,6 +373,7 @@ public class PredPrey {
 	
 	/**
 	 * Returns the options listed in the settings.txt file in the correct format for the program.
+	 * 
 	 * @return Parameters array.
 	 */
 	private  double[] getSettings() {
