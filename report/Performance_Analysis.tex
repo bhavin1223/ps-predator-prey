@@ -16,7 +16,7 @@
    $\sim$ 17\% of the computation time of a simulation, which is obviously not ideal.  \newline{}
 
 	
-  \begin{figure}[h]
+  \begin{figure}[H]
   \begin{center}
   \input{figs/buffering}
   \caption{\label{buffering}This graph shows the advantage of using a buffered file writer over repeated calls to the printf() method. 
@@ -35,7 +35,11 @@
 	 at the start of a run by creating the neighbours array. This allows it to be slightly faster on large grids, but adds overhead which becomes non-negligible 
 	 for small simulations.\newline{}
 	 
-  \begin{figure}[h]
+	 It can be seen from Figure \ref{overhead} that, for large simulations, the total time per cell per timestep is constant. The value on the 
+	 graph is roughly -3.27, although this is total time per cell. Thus, $10^{-3.27}/1200$, where 1200 is the number of timesteps, gives us the 
+	 time per cell per timestep: $\sim$450 nanoseconds.
+	 
+  \begin{figure}[H]
   \begin{center}
   \input{figs/overhead}
   \caption{\label{overhead}This is a graph of total time spent on each cell, which shows that overheads such as array initialization
@@ -43,7 +47,7 @@
   \end{center}
   \end{figure}
   
-  \begin{figure}[h]
+  \begin{figure}[H]
   \begin{center}
   \subfloat[]{\includegraphics[width=40mm]{figs/emptypic.png}}
   \subfloat[]{\input{figs/empty}}
