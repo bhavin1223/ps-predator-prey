@@ -1,9 +1,10 @@
 package com.pred.tests;
+import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import junit.framework.TestCase;
-import com.pred.prey.*;
+import com.pred.prey.Animal;
 
 /**
  * JUnit test case for the class Animal
@@ -11,9 +12,8 @@ import com.pred.prey.*;
  * @version 1.1, November 3rd, 2011
  * @since 1.0
  */
-public class TestAnimal extends TestCase {
+public class TestAnimal {
 	private double[][] densities;// = {{0.0, 0.0}, {0.0, 0.0}};
-	private double[][] nextDensities;
 	private double diffusionRate;
 	private double[] diffCoIn = { 0.3, 0.4 };
 	private double[] diffCoIn_2 = { 0.4, 0.5 };
@@ -21,7 +21,7 @@ public class TestAnimal extends TestCase {
 	private int numbAnimals;
 	private Animal[] animals;
 	private final int M = 102, N = 103;
-	private double dt, r;
+	private double dt;
 
 	/**
 	 * Gets executed before each test. Initialises the object under test.
@@ -31,9 +31,7 @@ public class TestAnimal extends TestCase {
 		numbAnimals = 2;
 		diffusionRate = 0.678;
 		densities = new double[M][N];
-		nextDensities = new double[M][N];
 		dt = 4.0;
-		r = 0.625;
 		diffusionRate = 0.2;
 		animals = new Animal[numbAnimals];		
 
@@ -86,12 +84,12 @@ public class TestAnimal extends TestCase {
 	public void testCalcNextDensity() {
 		assertNotSame(2.0, testAnimal.getDensity(50, 50));		
 		assertNotNull(testAnimal.getNextDensities());
-		assertEquals(13.2, testAnimal.getNextDensities()[50][50]);
+		assertEquals(13.2, testAnimal.getNextDensities()[50][50], 0.0);
 	}
 	
 	@Test
 	public void testApplyTimeStep() {
-			assertEquals(testAnimal.getDensities()[50][50], testAnimal.getNextDensities()[50][50]);
-			assertEquals(testAnimal.getDensities()[49][49], testAnimal.getNextDensities()[49][49]);
+			assertEquals(testAnimal.getDensities()[50][50], testAnimal.getNextDensities()[50][50], 0.0);
+			assertEquals(testAnimal.getDensities()[49][49], testAnimal.getNextDensities()[49][49], 0.0);
 	}
 }
