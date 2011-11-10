@@ -30,10 +30,7 @@
 	 because a significant fraction of the simulation time is being spent on finding arrays of neighbours and other `non essential' tasks. The graph
 	 shows that our code only begins to run as efficiently as possible once grids of $\sim$100x100 are used, above which the simulation time scales
 	 almost exactly as the number of cells (the flat part of Figure \ref{overhead}).\newline{}
-	 
-	 A `perfect' algorithm would spend the same amount of time on each cell regardless of grid size, but our code expends some effort on simplifying the problem 
-	 at the start of a run by creating the neighbours array. This allows it to be slightly faster on large grids, but adds overhead which becomes non-negligible 
-	 for small simulations.\newline{}
+
 	 
 	 It can be seen from Figure \ref{overhead} that, for large simulations, the total time per cell per timestep is constant. The value on the 
 	 graph is roughly -3.27, although this is total time per cell. Thus, $10^{-3.27}/1200$, where 1200 is the number of timesteps, gives us the 
