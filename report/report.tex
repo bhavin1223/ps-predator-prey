@@ -151,11 +151,9 @@ The Grid Algebra class governs methods for updating the animal densities across 
 \label{sec:MapReader}
 The MapReader class is responsible for reading the file which holds where the land and water are and outputs an array holding the neighbours of all the land cells, this is discussed further in section \ref{Input_Output}.
 
-
-
 \subsubsection{Output}
-\label{sec:Output}
-The output class takes the density distribution of the animals every ***time steps, calculates and outputs the average density as well as an image of the density distribution. All that is passed to methods in this class from the program is the density array of an animal and a file name for saving as output. 
+label{sec:Output}
+The output class is sent density distributions of the animals and from that calculates and outputs the average density as well as an image of the density distribution. The format and creation of these files is discussed further in Section \ref{Input_Output}
 
 \subsubsection{GUI}
 This class is responsible for displaying a GUI for a user to input parameters of the simulation
