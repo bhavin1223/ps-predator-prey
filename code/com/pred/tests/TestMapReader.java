@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.junit.Before;
 
 /**
- * JUnit test class that make some checks on MapReader.java. 
+ * JUnit test class for MapReader.java. 
  * 
  * @author Jorge M.
  * 

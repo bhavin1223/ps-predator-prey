@@ -16,8 +16,9 @@ import org.junit.Test;
 import com.pred.prey.Output;
 
 /**
- * @author Jorge M.
+ * JUnit test class for TestOutput.java.
  * 
+ * @author Jorge M. 
  */
 public class TestOutput {
 	private Output output;
