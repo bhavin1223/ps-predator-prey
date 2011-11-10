@@ -38,8 +38,6 @@ public class GridAlg {
 	 * Class constructor - Version taking an array of animals as argument and
 	 * the Neighbours Array from the input grid.
 	 * 
-	 * @param Array
-	 *            containing the animal objects.
 	 */
 	public GridAlg(int[][] neighbours, Animal[] animals) {
 		setNeighbours(neighbours);
@@ -59,9 +57,7 @@ public class GridAlg {
 	}
 
 	/**
-	 * Returns the array of animals
-	 * 
-	 * @return
+	 * @return Returns the array of animals on the map.
 	 */
 	public Animal[] getAnimals() {
 		return this.animals;

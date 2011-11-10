@@ -220,8 +220,6 @@ public class MapReader {
 	 * Set intBuffer: a double dimensional array that stores the values read
 	 * from the data file
 	 * 
-	 * @return The data from the file in a double dimensional array without
-	 *         spaces
 	 */
 	public void setIntBuffer(int[][] intBuffer) {
 		this.intBuffer = intBuffer;

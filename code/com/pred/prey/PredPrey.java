@@ -25,12 +25,7 @@ public class PredPrey {
 	private  double t = 500;
 	private  int T=20;
 
-	/**
-	 * Controls the IO and Algorithm classes.
-	 * 
-	 * @param args
-	 *            Program does not take command line arguments
-	 */
+	
 	public  void run(double[] parameters, String fileNameIn)
 	{
 		try
@@ -174,13 +169,6 @@ public class PredPrey {
 			System.out.println("...done");
 	}
 
-	/**
-	 * Takes the values from the gui and sets them to the main program
-	 * 
-	 * @param gui
-	 *            the gui for the program
-	 */
-
 	public Animal[] getAnimals() {
 		return animals;
 	}
@@ -306,7 +294,6 @@ public class PredPrey {
 	/**
 	 * Io deals with the reading and parsing of the landscape files (.dat)
 	 * 
-	 * @param A class responsible for reading/parsing
 	 */
 	public  void setIo(MapReader io) {
 		this.io = io;

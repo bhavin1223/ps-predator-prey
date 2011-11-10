@@ -5,12 +5,20 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.*;
-import java.io.*;
-/** InputFrame is a JFrame Swing GUI to get the input data from 
- * 	the user
+
+/**
+ * InputFrame is a JFrame Swing GUI to get the input data from 
+ * the user
+ * @author 
+ *
  */
 class InputFrame extends JFrame
 {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	int noAnimals = 2;
  	private double[][] diffCo = new double[noAnimals][noAnimals];
@@ -338,37 +346,7 @@ class InputFrame extends JFrame
 				}
 				}
 			});
-		/*
-		basic.addActionListener(new ActionListener()
-		{
 
-			public void actionPerformed(ActionEvent e)
-			{
-				dispose();
-				InputBasic window = new InputBasic();
-			}
-		});*/
-		
-		// The following code did not work when put in the loop so 
-		// it was written explicitely for every choise2 button below
-		// not the best solution in terms of lines of code but could
-		// not figure out how to do it otherwise yet	
-		/*
-		for (z=0; z<(nParameters-1); z++)
-		{
-			choiseButton[z].addActionListener(new ActionListener()
-			{
- 
-				public void actionPerformed(ActionEvent e)
-				{
-					hideInput2();
-					inputTextField2[z].setVisible(true);					
-
-
-				}
-			});
-		}*/
-			
 			
 		// For all the following choise2 buttons: 
 		//choise2Indicator is set so that it would be easy to track

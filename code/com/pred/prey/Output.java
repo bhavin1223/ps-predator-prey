@@ -73,7 +73,6 @@ public class Output {
 	 * and used as intensity values (three for each pixel, for red, green and blue). 
 	 * @param outputName
 	 * @param density
-	 * @param colour
 	 **/
 	public void printPpm(String outputName, double[][] density, int[][] neighbours) {
 		

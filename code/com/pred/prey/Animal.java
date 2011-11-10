@@ -74,9 +74,9 @@ public class Animal {
 	 * density. The old density is still required to calculate the next density
 	 * of adjacent cells.
 	 * 
-	 * @param i
+	 * @param y
 	 *            Row index
-	 * @param j
+	 * @param x
 	 *            Column index
 	 * @param dt
 	 *            Time step
@@ -156,8 +156,6 @@ public class Animal {
 	 * Sets the densities of all grid points from the distributions defined in
 	 * the 'customrand' method
 	 * 
-	 * @param densities
-	 *            The densities of the animals being set across the grid.
 	 */
 	public void initiateDensities(int y, int x) {
 		this.densities = new double[y][x];
@@ -167,8 +165,6 @@ public class Animal {
 	/**
 	 * Sets the densities of all grid points from a premade array
 	 * 
-	 * @param densities
-	 *            The densities of the animals being set across the grid.
 	 */
 	public double[][] getDensities() {
 		return densities;
@@ -191,9 +187,9 @@ public class Animal {
 	/**
 	 * Returns density at location i, j.
 	 * 
-	 * @param i
+	 * @param y
 	 *            Row index
-	 * @param j
+	 * @param x
 	 *            Column index
 	 * @return Value of density at grid point
 	 */
@@ -246,8 +242,6 @@ public class Animal {
 	/**
 	 * new densities holds the density values after applying time step delta t.
 	 * 
-	 * @param Array
-	 *            of densities to copy from.
 	 */
 	public void setNextDensities(double[][] nextDensitiesIn) {
 		nextDensities = nextDensitiesIn;
