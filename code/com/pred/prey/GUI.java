@@ -9,33 +9,28 @@ import java.awt.*;
 /**
  * InputFrame is a JFrame Swing GUI to get the input data from 
  * the user
- * @author 
- *
  */
-public class GUI extends JFrame
-{
-	
-	/**
-	 * 
-	 */
+public class GUI extends JFrame {
+
 	private static final long serialVersionUID = 1L;
 	
 	int noAnimals = 2;
- 	private double[][] diffCo = new double[noAnimals][noAnimals];
-	private double[] diffusionRate = new double[noAnimals];
-	private double step;
-	private String file;
+ 	private String file;
+ 	
 	/** nParameters is number of parameters set by user, for this task 
 	 * 	permanently set to 7
 	 */
 	int nParameters = 7;
+	
 	/**choise2Indicator indicates which parameter is chosen to have a 
 	 * range of values
 	 */
 	int choise2Indicator;
+	
 	/** number of values for a range for a parameter
 	 */
 	int n;
+	
 	/**	inputTextField is a JTextField to get user input, it is done
 	 * as an array to keep the code consise. it is assumed that the 
 	 * values for all the arrays go in the following order:
@@ -48,20 +43,25 @@ public class GUI extends JFrame
 	 * dt - time step
 	 */	
 	JTextField inputTextField[] = new JTextField[nParameters];
+	
 	/**	inputTextField2 is JTextField to get user input in case
 	 * 	user wants to run the simulation for a range of values
 	 */
 	JTextField inputTextField2[] = new JTextField[nParameters];
+	
 	/**	inputLabel is JLabel to label the text fields
 	 */
 	JLabel inputLabel[] = new JLabel[7];
+	
 	/** inputPlane is a JPlane that holds all the information about 
 	 * 	the input, buttonPlane has start button and radiobuttons
 	 */
 	JPanel inputPlane, input2Plane, buttonPlane;
+	
 	/** parameters holds input in double precision floating points
 	 */
 	double parameters[] = new double[nParameters+1];
+	
 	/** special case if a user wants to iterate the code over a range of
 	 * values, parameterRange holds all the values of that parameter
 	 */
@@ -70,9 +70,11 @@ public class GUI extends JFrame
 	 * preset values and range of values and choise2 represents choise 
 	 * of parameter to have a range of values for
 	 */
+	
 	ButtonGroup choise, choise2;
 	/** Members of choise button group
 	 */
+	
 	JRadioButton preSet, range;
 	/** Start button which initiates computation
 	 */
@@ -80,28 +82,29 @@ public class GUI extends JFrame
 	JButton basic;
 	
 	JButton start;
+	
 	/** Members of cchoise2 button group
-	 */
+	 */	
 	JRadioButton choiseButton[] = new JRadioButton[nParameters];
+	
 	/** Labeling textfield that is responsible for prompting for 
 	 * step size to iterate a parameter over
-	 */
+	 */	
 	JLabel stepLabel = new JLabel("range step");
+	
 	/** textfield that is responsible for prompting for 
 	 * step size to iterate a parameter over
-	 */
+	 */	
 	JTextField stepField = new JTextField();
 	JTextField TField = new JTextField("50");
 	JLabel TLabel = new JLabel("<html> steps before <br> output <html>");
 	
 	 JTextField fileNameField = new JTextField("./small.dat");
 	 JLabel fileNameLabel = new JLabel("Input map from: ");
+	 
 	/** readValues reads values for the parameters and converts them
 	 * into doubles to be put into parameters array
-	 */
-	
-	
-
+	 */	
 	public void readValues()
 	{
 		// This loop reads all the inputs 
@@ -132,6 +135,7 @@ public class GUI extends JFrame
 		
 		file = fileNameField.getText();
 	}
+	
 	/** creates labels for all the text field inputs accordingly
 	 */
 	public void label()
@@ -145,6 +149,7 @@ public class GUI extends JFrame
 		inputLabel[5] = new JLabel("Puma Diffusion Rate");
 		inputLabel[6] = new JLabel("Time Step");
 	}
+	
 	/** method that hides second line of input for preSet values
 	 */
 	public void hideInput2()
@@ -154,6 +159,7 @@ public class GUI extends JFrame
 			inputTextField2[j].setVisible(false);
 		}
 	}
+	
 	/** Method to construct the first plane of input
 	 */
 	public void createInputPlane()
@@ -171,6 +177,7 @@ public class GUI extends JFrame
 			
 		}
 	}
+	
 	/**Method to construct second plane of input
 	 */
 	public void createInput2Plane()
@@ -190,6 +197,7 @@ public class GUI extends JFrame
 		}
 		
 	}
+	
 	/** Method to construct a plane with all the buttons
 	 */
 	public void createButtonPlane()
@@ -232,6 +240,7 @@ public class GUI extends JFrame
 		preSet.setSelected(true);
 
 	}
+	
 	/** Method to put default values for input
 	 */
 	public void setTextField()
@@ -247,6 +256,7 @@ public class GUI extends JFrame
 		inputTextField[6] = new JTextField("0.4");
 		
 	}
+	
 	/** Method creates text field for ranged input
 	 */
 	public void setTextField2()
@@ -255,6 +265,7 @@ public class GUI extends JFrame
 		for (int i=0; i<nParameters; i++)
 		{ inputTextField2[i] = new JTextField("    "); }
 	}
+	
 	/** Method creates radio buttons to choose ranged input
 	 */
 	public void createChoise2()
@@ -272,6 +283,7 @@ public class GUI extends JFrame
 		hideInput2();
 		inputTextField2[0].setVisible(true);
 	}
+	
 	/** Method is responsible for all the actions performed by all the buttons 
 	 * including start button
 	 */
@@ -346,8 +358,7 @@ public class GUI extends JFrame
 				}
 				}
 			});
-
-			
+		
 		// For all the following choise2 buttons: 
 		//choise2Indicator is set so that it would be easy to track
 		// which input parameter needs to be ranged.	
@@ -415,12 +426,12 @@ public class GUI extends JFrame
 				}
 			});
 	}
+	
 	/** Method to check if a string could be parsed into double,
 	 * very useful to check if inputs are of the correct format
 	 */
 	public static boolean isDouble( String input )  
-	{  
-		
+	{  		
 		try  
 		{  
 			Double.parseDouble( input );  
@@ -432,6 +443,7 @@ public class GUI extends JFrame
 			return false;  
 		}  
 }  
+	
 	/** Method returns true if all the inputs can be used in the 
 	 * simulation(i.e. all doubles) and false otherwise 
 	 */
@@ -460,6 +472,7 @@ public class GUI extends JFrame
 		}
 		return temp;
 	}
+	
 	/** Constructor
 	 */
 	GUI()
@@ -487,7 +500,6 @@ public class GUI extends JFrame
 		// so box layout is preferred
 		buttonPlane.setLayout(new BoxLayout(buttonPlane, BoxLayout.Y_AXIS));
 		
-	
 		// adding all the planes to the frame
 		content.add(inputPlane);
 
