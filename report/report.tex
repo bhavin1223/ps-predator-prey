@@ -120,7 +120,7 @@ These populations exist in a `world' consisting of land and water and are also a
 
 \node [block, right of=MapReader] (Output) {Output\\ \ref{sec:Output}};
 
-\node [block, below of=GridAlg] (InputFrame) {InputFrame\\ \ref{sec:InputFrame}};
+\node [block, below of=GridAlg] (InputFrame) {GUI\\ \ref{sec:InputFrame}};
 
 \node [block, below of=MapReader] (PredPrey) {PredPrey\\ \ref{sec:PredPrey}};
 
@@ -157,7 +157,8 @@ The MapReader class is responsible for reading the file which holds where the la
 \label{sec:Output}
 The output class takes the density distribution of the animals every ***time steps, calculates and outputs the average density as well as an image of the density distribution. All that is passed to methods in this class from the program is the density array of an animal and a file name for saving as output. 
 
-\subsubsection{InputFrame}
+\subsubsection{GUI}
+This class is responsible for displaying a GUI for a user to input parameters of the simulation
 \label{sec:InputFrame}
 
 \subsubsection{PredPrey}
