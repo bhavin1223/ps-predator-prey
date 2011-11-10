@@ -189,20 +189,23 @@ public class GridAlg {
 		}
 	}
 
+	/**
+	 * Serially updates a random animal in a random grid cell the same number of times as if looping for one time step
+	 */
     public void randomUpdate() {
 
 	int randomX;
 	int randomY;
 	int randomAnimal;
 
-	for (int i =0; i< (getNeighbours().length - 1)*(getNeighbours()[0].length - 1)*animals.length) {
+	for (int i =0; i< (getNeighbours().length - 2)*(getNeighbours()[0].length - 2)*animals.length; i++) {
 
 	    randomX = random.nextInt(getNeighbours().length-2)+1;
 	    randomY = random.nextInt(getNeighbours()[0].length-2)+1;
 	    randomAnimal = random.nextInt(animals.length);
 	    if(getNeighbours(randomY,randomX)!= -1) {
 		animals[randomAnimal].calcNextDensity(randomY,randomX,dt,animals,neighbours[randomY][randomX]);
-		animals[randomAnimal].setDensity(randomY,randomX,animals[randomAnimal].getDensity(randomY,randomX);
+		animals[randomAnimal].setDensity(randomY,randomX,animals[randomAnimal].getNextDensity(randomY,randomX));
 	    }
 	}
     }

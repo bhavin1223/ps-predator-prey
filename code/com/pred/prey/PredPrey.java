@@ -80,7 +80,7 @@ public class PredPrey {
 
 					}
 
-				getGrid().syncUpdate();
+				getGrid().randomUpdate();
 				stepnum += 1;
 
 			}
@@ -164,7 +164,7 @@ public class PredPrey {
 	
 						}
 	
-					getGrid().syncUpdate();
+					getGrid().randomUpdate();
 					stepnum += 1;
 	
 				}
