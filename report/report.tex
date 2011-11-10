@@ -160,7 +160,7 @@ The output class takes the density distribution of the animals every ***time ste
  A main class, PredPrey, governs the creation of occurrences of all of the other classes in the order required.  When running to program there is an option to run with or without a GUI, this is  implemented by either passing the input file names in the command line when running the program or not. If the arguments are passed, the input parameters are read from the file, if they are not then the user can input them in themselves. The parameters required by the user are the coefficients that govern the central update equation, the time step, diffusion rates of Pumas and Hares and the differential interaction coefficients between the animals, all described in ***section***.
       \subsection{Algorithm} %matt
       The equations shown in the problem Model are specific to Hares and Pumas located in the cells of the world grid. Out initial approach was to write a computational algorithm that simply iterated the equations for the density arrays of the two animals. The next stage in the development was creating an abstract Animal class, for which subclasses provided the implementation of the kernel specific to that animal. It was soon noticed that this abstraction could be removed, and the problem generalised even further resulting in the current algorithm: A general Animal class is used to represent any species present in the world. Instances of Animal are created at runtime for all such species. These objects contain all of the information about the animal, most importantly: 
-\begin{lstlisting}[language=Java,caption=The fundamental fields of the animal class.]
+\begin{lstlisting}[numbers=none, language=Java,caption=The fundamental fields of the animal class.]
 // The density of the animal in each cell
 double[][] densities
 // The diffusion rate of the animal     
@@ -171,11 +171,11 @@ double diffCo[]
 
       To illustrate more clearly what values diffusionRate and diffCo[] take, they are shown for the simple hare puma case that was used for the entirety of testing.
       
-\begin{lstlisting}[language=Java,caption=Behavioural coefficients for the hare instance of animal.]
+\begin{lstlisting}[numbers=none, language=Java,caption=Behavioural coefficients for the hare instance of animal.]
 diffusionRate = k
 diffCo[0] = r		 // How hares effects the hare
 diffCo[1] = -a		// How pumas effects the hare
-\end{lstlisting} \begin{lstlisting}[language=Java,caption=Behavioural coefficients for the puma instance of animal.]
+\end{lstlisting} \begin{lstlisting}[numbers=none, language=Java,caption=Behavioural coefficients for the puma instance of animal.]
 diffusionRate = l
 diffCo[0] = b			 // How hares effect the puma
 diffCo[1] = -m			// How pumas effect the puma
@@ -183,7 +183,7 @@ diffCo[1] = -m			// How pumas effect the puma
 
 The governing class (PredPrey) creates an array of Animals, passing each their diffusion rate, and the array diffCo dictating how the of the other animals effect them. Armed with these tools, the Animal objects are able to iterate the equations shown in the model themselves. As long as the constants governing the effect of each animal on others are known, the size of the array of Animals can be increased to as many as desired. At each time step, the code loops over the animals, invoking the calcNextDensity() method. Part of this method is shown in listing 3.4.
 
-\begin{lstlisting}[language=Java,caption=The key part of the computational kernel within animal - called when the density for a single cell is to be updated to the next time step.]
+\begin{lstlisting}[numbers=none, language=Java,caption=The key part of the computational kernel within animal - called when the density for a single cell is to be updated to the next time step.]
 // Loop over the total number of animals/behavioral coefficients.
 for (int k = 0; k < animals.length; k++) {
 			
@@ -268,7 +268,7 @@ To automate the building of the software, we have coded an Ant file using the XM
       Every class of the project form a functional unit according to the design elaborated at the beginning of the project. In order to ensure the software's good functioning and correct behaviour, all classes have been tested using the Java JUnit framework with test cases to tackle programming errors and code bugs.
 
 The libraries necessary to the tests are thus accessed from the test cases using Java import statements and extending the TestCase superclass in the class declaration:
-\begin{lstlisting}[language=Java,caption= Test case headers]
+\begin{lstlisting}[language=Java,caption= Test case headers, numbers=none]
 import org.junit.Before;
 import org.junit.Test;
 import junit.framework.TestCase;
@@ -281,7 +281,7 @@ The test cases, for each class, follow the normal directives in use for Unit tes
 
 Every test case includes a setup() method that builds the initial object and its different parameters. Directives like @Before and @Test for every method declaration were thus inserted in the code were appropriate. The functioning of a method is then assessed comparing the expected results with the actual ones with JUnit testing methods such as AssertEquals(), AssertNotNull(), etc...
 
-\begin{lstlisting}[language=Java,caption= Use of JUnit directives in test cases]
+\begin{lstlisting}[language=Java,caption= Use of JUnit directives in test cases, numbers=none]
 @Before
 public void setUp() {
     ...
