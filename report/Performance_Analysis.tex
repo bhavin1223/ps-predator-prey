@@ -38,6 +38,8 @@
 	 generate this data, at least). For instance, if we had a $10000\times10000$ array, this would should take $10000^{2}\times N$, where $N$ is the 
 	 number of timesteps. For the same number of steps this is about 15 hours!
 	 
+	 \newpage{}
+	 
   \begin{figure}[H]
   \begin{center}
   \input{figs/overhead}
@@ -45,6 +47,7 @@
   take up a significant fraction of computation time with grids smaller than $\sim$100 by 100.}
   \end{center}
   \end{figure}
+  
   
   \begin{figure}[H]
   \begin{center}
@@ -55,5 +58,12 @@
   the amount of land, since the bulk of the main algorithm is only run for land cells.}
   \end{center}
   \end{figure}
+  
+  \newpage{}
+  
+  
+  The effect of map complexity is also discussed in Figure \ref{empty}. As expected, we found that the code was totally insensitive to
+  complexity, being affected mostly by the total number of land cells. This is because most of the density update algorithm is never implemented for water 
+  cells, and checking whether a cell is land or water does not take much time compared to a full density update.
   
   
