@@ -32,9 +32,11 @@
 	 almost exactly as the number of cells (the flat part of Figure \ref{overhead}).\newline{}
 
 	 
-	 It can be seen from Figure \ref{overhead} that, for large simulations, the total time per cell per timestep is constant. The value on the 
-	 graph is roughly -3.27, although this is total time per cell. Thus, $10^{-3.27}/1200$, where 1200 is the number of timesteps, gives us the 
-	 time per cell per timestep: $\sim$450 nanoseconds.
+	 Using this, we can find how long our program takes to update a single cell, giving us a useful way of quantifying the speed. The value on the 
+	 graph is roughly $10^{-3.27}$s per cell over the whole simulation. Thus, $10^{-3.27}/1200$, where 1200 is the number of timesteps, gives us the 
+	 time per cell per timestep: $\sim$450 nanoseconds. This allows us to predict how long a given simulation should take (on the machine use to
+	 generate this data, at least). For instance, if we had a $10000\times10000$ array, this would should take $10000^{2}\times N$, where $N$ is the 
+	 number of timesteps. For the same number of steps this is about 15 hours!
 	 
   \begin{figure}[H]
   \begin{center}
