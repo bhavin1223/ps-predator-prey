@@ -99,9 +99,9 @@ public class MapReader {
 
 						initialiseIntBuffer();
 					} else if (lineNo > 0) {
-						for (int x = 1; x < tokens.length - 1; x++) {
-							intBuffer[lineNo][x] = Integer
-									.parseInt(tokens[x - 1]);
+						for (int x = 0; x < tokens.length; x++) {
+							intBuffer[lineNo][x+1] = Integer
+									.parseInt(tokens[x]);
 						}
 
 						lineNo++;
