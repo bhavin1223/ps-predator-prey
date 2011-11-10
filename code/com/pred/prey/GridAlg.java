@@ -122,8 +122,6 @@ public class GridAlg {
 
 		//loops over all of the animals
 		for (int i = 0; i < getAnimals().length; i++) {
-			// Density arrays initialisation
-			getAnimals()[i].initiateDensities(getNeighbours().length, getNeighbours()[0].length); 
 		
 			//loops over all of the cells filling with a random density
 			for (int x = 0; x < getNeighbours()[0].length; x++) {			
