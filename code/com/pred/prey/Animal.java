@@ -84,7 +84,7 @@ public class Animal {
 	 *            The number of land neighbours cell i, j has.
 	 */
 	public void calcNextDensity(int y, int x, double dt, Animal[] animals,
-			int neighbours) { //
+			int neighbours) {
 		double oldDensity = getDensity(y, x);
 		double newDensity = oldDensity;
 
@@ -124,9 +124,7 @@ public class Animal {
 	 * nextDensities array.
 	 */
 	public void applyTimeStep() {
-
 				densities = nextDensities.clone();
-
 	}
 
 	/**

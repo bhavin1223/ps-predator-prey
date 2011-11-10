@@ -97,16 +97,6 @@ public class TestGridAlg {
 	}
 
 	/**
-	 * Test method for {@link com.pred.prey.GridAlg#distributedRandom(double, double)}.
-	 */
-	@Test
-	public final void testDistributedRandom() {
-		actual = grid.distributedRandom(0, 10);
-		assertTrue(actual <= 10);
-		assertTrue(actual >= 0);
-	}
-
-	/**
 	 * Test method for {@link com.pred.prey.GridAlg#syncUpdate()}.
 	 */
 	@Test

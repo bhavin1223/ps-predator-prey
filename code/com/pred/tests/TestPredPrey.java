@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.pred.prey.PredPrey;
-import com.pred.prey.SwingTest;
 
 /**
  * Junit tescase for the PredPrey class

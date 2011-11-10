@@ -118,17 +118,16 @@ public class GridAlg {
 	 * distributed number. Only the land squares are filled with animals.
 	 */
 	public void initaliseDensities() {
-
 		double randomValue;
 
 		//loops over all of the animals
 		for (int i = 0; i < getAnimals().length; i++) {
+			// Density arrays initialisation
+			getAnimals()[i].initiateDensities(getNeighbours().length, getNeighbours()[0].length); 
 		
 			//loops over all of the cells filling with a random density
-			for (int x = 0; x < getNeighbours()[0].length; x++) {
-			
-				for (int y = 0; y < getNeighbours().length; y++) {
-				
+			for (int x = 0; x < getNeighbours()[0].length; x++) {			
+				for (int y = 0; y < getNeighbours().length; y++) {				
 					if (getNeighbours(y, x) == -1) {
 						randomValue = 0;
 					} else {
@@ -179,8 +178,8 @@ public class GridAlg {
 		for (int i = 0; i < animals.length; i++) {
 
 			// Loop over all of the cells, calculating the next densities
-			for (int x = 0; x < getNeighbours()[0].length; x++) {
-				for (int y = 0; y < getNeighbours().length; y++) {
+			for (int x = 1; x < getNeighbours()[0].length - 1; x++) {
+				for (int y = 1; y < getNeighbours().length - 1; y++) {
 					if (getNeighbours(y, x) != -1) {
 						animals[i].calcNextDensity(y, x, dt, animals,
 								neighbours[y][x]);
