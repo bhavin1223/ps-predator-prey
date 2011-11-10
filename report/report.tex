@@ -144,7 +144,8 @@ The Animal class holds the information about the animal; it's density distributi
 It is called in the PredPrey class where it' values are initialised from those taken from the GUI or input file.
 \subsubsection{GridAlg}
 \label{sec:GridAlg}
-The Grid Algebra class governs methods for updating the animal densities across the  grid. The constructor takes an array of animals passed from the main class and the 2 dimensional array of neighbours passed from the input class. Upon creation the GridAlg class initialises the densities of each animal in each grid cell to a uniformly distributed random number between 0 and 1, if different density distributions were required for each animal it would be easy to edit the code to accommodate this. A couple of different methods of updating the grid are held in the class, either updating in parallel, for all animals (all of the old densities are replaced by new one's at the same time) or updating the animals one by one. Other update methods which would be interesting to investigate would be updating the cells one by one and updating random cells and or animals. In this experiment only the fully parallel update is used for investigation.
+The Grid Algebra class governs methods for updating the animal densities across the grid. The constructor takes the array of animals passed after creation in the PredPrey class and the 2 dimensional array of neighbours passed from the MapReader class. Upon creation the GridAlg class initialises the densities of each animal in each grid cell to a uniformly distributed random number between 0 and 5, changing this range are only seen to change the scale of the simulation. A couple of different methods of updating the grid are held in the class, these is discussed further ***.
+
 
 \subsubsection{MapReader}
 \label{sec:MapReader}
