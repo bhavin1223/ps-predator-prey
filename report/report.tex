@@ -1,5 +1,5 @@
 \documentclass[11pt]{report}
-\title{Predator Prey Model\footnote{When writing this report, a lot of emphasis was put on interactivity, so, a reader would benefit from reading an electronic version (PDF) rather than a paper one}}
+\title{Predator Prey Model\let\thefootnote\relax\footnotetext{When writing this report, a lot of emphasis was put on interactivity, so, a reader would benefit from reading an electronic version (PDF) rather than a paper one}}
 \author{Names Here}
 \date{November 2011}
 
@@ -67,9 +67,12 @@ inputencoding=utf8
 %\begin{abstract}
 %\end{abstract}
 
+
 \tableofcontents
+\thispagestyle{empty}
 
 \chapter{Introduction}
+\setcounter{page}{1}
 
 % i just wrote this to get the report started - feel free to change or add to it
 The problem was as follows:
