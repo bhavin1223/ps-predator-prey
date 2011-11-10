@@ -429,6 +429,9 @@ public class GUI extends JFrame {
 	
 	/** Method to check if a string could be parsed into double,
 	 * very useful to check if inputs are of the correct format
+	 * @param input  string checked
+	 * 
+	 * @return true if input can be converted to Double
 	 */
 	public static boolean isDouble( String input )  
 	{  		
