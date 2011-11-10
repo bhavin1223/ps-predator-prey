@@ -144,12 +144,12 @@ The Animal class holds the information about the animal; it's density distributi
 It is called in the PredPrey class where it' values are initialised from those taken from the GUI or input file.
 \subsubsection{GridAlg}
 \label{sec:GridAlg}
-The Grid Algebra class governs methods for updating the animal densities across the grid. The constructor takes the array of animals passed after creation in the PredPrey class and the 2 dimensional array of neighbours passed from the MapReader class. Upon creation the GridAlg class initialises the densities of each animal in each grid cell to a uniformly distributed random number between 0 and 5, changing this range are only seen to change the scale of the simulation. A couple of different methods of updating the grid are held in the class, these is discussed further ***.
+The Grid Algebra class governs methods for updating the animal densities across the grid. The constructor takes the array of animals passed after creation in the PredPrey class and the 2 dimensional array of neighbours passed from the MapReader class. Upon creation the GridAlg class initialises the densities of each animal in each grid cell to a uniformly distributed random number between 0 and 5, changing this range are only seen to change the scale of the simulation. A couple of different methods of updating the grid are held in the class, these is discussed further in subsection \ref{sec:Algorithm}.
 
 
 \subsubsection{MapReader}
 \label{sec:MapReader}
-The MapReader class is responsible for reading the file which holds where the land and water are. It reads the information from the file into a two dimensional array and from there calculates the number of nearest neighbours each cell has and holds that in a new two dimensional array. Water cells are held as -1 to differentiate between land cells with no neighbours and water. This array of neighbours is all that is required by the rest of the program.
+The MapReader class is responsible for reading the file which holds where the land and water are and outputs an array holding the neighbours of all the land cells, this is discussed further in section \ref{Input_Output}.
 
 
 
@@ -164,6 +164,7 @@ The output class takes the density distribution of the animals every ***time ste
 \label{sec:PredPrey}
  A main class, PredPrey, governs the creation of occurrences of all of the other classes in the order required.  When running to program there is an option to run with or without a GUI, this is  implemented by either passing the input file names in the command line when running the program or not. If the arguments are passed, the input parameters are read from the file, if they are not then the user can input them in themselves. The parameters required by the user are the coefficients that govern the central update equation, the time step, diffusion rates of Pumas and Hares and the differential interaction coefficients between the animals, all described in ***section***.
       \subsection{Algorithm} %matt
+	\label{sec:Algorithm}
       The equations shown in the problem Model are specific to Hares and Pumas located in the cells of the world grid. Out initial approach was to write a computational algorithm that simply iterated the equations for the density arrays of the two animals. The next stage in the development was creating an abstract Animal class, for which subclasses provided the implementation of the kernel specific to that animal. It was soon noticed that this abstraction could be removed, and the problem generalised even further resulting in the current algorithm: A general Animal class is used to represent any species present in the world. Instances of Animal are created at runtime for all such species. These objects contain all of the information about the animal, most importantly: 
 \begin{lstlisting}[numbers=none, language=Java,caption=The fundamental fields of the animal class.]
 // The density of the animal in each cell
@@ -211,6 +212,7 @@ for (int k = 0; k < animals.length; k++) {
 \end{lstlisting} 
 
 \input{Input_Output} %milena
+\label{Input_Output}
       
 \input{GUI} %dmitry
 
