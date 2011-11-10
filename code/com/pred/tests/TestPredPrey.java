@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.pred.prey.MapReader;
 import com.pred.prey.PredPrey;
 
 /**
@@ -41,6 +42,7 @@ public class TestPredPrey {
 
 		pd.setDiffCo(diffCo);
 		pd.setDiffusionRate(diffusionRate);
+		pd.setIo(new MapReader());
 		pd.createAnimals();
 		pd.createGrid();
 		pd.createOutput();

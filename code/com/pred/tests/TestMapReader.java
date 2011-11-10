@@ -1,12 +1,12 @@
 package com.pred.tests;
 
+import static org.junit.Assert.*;
+
 import com.pred.prey.MapReader;
 
 import org.junit.After;
 import org.junit.Test;
 import org.junit.Before;
-
-import junit.framework.TestCase;
 
 /**
  * JUnit test class that make some checks on MapReader.java. 
@@ -14,7 +14,7 @@ import junit.framework.TestCase;
  * @author Jorge M.
  * 
  */
-public class TestMapReader extends TestCase {
+public class TestMapReader {
 	// String fName = "/home/jorge/Library/PS/Coursework/islands.dat";
 	private String fName = "/home/jorge/Library/PS/Coursework/small.dat";
 	private MapReader IOtest;
