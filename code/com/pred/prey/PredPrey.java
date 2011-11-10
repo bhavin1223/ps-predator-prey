@@ -199,6 +199,7 @@ public class PredPrey {
 			animals[i] = new Animal(noAnimals);
 			animals[i].setDiffCo(diffCo[i]);
 			animals[i].setDiffusionRate(diffusionRate[i]);
+      animals[i].initiateDensities(getIo().getNeighbours().length,getIo().getNeighbours()[0].length);
 		}
 	
 		 animals[0].setName("Hare"); 
