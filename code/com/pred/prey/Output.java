@@ -3,37 +3,39 @@ package com.pred.prey;
 import java.io.*;
 
 /**
- * This class contains methods to create/clean output directories and to write data to output files. 
+ * This class contains methods to create/clean output directories and to write data to output ppm files. 
  * 
  * @author Milena, Tom 
  * @version 6.0, October, 28th 2011
  * @since 1.0
  **/
-
 public class Output {
 	
-	int x, y;
-	double maxValue, minValue;
-	boolean direrror = false;
-	int landarea=0;
-	double[][] density;
+	/**
+	 * Error flag.
+	 */
+	boolean direrror = false;	
+	
+	/**
+	 * Number of land cells on the map
+	 */
+	int landarea;
 
 	public Output() {
+		landarea = 0;
 	}
-
+	
   /**
   * Method to create a directory 'dirname' if it doesn't exists already,
   * or to clean it if it does.
   * @param dirname
   **/
-	
 	public void cleanDirectory(String dirname) {
 	
 		File directory = new File(dirname);
 
-		/**
-		 *Check if directory 'dirname' exists and if it does, delete all files it contains.
-		 **/
+		
+		//Check if directory 'dirname' exists and if it does, delete all files it contains.
 		if(directory.exists()) 
 		{
 			File[] files = directory.listFiles();
@@ -50,9 +52,8 @@ public class Output {
 			}	
 
 		}
-		/**
-		 *Otherwise create directory 'dirname'.
-		 **/
+		
+		// Otherwise create directory 'dirname'.
 		else 
 		{
 			System.out.println("   No output directory found, creating "+dirname+" directory.");
@@ -74,9 +75,10 @@ public class Output {
 	 * @param density
 	 * @param colour
 	 **/
-	
 	public void printPpm(String outputName, double[][] density, int[][] neighbours) {
 		
+		int x, y;						// Grid coordinates
+		double maxValue, minValue;		// Max/min density values
 		
 		maxValue = 0;
 		minValue = 10; // have to guess at a good starting point here
@@ -85,17 +87,15 @@ public class Output {
 		{
 			for (y = 1; y < (density.length - 1); y++) 
 			{
-				/**
-				 * Calculate maximum density.
-				 **/
+				
+				// Calculate maximum density.
 				if (density[y][x] > maxValue)
 				{
 					maxValue = density[y][x];
 				}
 				
-				/**
-				 * Calculate minimum density.
-				 **/
+				
+				// Calculate minimum density.
 				if ((density[y][x] < minValue) && (neighbours[y][x] != -1)) 
 				{
 					minValue = density[y][x];
@@ -103,15 +103,12 @@ public class Output {
 			}
 		}
 		
-		/**
-		 * Compute the scale factor.
-		 **/
+		// Compute the scale factor.
 		double scale = 255 / (maxValue - minValue); 
 													// leave room for error
 
-		/**
-		 * Print the values in a PPM file.
-		 **/
+		
+		// Print the values in a PPM file.	
 		BufferedWriter bufferedWriter = null;
 		
 		try {
@@ -131,18 +128,18 @@ public class Output {
 					for (x = 1; x < (density[0].length - 1); x++)
 					{
 						
-						/**
-						 * Fill water cells with blue.
-						 **/
+						
+						// Fill water cells with blue.	
 						if (neighbours[y][x] == -1) 
 						{
 							bufferedWriter.write("0 0 255 ");
 						}
 						
-						/**
-						 * Fill land cells with grey with higher intensity corresponding to 
-						 * greater value of density in a given cell.
-						 **/
+
+						 /*
+						  * Fill land cells with grey with higher intensity corresponding to 
+						  * greater value of density in a given cell.
+						  */
 						else
 						{
 							bufferedWriter.write((int) ((density[y][x] - minValue) * scale)
@@ -171,7 +168,6 @@ public class Output {
 	 * @param density
 	 * @param time
 	 **/
-	
 	public void printMeanDensity(String outputName, double[][] density,double time) {		
 		
 		double sum = 0;
@@ -186,8 +182,8 @@ public class Output {
 			ioe.getMessage();
 			}
 
-		for (x = 1; x < (density.length - 1); x++) {
-			for (y = 1; y < (density[0].length - 1); y++) {
+		for (int x = 1; x < (density.length - 1); x++) {
+			for (int y = 1; y < (density[0].length - 1); y++) {
 				sum += density[x][y];
 			}
 		}
@@ -202,10 +198,10 @@ public class Output {
 	 * Method to write the average density with corresponding time to a file.
 	 * @param neighbours
 	 **/
-	public void GetLandArea(int[][] neighbours) {
+	public void calcLandArea(int[][] neighbours) {
 	
-		for (y = 1; y < (neighbours.length - 1); y++) {
-			for (x = 1; x < (neighbours[0].length - 1); x++) {
+		for (int y = 1; y < (neighbours.length - 1); y++) {
+			for (int x = 1; x < (neighbours[0].length - 1); x++) {
 			
 				if(neighbours[y][x] != -1 ) {
 				landarea++;

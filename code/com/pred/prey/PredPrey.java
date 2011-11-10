@@ -57,7 +57,7 @@ public class PredPrey {
 		
 			getOutput().cleanDirectory("./outputs/");
 			
-			getOutput().GetLandArea(getIo().getNeighbours());
+			getOutput().calcLandArea(getIo().getNeighbours());
 		
 			System.out.print("Simulating populations...");
 
@@ -141,7 +141,7 @@ public class PredPrey {
 				createAnimals();
 				createGrid();
 				
-				getOutput().GetLandArea(getIo().getNeighbours());
+				getOutput().calcLandArea(getIo().getNeighbours());
 	
 				for (double i = 0; i < t; i += getStep()) {
 				
