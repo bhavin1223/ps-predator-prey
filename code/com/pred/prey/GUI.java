@@ -1,8 +1,6 @@
 package com.pred.prey;
 import com.pred.prey.PredPrey;
 
-import javax.swing.JFrame;
-import javax.swing.JTextField;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -309,15 +307,19 @@ class InputFrame extends JFrame
 					// checking if all the inputs are doubles
 					if (isInputAcceptable())
 					{
-						
 						readValues();
-						System.out.println("...");
-						// no need to see the GUI after simulation have started
-						System.out.println("Algorithm running please wait...");
+				
+						// Variables for timing the algorithm
+						double t0, t1;
+						
+						System.out.println("Beginning algorithm...");
+						t0 = System.currentTimeMillis();
 						PredPrey pp = new PredPrey();
 						if (range.isSelected()) pp.run(parameters, file, parameterRange, choise2Indicator);
 						else pp.run(parameters, file);
-						System.out.println("Algorithm complete.");
+						t1 = System.currentTimeMillis();
+						System.out.println("Algorithm completed!");
+						System.out.println("Computation time = " + (t1-t0) + " ms.");
 					}
 					// if some inputs are not doubles, an error message is shown
 					// allowing the user to try again
