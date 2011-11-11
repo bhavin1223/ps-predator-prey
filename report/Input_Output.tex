@@ -1,7 +1,7 @@
 \section{Input/output}
       
       In our model the "world", or landscape, is represented by a rectangular grid of alterable dimensions $N \times N$, where $N$ can be as large as 2000.
-      We designed the code in a way such that it can read in an ASCII file that contains a set of numbers, those being either 0 or 1 and representing water and land, respectively, parses them and stores in a two-dimensional array. This means that the code can be used to model landscapes of different sizes with various distributions of land and water.
+      We designed the code in a way such that it can read in an ASCII file that contains a set of numbers, those being either 0 or 1 and representing water and land, respectively, parses them and stores in a two-dimensional array. This means that the code can be used to model landscapes of different sizes with various distributions of land and water. After the input file is read into an array the number of nearest neighbours each cell has is calculated and stored in a new two dimensional array. Water cells are held as -1 so that they can be distinguished from land cells with no neighbours. This array of neighbours is all that is required by the rest of the program.
       \newline{}
       The boundary conditions are assigned to the model by setting the values for density of both, pumas and hares, to 0 at the edges of the grid.  Initially, pumas and hares are randomly distributed across the land cells. 
       All these tasks are implemented in methods within the MapReader class.
