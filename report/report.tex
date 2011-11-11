@@ -47,6 +47,30 @@ inputencoding=utf8
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%This part removes all the white space around the chapter heading
+%I have no idea how it works :(
+\makeatletter
+\renewcommand*\@makechapterhead[1]{%
+{\parindent \z@ \raggedright \normalfont
+\huge\bfseries
+\ifnum \c@secnumdepth >\m@ne
+\thechapter\hspace{1cm}
+\fi
+#1\par\nobreak
+\vskip 20\p@
+}}
+\makeatother
+
+\makeatletter
+\renewcommand*\@makeschapterhead[1]{%
+{\parindent \z@ \raggedright
+\normalfont
+\huge\bfseries #1\par\nobreak
+\vskip 20\p@
+}}
+\makeatother
+%End of chapter header voodoo section
+
 \begin{document}
 
 \usetikzlibrary{shapes,arrows}
@@ -231,7 +255,7 @@ Compared to Eclipse, Netbeans is a new IDE for Java developed by Sun, which prov
      
       \subsection{SVN} %matt
       
-	We chose to host the SVN repository using a Google Code project. The home page can be found at \href{http://code.google.com/p/ps-predator-prey/}{http://code.google.com/p/ps-predator-prey/}. Doing so allowed us to make use of the many excellent tools that are available for managing such projects; the most obvious example being the ability to quickly and easily browse all of the revisions from r1 current via the web interface.  The fact that the code was hosted externally on a 24/h server meant that it could be accessed from anywhere at any time. There was also no issue with compatibility: Some of the group members opted to use the SVN Eclipse plug that interfaces seamlessly with the Google Code while others chose to use the more traditional approach of checking code in and out via the command line. Another invaluable feature was the ability to compare side by side any and all changes between revisions. 
+	We chose to host the SVN repository using a Google Code project. The home page can be found at \href{http://code.google.com/p/ps-predator-prey/}{http://code.google.com/p/ps-predator-prey/}. Doing so allowed us to make use of the many excellent tools that are available for managing such projects; the most obvious example being the ability to quickly and easily browse all of the revisions from r1 current via the web interface.  The fact that the code was hosted externally on a 24/h server meant that it could be accessed from anywhere at any time. There was also no issue with compatibility: Some of the group members opted to use the SVN Eclipse plugin that interfaces seamlessly with the Google Code while others chose to use the more traditional approach of checking code in and out via the command line. Another invaluable feature was the ability to compare side by side any and all changes between revisions. 
 	See for example the changes made to Output.java in revision r29\footnote{\href{http://code.google.com/p/ps-predator-prey/source/diff?spec=svn29\&r=29\&format=side\&path=/code/Output.java}{http://code.google.com/p/ps-predator-prey/source/diff?spec=svn29\&r=29\&format=side\&path=/code/Output.java}}.
 	 This feature is compatible with all text files, and so also proved useful for the group editing of latex files.	   
  
@@ -288,11 +312,11 @@ The pumas eventually eat all of hares in their areas, and start to die off, corr
 
 \chapter{Conclusions} %everyone
 
-	The Google Code SVN combined with the ability to compile and run Java code on any platform provided a universal code base that could be accessed from anywhere at any time.  
+	The Google Code SVN, combined with the ability to compile and run Java code on any platform, provided a universal code base that could be accessed from anywhere at any time.  
 	
-We chose to write the program with a generalised algorithm, such that it could be easily extended to handle more animals. While this gives a results in slight decrease in efficiency over a more primitive less extendible alternative, it was felt that it offered a solution that was more in line with good programming practices.
+We chose to write the program with a generalised algorithm, such that it could be easily extended to handle more animals. While this results in slight decrease in efficiency over a more primitive less extendible alternative, it was felt that it offered a solution that was more in line with good programming practices.
 
-GUI was not necessary for this task, however it did provide a more user friendly experience and the possibility to range over values. Possible improvements: output animations of the island to the GUI, add options to run performance tests.
+The GUI was not necessary for this task, however it did provide a more user friendly experience and the ability to range over parameters. Possible improvements exist; animations of the island could be output to the GUI, add the option to run performance tests could be added.
   
 The group performed well and achieved with success the task proposed at the beginning of the project. The solution is a fully working piece of software that models the diffusion of pumas and hares on a grid over time. The group has also been able to complete tests and analysis of the results obtained from the software and to plot these results on a series of graphs that visualise the behaviour of the model in time.
 \end{document}
