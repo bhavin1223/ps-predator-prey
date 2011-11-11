@@ -1,6 +1,6 @@
 \documentclass[11pt]{report}
 \title{Predator Prey Model\let\thefootnote\relax\footnotetext{When writing this report, a lot of emphasis was put on interactivity, so, a reader would benefit from reading an electronic version (PDF) rather than a paper one}}
-\author{Matt Cole\\ Tom Catling\\ Simon Gardner\\ Milena Pawlik\\ Dmitri Tsigelnitskiy\\ Jorge Moreira\\ Chen Shen}
+\author{Matt Cole\\ Tom Catling\\ Simon Gardner\\ Milena Pawlik\\ Dmitry Tsigelnitskiy\\ Jorge Moreira\\ Chen Shen}
 \date{November 2011}
 
 \usepackage{amsmath}
@@ -75,7 +75,7 @@ inputencoding=utf8
 \setcounter{page}{1}
 
 % i just wrote this to get the report started - feel free to change or add to it
-The problem was as follows:
+This project involved writing a computational simulation of a predator-prey model. The focus of the task was to produce an efficient algorithm and a readable extendible code base. This was  done by making use of a number of useful development tools and employing good set of programming practices throughout. The problem was as follows:
 \begin{itemize}
 \item An island represented by a rectangular domain, where every grid point is either land or water
 \item Density of prey (hares) and predators (pumas) are changing with time depending on parameters $r$,$a$,$b$ $m$, $k$, $l$.\footnote{Where $r$ is prey birth rate, $a$ is predation rate, $b$ is predator birth rate, $m$ is predator death rate, $k$ is prey diffusion rate, $l$ is predator diffusion rate}
@@ -120,7 +120,7 @@ These populations exist in a `world' consisting of land and water and are also a
 
 \node [block, right of=MapReader] (Output) {Output\\ \ref{sec:Output}};
 
-\node [block, below of=GridAlg] (InputFrame) {GUI\\ \ref{sec:InputFrame}};
+\node [block, below of=GridAlg] (InputFrame) {GUI\\ \ref{sec:GUI}};
 
 \node [block, below of=MapReader] (PredPrey) {PredPrey\\ \ref{sec:PredPrey}};
 
@@ -141,7 +141,7 @@ These populations exist in a `world' consisting of land and water and are also a
 \subsubsection{Animal}
 \label{sec:Animal}
 The Animal class holds the information about the animal; it's density distribution and how it is updated relating to other animals.
-It is called in the PredPrey class where it's values are initialised from those taken from the GUI or input file. Discussion of the implementation of the main algorithm can be found in section \ref{Algorithm}
+It is called in the PredPrey class where it's values are initialised from those taken from the GUI or input file. Discussion of the implementation of the main algorithm can be found in section \ref{sec:Algorithm}
 \subsubsection{GridAlg}
 \label{sec:GridAlg}
 The Grid Algebra class governs methods for updating the animal densities across the grid. The constructor takes the array of animals passed after creation in the PredPrey class and the 2 dimensional array of neighbours passed from the MapReader class. Upon creation the GridAlg class initialises the densities of each animal in each grid cell to a uniformly distributed random number between 0 and 5, changing this range are only seen to change the scale of the simulation. A couple of different methods of updating the grid are held in the class, these is discussed further in subsection \ref{sec:Algorithm}.
@@ -152,7 +152,7 @@ The Grid Algebra class governs methods for updating the animal densities across 
 The MapReader class is responsible for reading the file which holds where the land and water are and outputs an array holding the neighbours of all the land cells, this is discussed further in section \ref{Input_Output}.
 
 \subsubsection{Output}
-label{sec:Output}
+\label{sec:Output}
 The output class is sent density distributions of the animals and from that calculates and outputs the average density as well as an image of the density distribution. The format and creation of these files is discussed further in section \ref{Input_Output}
 
 \subsubsection{GUI}
