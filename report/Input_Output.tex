@@ -12,18 +12,18 @@
       \newline{}
       \newline{}
       
-      The methods responsible for creating the output are included in the Output class. Depending on the user's preference, the code will create one output directory (for single initial values) or a number of such directories (for the range of initial values), i.e. one for each run. In both cases the user will be able to view the distribution of both populations across the landscape every $T$ time steps. The form of the output is a number of *.ppm files which can be viewed as images, or "maps", similar to these showed in the figure below.
+      The methods responsible for creating the output are included in the Output class. Depending on the user's preference, the code will create one output directory (for single initial values) or a number of such directories (for the range of initial values), i.e. one for each run. In both cases the user will be able to view the distribution of both populations across the landscape every $T$ time steps. The form of the output is a number of ppm files which can be viewed as images, or "maps", similar to these showed in the figure below.
      
       
       \begin{figure}[H]
       \begin{center}
   \subfloat[$t=360$]{\includegraphics[width=55mm]{figs/Puma900.jpg}}
   \subfloat[$t=416$]{\includegraphics[width=55mm]{figs/Puma1040.jpg}}
-      \caption{This figure shows examples of the output files created during a simulation using a $500 \times 500$ grid and default initial conditions. Various shades of grey represent the density of pumas after 900 (a) and 1040 (b) timesteps, with timestep size set to 0.4.}
+      \caption{This figure shows examples of the output files created during a simulation using a $500 \times 500$ grid and default initial conditions. Various shades of grey represent the density of pumas after 900 (a) and 1040 (b) time steps, with time step size set to 0.4.}
       \end{center}
       \end{figure}
       
      
-      The number of the *.ppm files created depends on the initial parameters specified by the user, $dt$ and $T$. To maximise the level of output clarity we decided to make separate landscape "maps" for each type of animal, here pumas and hares. In each "map" the pixels corresponding to water cells are shown in blue, while the land cells are white. The variation in density of pumas/hares across the land cells is represented by different shades of grey, with black colour corresponding to the maximum value. 
+      The number of the ppm files created depends on the initial parameters specified by the user, $dt$ and $T$. To maximise the level of output clarity we decided to make separate landscape "maps" for each type of animal, here pumas and hares. In each "map" the pixels corresponding to water cells are shown in blue, while the land cells are white. The variation in density of pumas/hares across the land cells is represented by different shades of grey, with black colour corresponding to the maximum value. 
       \newline{}
       For each type of animal, every $T$ time steps, the code also calculates the mean population density and writes it along with the corresponding time into a file. 
