@@ -47,30 +47,6 @@ inputencoding=utf8
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%This part removes all the white space around the chapter heading
-%I have no idea how it works :(
-\makeatletter
-\renewcommand*\@makechapterhead[1]{%
-{\parindent \z@ \raggedright \normalfont
-\huge\bfseries
-\ifnum \c@secnumdepth >\m@ne
-\thechapter\hspace{1cm}
-\fi
-#1\par\nobreak
-\vskip 20\p@
-}}
-\makeatother
-
-\makeatletter
-\renewcommand*\@makeschapterhead[1]{%
-{\parindent \z@ \raggedright
-\normalfont
-\huge\bfseries #1\par\nobreak
-\vskip 20\p@
-}}
-\makeatother
-%End of chapter header voodoo section
-
 \begin{document}
 
 \usetikzlibrary{shapes,arrows}
