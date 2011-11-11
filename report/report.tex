@@ -13,13 +13,7 @@
 \usepackage[pdftex]{hyperref}
 \usepackage{subfig}
 %%%%% Remove URL link boxes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\hypersetup{
-    colorlinks,%
-    citecolor=black,%
-    filecolor=black,%
-    linkcolor=black,%
-    urlcolor=black
-}
+
 \usepackage{times}
 
 %%%%% Code Constraints %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -92,9 +86,7 @@ P_{ij}^{new}=P_{ij}^{old} + {\Delta}t(bH_{ij}^{old}P_{ij}^{old}-mP_{ij}^{old} + 
 
 % i just wrote this to get the report started - feel free to change or add to it
 
-We tried to design the program in such a way to take advantage of Java's object-orientated, modular nature. 
-Due to the large size of our group we also decided to develop a GUI for the program, although the code was designed 
-in to be usable from the command line as well.\newline{}
+We designed the program in such a way as to take advantage of Java's object-orientated, modular nature. Due to the large size of our group we also decided to incorporate a GUI. The program can also be run from the command line, as in some situations (ssh) a GUI is not available.\newline{}
 
 There is always some compromise between readability and performance in coding, and we tried to keep this balance in mind
 when designing our code. We made best use of class structure whilst still keeping our implementation of the given 
