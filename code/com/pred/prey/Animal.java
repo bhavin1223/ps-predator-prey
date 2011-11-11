@@ -218,8 +218,6 @@ public class Animal {
 
 	/**
 	 * Sets the coefficients controlling the changes of population with time.
-	 * 
-	 * @param	An array od coefficients to be copied from
 	 */
 	public void setDiffCo(double[] diffCo) {
 		this.diffCoefficients = diffCo;

@@ -27,11 +27,6 @@ public class MapReader {
 	private String defaultFile = "./small.dat";
 	// private String defaultFile = "./islands.dat";
 
-	/**
-	 * Constructor
-	 * 
-	 * @param	The path name to the file to be loaded
-	 */
 	public MapReader(String pathToFile) {
 		loadLandscape(pathToFile);
 		countNeighbours();
