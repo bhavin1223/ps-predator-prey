@@ -69,7 +69,7 @@ inputencoding=utf8
 \setcounter{page}{1}
 
 % i just wrote this to get the report started - feel free to change or add to it
-This project involved writing a computational simulation of a predator-prey model. The focus of the task was to produce an efficient algorithm and a readable extendible code base. This was  done by making use of a number of useful development tools and employing good set of programming practices throughout. The problem was as follows:
+This project involved writing a computational simulation of a predator-prey model. The focus of the task was to produce an efficient algorithm and a readable extendible code base. This was  done by making use of a number of key development tools and employing a good set of programming practices throughout. The problem was as follows:
 \begin{itemize}
 \item An island represented by a rectangular domain, where every grid point is either land or water
 \item Density of prey (hares) and predators (pumas) are changing with time depending on parameters $r$,$a$,$b$ $m$, $k$, $l$.\footnote{Where $r$ is prey birth rate, $a$ is predation rate, $b$ is predator birth rate, $m$ is predator death rate, $k$ is prey diffusion rate, $l$ is predator diffusion rate}
@@ -86,21 +86,19 @@ P_{ij}^{new}=P_{ij}^{old} + {\Delta}t(bH_{ij}^{old}P_{ij}^{old}-mP_{ij}^{old} + 
 
 % i just wrote this to get the report started - feel free to change or add to it
 
-We designed the program in such a way as to take advantage of Java's object-orientated, modular nature. Due to the large size of our group we also decided to incorporate a GUI. The program can also be run from the command line, as in some situations (ssh) a GUI is not available.\newline{}
+We designed the program in such a way as to take advantage of Java's object-orientated, modular nature. Due to the large size of our group we also decided to incorporate a GUI. The program can still be run from the command line, as in some situations (ssh) a GUI is not available.\newline{}
 
-There is always some compromise between readability and performance in coding, and we tried to keep this balance in mind
-when designing our code. We made best use of class structure whilst still keeping our implementation of the given 
-algorithm as efficient as possible.\newline{}
+There is always some compromise between readability (object oriented design) and performance in OO coding, and we tried to maintain a reasonable balance when designing our code. We made best use of class structure whilst still keeping our implementation of the given algorithm as efficient as possible.\newline{}
 
 The predator prey algorithm implemented in this project crudely models the interaction between population densities of different animals, specifically hares and pumas. Each population has a self-interaction coefficient (birth for Hares, death for Pumas) and a coefficient describing how it interacts with other species' populations. \newline{}
 
-These populations exist in a `world' consisting of land and water and are also able to diffuse across land squares with a rate determined by a diffusion coefficient. Thus, each population has N+1 coefficients which determine its behaviour, where N is the number of animals.
+These populations exist in a 'world' consisting of land and water and are also able to diffuse across land squares with a rate determined by a diffusion coefficient. Thus, each population has N+1 coefficients which determine its behaviour, where N is the number of animals.
 
 \chapter{Design \& Implementation}
    \section{Code}
       \subsection{Structure} %simon (dmitry to make flowchart)
       %not sure if this is quite right but a first go at the code structure explanaion
-          The language our group decided to code the predator-prey model in was Java. Using Java gave us easy access to numerous tools such as Javadoc and Swing for creating GUIs, and the main advantage for most of us was the familiarity of working with object oriented code design. Object orientation provided us with the opportunity to design the central workings of the code with extensive extendibility, leaving just the user interface specifically designed for the problem at hand.
+          All code was written with Java. Doing so gave us easy access to numerous tools such as Javadoc and Swing for creating GUIs, the main advantage for most of us was the familiarity of working with object oriented code design. Object orientation provided us with the opportunity to design the central workings of the code with extensive extendibility, leaving just the user interface specifically designed for the problem at hand.
 \subsubsection{Classes Flow Chart}
 \begin{tikzpicture}[node distance = 3.2cm, auto]
 
@@ -133,10 +131,10 @@ These populations exist in a `world' consisting of land and water and are also a
 \subsubsection{Animal}
 \label{sec:Animal}
 The Animal class holds the information about the animal; it's density distribution and how it is updated relating to other animals.
-It is called in the PredPrey class where it's values are initialised from those taken from the GUI or input file. Discussion of the implementation of the main algorithm can be found in section \ref{sec:Algorithm}
+Its methods are called called from the PredPrey class where which passes it the values taken from the GUI or input file. Discussion of the implementation of the main algorithm can be found in section \ref{sec:Algorithm}
 \subsubsection{GridAlg}
 \label{sec:GridAlg}
-The Grid Algebra class governs methods for updating the animal densities across the grid. The constructor takes the array of animals passed after creation in the PredPrey class and the 2 dimensional array of neighbours passed from the MapReader class. Upon creation the GridAlg class initialises the densities of each animal in each grid cell to a uniformly distributed random number between 0 and 5, changing this range are only seen to change the scale of the simulation. A couple of different methods of updating the grid are held in the class, these is discussed further in subsection \ref{sec:Algorithm}.
+This class governs methods for updating the animal densities across the grid. The constructor takes the array of animals passed after creation in the PredPrey class and the 2 dimensional array of neighbours passed from the MapReader class. Upon creation, the GridAlg class initialises the densities of each animal in each grid cell to a uniformly distributed random number between 0 and 5, changing this range are only seen to change the scale of the simulation. A couple of different methods of updating the grid are held in the class, these is discussed further in subsection \ref{sec:Algorithm}.
 
 
 \subsubsection{MapReader}
